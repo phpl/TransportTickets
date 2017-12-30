@@ -6,20 +6,24 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.inject.Inject;
+import lombok.extern.log4j.Log4j;
 import org.controlsfx.control.action.ActionProxy;
 
+import javax.inject.Inject;
+
 @ParticleActions
+@Log4j
 public class MenuActions {
 
-    @Inject ParticleApplication app;
+    @Inject
+    ParticleApplication app;
 
-    @ActionProxy(text="Exit", accelerator="alt+F4")
+    @ActionProxy(text = "Exit", accelerator = "alt+F4")
     private void exit() {
         app.exit();
     }
-    
-    @ActionProxy(text="About")
+
+    @ActionProxy(text = "About")
     private void about() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Gluon Desktop");
@@ -28,5 +32,5 @@ public class MenuActions {
         alert.setContentText("This is a basic Gluon Desktop Application");
         alert.showAndWait();
     }
-        
+
 }

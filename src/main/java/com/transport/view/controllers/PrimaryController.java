@@ -3,59 +3,55 @@ package com.transport.view.controllers;
 import com.gluonhq.particle.application.ParticleApplication;
 import com.gluonhq.particle.state.StateManager;
 import com.gluonhq.particle.view.ViewManager;
-
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-
-import com.transport.controller.CityBean;
-import com.transport.model.City;
 import com.transport.DatabaseService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
-import javax.inject.Inject;
-
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionMap;
 import org.controlsfx.control.action.ActionProxy;
 
+import javax.inject.Inject;
+import java.util.ResourceBundle;
+
+@Log4j
 public class PrimaryController {
 
-    @Inject ParticleApplication app;
-    
-    @Inject private ViewManager viewManager;
+    @Inject
+    ParticleApplication app;
 
-    @Inject private StateManager stateManager;
-    
+    @Inject
+    private ViewManager viewManager;
+
+    @Inject
+    private StateManager stateManager;
+
     private boolean first = true;
-    
+
     @FXML
     private Label label;
-    
+
     @FXML
     private Button button;
-    
+
     @FXML
     private ResourceBundle resources;
-    
+
     private Action actionSignin;
 
     private DatabaseService databaseService;
 
-    private static Logger logger = Logger.getLogger(PrimaryController.class);
-
-
     public void initialize() {
         ActionMap.register(this);
-        actionSignin =  ActionMap.action("signin");
-        
+        actionSignin = ActionMap.action("signin");
+
         button.setOnAction(e -> viewManager.switchView("secondary"));
 
 
     }
-    
+
     public void postInit() {
         databaseService = new DatabaseService();
         if (first) {
@@ -65,17 +61,17 @@ public class PrimaryController {
         }
         app.getParticle().getToolBarActions().add(0, actionSignin);
     }
-    
+
     public void dispose() {
         app.getParticle().getToolBarActions().remove(actionSignin);
     }
-    
+
     public void addUser(String userName) {
-        label.setText(resources.getString("label.text") + (userName.isEmpty() ? "" :  ", " + userName) + "!");
+        label.setText(resources.getString("label.text") + (userName.isEmpty() ? "" : ", " + userName) + "!");
         stateManager.setProperty("UserName", userName);
     }
 
-    @ActionProxy(text="Sign In")
+    @ActionProxy(text = "Sign In")
     private void signin() {
         TextInputDialog input = new TextInputDialog(stateManager.getProperty("UserName").orElse("").toString());
         input.setTitle("User name");
@@ -83,5 +79,5 @@ public class PrimaryController {
         input.setContentText("Input your name:");
         input.showAndWait().ifPresent(this::addUser);
     }
-    
+
 }

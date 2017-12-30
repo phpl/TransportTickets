@@ -1,6 +1,6 @@
 package com.transport;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +9,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+@Log4j
 public class DatabaseService {
-    private static Logger logger = Logger.getLogger(DatabaseService.class);
 
     private Connection connection = null;
 
@@ -63,14 +63,15 @@ public class DatabaseService {
             e.printStackTrace();
         }
 
-        logger.info("Connected to the Database");
+
+        log.info("Connected to the Database");
     }
 
     public void closeConnection() {
         try {
             if (connection != null)
                 connection.close();
-            logger.info("Closed connection");
+            log.info("Closed connection");
         } catch (SQLException e) {
             e.printStackTrace();
         }
