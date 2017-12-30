@@ -7,14 +7,14 @@ import static org.controlsfx.control.action.ActionMap.actions;
 public class TransportTickets extends ParticleApplication {
 
     public TransportTickets() {
-        super("Gluon Desktop Application");
+        super("Transport");
     }
 
     @Override
     public void postInit(Scene scene) {
         scene.getStylesheets().add(TransportTickets.class.getResource("style.css").toExternalForm());
 
-        setTitle("Gluon Desktop Application");
+        setTitle("Transport");
 
         getParticle().buildMenu("File -> [exit]", "Help -> [about]");
         
