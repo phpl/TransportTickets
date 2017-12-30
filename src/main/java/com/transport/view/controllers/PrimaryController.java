@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import com.transport.controller.CityBean;
 import com.transport.model.City;
-import com.transport.services.DatabaseService;
+import com.transport.DatabaseService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -44,8 +44,6 @@ public class PrimaryController {
 
     private DatabaseService databaseService;
 
-    private CityBean cityBean;
-
     private static Logger logger = Logger.getLogger(PrimaryController.class);
 
 
@@ -59,9 +57,7 @@ public class PrimaryController {
     }
     
     public void postInit() {
-
         databaseService = new DatabaseService();
-        cityBean = new CityBean(databaseService);
         if (first) {
             stateManager.setPersistenceMode(StateManager.PersistenceMode.USER);
             addUser(stateManager.getProperty("UserName").orElse("").toString());
@@ -77,14 +73,6 @@ public class PrimaryController {
     public void addUser(String userName) {
         label.setText(resources.getString("label.text") + (userName.isEmpty() ? "" :  ", " + userName) + "!");
         stateManager.setProperty("UserName", userName);
-
-        databaseService.connectToDatabase();
-        City city = new City(userName);
-        try {
-            cityBean.insertNewCity(city);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @ActionProxy(text="Sign In")

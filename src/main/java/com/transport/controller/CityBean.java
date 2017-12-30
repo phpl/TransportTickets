@@ -1,7 +1,7 @@
 package com.transport.controller;
 
 import com.transport.model.City;
-import com.transport.services.DatabaseService;
+import com.transport.DatabaseService;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
