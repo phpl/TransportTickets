@@ -20,11 +20,9 @@ public class CityDao {
         String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCity)) {
-
             log.info("Begin insertNewCity");
 
             preparedStatement.setString(1, cityEntityToInsert.getName());
-
             preparedStatement.executeUpdate();
 
             log.info("End insertNewCity");
