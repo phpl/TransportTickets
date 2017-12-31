@@ -2,19 +2,17 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CityEntity;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
+@RequiredArgsConstructor
 public class CityDao {
 
     private DatabaseService databaseService = null;
-
-    public CityDao(DatabaseService databaseService) {
-        this.databaseService = databaseService;
-    }
 
     public void insertNewCity(CityEntity cityEntityToInsert) throws SQLException {
         String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
