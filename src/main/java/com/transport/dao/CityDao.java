@@ -13,9 +13,15 @@ import java.sql.SQLException;
 public class CityDao {
     private DatabaseService databaseService = null;
 
-    public void insertCity(CityEntity newEntity) throws SQLException {
-        String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
+    private String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
 
+    public void insertCity(CityEntity newEntity) throws SQLException {
+        databaseService.setAutoCommit(false);
+        executeInsert(newEntity);
+        databaseService.setAutoCommit(false);
+    }
+
+    private void executeInsert(CityEntity newEntity) {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCity)) {
             log.info("Begin insertNewCity");
 
