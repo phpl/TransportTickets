@@ -7,8 +7,6 @@ import lombok.extern.log4j.Log4j;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static com.transport.queries.CityQuerries.INSERT_NEW_CITY;
-
 @Log4j
 public class CityDao {
 
@@ -19,15 +17,17 @@ public class CityDao {
     }
 
     public void insertNewCity(CityEntity cityEntityToInsert) throws SQLException {
-        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(INSERT_NEW_CITY)) {
+        String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
 
-            log.info("Begin INSERT_NEW_CITY");
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCity)) {
+
+            log.info("Begin insertNewCity");
 
             preparedStatement.setString(1, cityEntityToInsert.getName());
 
             preparedStatement.executeUpdate();
 
-            log.info("End INSERT_NEW_CITY");
+            log.info("End insertNewCity");
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
