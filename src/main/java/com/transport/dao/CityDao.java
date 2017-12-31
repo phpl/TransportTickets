@@ -11,7 +11,6 @@ import java.sql.SQLException;
 @Log4j
 @RequiredArgsConstructor
 public class CityDao {
-
     private DatabaseService databaseService = null;
 
     public void insertNewCity(CityEntity cityEntityToInsert) throws SQLException {
