@@ -13,13 +13,13 @@ import java.sql.SQLException;
 public class CityDao {
     private DatabaseService databaseService = null;
 
-    public void insertNewCity(CityEntity cityEntityToInsert) throws SQLException {
+    public void insertCity(CityEntity newCity) throws SQLException {
         String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCity)) {
             log.info("Begin insertNewCity");
 
-            preparedStatement.setString(1, cityEntityToInsert.getName());
+            preparedStatement.setString(1, newCity.getName());
             preparedStatement.executeUpdate();
 
             log.info("End insertNewCity");
