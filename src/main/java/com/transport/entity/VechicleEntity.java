@@ -1,9 +1,9 @@
-package com.transport.model;
+package com.transport.entity;
 
 import lombok.Data;
 
 @Data
-public class Vechicle {
+public class VechicleEntity {
     private String model;
     private String licencePlate;
     private int seatNumber;

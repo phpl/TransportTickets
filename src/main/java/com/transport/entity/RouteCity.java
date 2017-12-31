@@ -1,4 +1,4 @@
-package com.transport.model;
+package com.transport.entity;
 
 import lombok.Data;
 

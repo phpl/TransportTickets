@@ -74,7 +74,7 @@ public class PrimaryController {
     @ActionProxy(text = "Sign In")
     private void signin() {
         TextInputDialog input = new TextInputDialog(stateManager.getProperty("UserName").orElse("").toString());
-        input.setTitle("User name");
+        input.setTitle("UserEntity name");
         input.setHeaderText(null);
         input.setContentText("Input your name:");
         input.showAndWait().ifPresent(this::addUser);

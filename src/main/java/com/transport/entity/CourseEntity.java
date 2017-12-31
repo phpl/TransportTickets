@@ -1,11 +1,11 @@
-package com.transport.model;
+package com.transport.entity;
 
 import lombok.Data;
 
 import java.time.LocalTime;
 
 @Data
-public class Course {
+public class CourseEntity {
     private LocalTime departureTime;
     private LocalTime arrivalTime;
     private int maxAvailableSeats;

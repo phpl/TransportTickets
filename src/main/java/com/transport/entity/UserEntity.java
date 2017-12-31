@@ -1,9 +1,9 @@
-package com.transport.model;
+package com.transport.entity;
 
 import lombok.Data;
 
 @Data
-public class User {
+public class UserEntity {
     private String login;
     private String password;
 }

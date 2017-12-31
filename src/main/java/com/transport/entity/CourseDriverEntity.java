@@ -1,9 +1,9 @@
-package com.transport.model;
+package com.transport.entity;
 
 import lombok.Data;
 
 @Data
-public class CourseDriver {
+public class CourseDriverEntity {
     private int driverId;
     private int courseId;
 }

@@ -1,7 +1,7 @@
-package com.transport.controller;
+package com.transport.dao;
 
 import com.transport.DatabaseService;
-import com.transport.model.City;
+import com.transport.entity.CityEntity;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -10,20 +10,20 @@ import java.sql.SQLException;
 import static com.transport.queries.CityQuerries.INSERT_NEW_CITY;
 
 @Log4j
-public class CityBean {
+public class CityDao {
 
     private DatabaseService databaseService = null;
 
-    public CityBean(DatabaseService databaseService) {
+    public CityDao(DatabaseService databaseService) {
         this.databaseService = databaseService;
     }
 
-    public void insertNewCity(City cityToInsert) throws SQLException {
+    public void insertNewCity(CityEntity cityEntityToInsert) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(INSERT_NEW_CITY)) {
 
             log.info("Begin INSERT_NEW_CITY");
 
-            preparedStatement.setString(1, cityToInsert.getName());
+            preparedStatement.setString(1, cityEntityToInsert.getName());
 
             preparedStatement.executeUpdate();
 

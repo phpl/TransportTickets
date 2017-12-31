@@ -1,9 +1,9 @@
-package com.transport.model;
+package com.transport.entity;
 
 import lombok.Data;
 
 @Data
-public class Address {
+public class AddressEntity {
     private String city;
     private String street;
     private String houseNumber;
