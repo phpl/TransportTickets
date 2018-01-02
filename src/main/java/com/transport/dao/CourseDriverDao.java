@@ -14,7 +14,7 @@ public class CourseDriverDao {
     private DatabaseService databaseService = null;
 
     private String insertNewCourseDriver = "INSERT INTO " +
-            "transport.kurs (kierowca_pk, kurs_pk) VALUES (?, ?);";
+            "transport.kurs_kierowca (kierowca_pk, kurs_pk) VALUES (?, ?);";
 
     public void insertCourseDriver(CourseDriverEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
