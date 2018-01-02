@@ -4,7 +4,8 @@ import com.gluonhq.particle.application.ParticleApplication;
 import com.gluonhq.particle.state.StateManager;
 import com.gluonhq.particle.view.ViewManager;
 import com.transport.DatabaseService;
-import com.transport.dao.AddressDao;
+import com.transport.dao.*;
+import com.transport.entity.AddressEntity;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -70,8 +71,20 @@ public class PrimaryController {
     public void addUser(String userName) {
         label.setText(resources.getString("label.text") + (userName.isEmpty() ? "" : ", " + userName) + "!");
         stateManager.setProperty("UserName", userName);
+    }
 
+    private void testInserts() {
         AddressDao addressDao = new AddressDao(databaseService);
+        CityDao cityDao = new CityDao(databaseService);
+        CourseDao courseDao = new CourseDao(databaseService);
+        CourseDriverDao courseDriverDao = new CourseDriverDao(databaseService);
+        DriverDao driverDao = new DriverDao(databaseService);
+        LuggageDao luggageDao = new LuggageDao(databaseService);
+        PersonalDataDao personalDataDao = new PersonalDataDao(databaseService);
+        RouteCityDao routeCityDao = new RouteCityDao(databaseService);
+        RouteDao routeDao = new RouteDao(databaseService);
+
+        AddressEntity addressEntity = new AddressEntity("test", "test", "test");
     }
 
     @ActionProxy(text = "Sign In")
