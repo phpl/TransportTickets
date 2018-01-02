@@ -14,7 +14,7 @@ public class CourseDao {
     private DatabaseService databaseService = null;
 
     private String insertNewCourse = "INSERT INTO " +
-            "transport.kurs (godzina_odjazdu, godzina_powrotu, maks_dostepna_ilosc_miejsc, trasa_pk) VALUES (?, ?, ?);";
+            "transport.kurs (godzina_odjazdu, godzina_powrotu, maks_dostepna_ilosc_miejsc, trasa_pk) VALUES (?, ?, ?, ?);";
 
     public void insertCourse(CourseEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
