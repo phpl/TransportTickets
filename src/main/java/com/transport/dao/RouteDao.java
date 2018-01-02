@@ -19,7 +19,7 @@ public class RouteDao {
             "transport.trasa (odleglosc) " +
             "VALUES (?);";
 
-    public void isnertRoute(RouteEntity newEntity) throws SQLException {
+    public void insertRoute(RouteEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
