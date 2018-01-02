@@ -28,8 +28,8 @@ public class CourseDao {
 
             preparedStatement.setObject(1, newEntity.getDepartureTime());
             preparedStatement.setObject(2, newEntity.getArrivalTime());
-            preparedStatement.setInt(1, newEntity.getMaxAvailableSeats());
-            preparedStatement.setInt(2, newEntity.getRouteId());
+            preparedStatement.setInt(3, newEntity.getMaxAvailableSeats());
+            preparedStatement.setInt(4, newEntity.getRouteId());
             preparedStatement.executeUpdate();
 
             log.info("End insertNewCourse");

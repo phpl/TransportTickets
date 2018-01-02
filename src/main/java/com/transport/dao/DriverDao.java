@@ -29,9 +29,9 @@ public class DriverDao {
 
             preparedStatement.setString(1, newEntity.getFirstName());
             preparedStatement.setString(2, newEntity.getLastName());
-            preparedStatement.setInt(1, newEntity.getPhoneNumber());
-            preparedStatement.setObject(1, newEntity.getPeriodOfMedicalCheckUpValidation());
-            preparedStatement.setObject(2, newEntity.getPeriodOfDriverLicenceValidation());
+            preparedStatement.setInt(3, newEntity.getPhoneNumber());
+            preparedStatement.setObject(4, newEntity.getPeriodOfMedicalCheckUpValidation());
+            preparedStatement.setObject(5, newEntity.getPeriodOfDriverLicenceValidation());
             preparedStatement.executeUpdate();
 
             log.info("End insertNewDriver");
