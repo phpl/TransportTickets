@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class RouteVechicleEntity {
+public class CourseVehicleEntity {
     @NonNull
     private int courseId;
     @NonNull
-    private int vechicleId;
+    private int vehicleId;
 }
