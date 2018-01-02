@@ -4,7 +4,7 @@ import com.gluonhq.particle.annotation.ParticleView;
 import com.gluonhq.particle.view.FXMLView;
 import com.transport.view.controllers.PrimaryController;
 
-@ParticleView(name = "primary", isDefault = true)
+@ParticleView(name = "primary", isDefault = false)
 public class PrimaryView extends FXMLView {
     
     public PrimaryView() {

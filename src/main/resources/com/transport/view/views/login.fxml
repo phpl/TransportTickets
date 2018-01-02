@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1"
+            fx:controller="com.transport.view.controllers.LoginController">
+    <children>
+        <GridPane layoutX="200.0" layoutY="155.0" prefHeight="300.0" prefWidth="499.0" AnchorPane.bottomAnchor="50.0"
+                  AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="224.66665649414062" minHeight="10.0" prefHeight="54.66667683919271"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="241.00000508626303" minHeight="10.0" prefHeight="120.33332316080728"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="145.33334350585938" minHeight="0.0" prefHeight="77.66667683919269"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="145.33334350585938" minHeight="10.0" prefHeight="84.66668701171875"
+                                vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <AnchorPane prefHeight="197.0" prefWidth="500.0" GridPane.rowIndex="1">
+                    <children>
+                        <GridPane layoutX="150.0" layoutY="63.0" prefHeight="68.0" prefWidth="500.0"
+                                  AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                  AnchorPane.topAnchor="0.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="166.66665649414062" minHeight="10.0"
+                                                prefHeight="75.33334350585938" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="95.33334350585938" minHeight="10.0"
+                                                prefHeight="30.666656494140625" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <Label alignment="BOTTOM_CENTER" prefHeight="143.0" prefWidth="250.0" text="Login:"
+                                       textAlignment="CENTER">
+                                    <font>
+                                        <Font size="36.0"/>
+                                    </font>
+                                </Label>
+                                <Label alignment="BOTTOM_CENTER" prefHeight="157.0" prefWidth="250.0" text="Hasło:"
+                                       textAlignment="CENTER" GridPane.columnIndex="1">
+                                    <font>
+                                        <Font size="36.0"/>
+                                    </font>
+                                </Label>
+                                <PasswordField fx:id="passwordInput" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets left="5.0" right="5.0"/>
+                                    </GridPane.margin>
+                                </PasswordField>
+                                <TextField fx:id="loginInput" GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets left="5.0" right="5.0"/>
+                                    </GridPane.margin>
+                                </TextField>
+                            </children>
+                        </GridPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                    <children>
+                        <Button fx:id="loginButton" layoutX="224.0" layoutY="38.0" mnemonicParsing="false"
+                                onAction="#loginAsUser" text="Zaloguj się!" AnchorPane.bottomAnchor="0.0"
+                                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
+                <Button fx:id="loginGuestButton" mnemonicParsing="false" onAction="#loginAsGuest" prefHeight="68.0"
+                        prefWidth="500.0" text="Zaloguj się jako gość!" GridPane.rowIndex="3"/>
+                <Label fx:id="loginLabel" alignment="CENTER" prefHeight="48.0" prefWidth="500.0" textFill="RED">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

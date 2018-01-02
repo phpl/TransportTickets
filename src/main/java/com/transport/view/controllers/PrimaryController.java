@@ -4,7 +4,7 @@ import com.gluonhq.particle.application.ParticleApplication;
 import com.gluonhq.particle.state.StateManager;
 import com.gluonhq.particle.view.ViewManager;
 import com.transport.DatabaseService;
-import com.transport.dao.*;
+import com.transport.dao.LuggageDao;
 import com.transport.entity.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -53,8 +53,6 @@ public class PrimaryController {
         actionSignin = ActionMap.action("signin");
 
         button.setOnAction(e -> viewManager.switchView("secondary"));
-
-
     }
 
     public void postInit() {
@@ -76,46 +74,74 @@ public class PrimaryController {
         stateManager.setProperty("UserName", userName);
 
         testInserts();
+        databaseService.closeConnection();
     }
 
     private void testInserts() {
         databaseService.connectToDatabase();
-        AddressDao addressDao = new AddressDao(databaseService);
-        UserDao
-        CityDao cityDao = new CityDao(databaseService);
-        CourseDao courseDao = new CourseDao(databaseService);
+//        AddressDao addressDao = new AddressDao(databaseService);
+//        UserDao userDao = new UserDao(databaseService);
+//        CourseVehicleDao courseVehicleDao = new CourseVehicleDao(databaseService);
+//        TicketDao ticketDao = new TicketDao(databaseService);
+//        VehicleDao vehicleDao = new VehicleDao(databaseService);
+//        CityDao cityDao = new CityDao(databaseService);
+//        CourseDao courseDao = new CourseDao(databaseService);
 //        CourseDriverDao courseDriverDao = new CourseDriverDao(databaseService);
 //        DriverDao driverDao = new DriverDao(databaseService);
         LuggageDao luggageDao = new LuggageDao(databaseService);
-        PersonalDataDao personalDataDao = new PersonalDataDao(databaseService);
-        RouteCityDao routeCityDao = new RouteCityDao(databaseService);
-        RouteDao routeDao = new RouteDao(databaseService);
+//        PersonalDataDao personalDataDao = new PersonalDataDao(databaseService);
+//        RouteCityDao routeCityDao = new RouteCityDao(databaseService);
+//        RouteDao routeDao = new RouteDao(databaseService);
 
         AddressEntity addressEntity = new AddressEntity("test", "test", "test");
+        UserEntity userEntity = new UserEntity("test", "test");
+        CourseVehicleEntity courseVehicleEntity = new CourseVehicleEntity(2, 1);
+        TicketEntity ticketEntity = new TicketEntity(1, 1.0, 2);
+        VehicleEntity vehicleEntity = new VehicleEntity("test", "test", 1, 1.0);
         CityEntity cityEntity = new CityEntity("test");
         CourseEntity courseEntity = new CourseEntity(LocalTime.of(1, 0), LocalTime.of(1, 1), 1, 1);
         CourseDriverEntity courseDriverEntity = new CourseDriverEntity(1, 2);
         DriverEntity driverEntity = new DriverEntity("test", "test", 1, LocalDate.now(), LocalDate.now());
-        LuggageEntity luggageEntity = new LuggageEntity(1, 1, 1);
+        LuggageEntity luggageEntity = new LuggageEntity(3, 1, 1);
         PersonalDataEntity personalDataEntity = new PersonalDataEntity(1, "test", "test", 1, 1);
-        RouteCityEntity routeCityEntity = new RouteCityEntity(1, 7);
+        RouteCityEntity routeCityEntity = new RouteCityEntity(1, 1);
         RouteEntity routeEntity = new RouteEntity(1);
 
-        try {
-            addressDao.insertAddress(addressEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            cityDao.insertCity(cityEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            courseDao.insertCourse(courseEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            addressDao.insertAddress(addressEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            userDao.insertUser(userEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            courseVehicleDao.insertCourseVehicle(courseVehicleEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            ticketDao.insertTicket(ticketEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            vehicleDao.insertVechicle(vehicleEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            cityDao.insertCity(cityEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            courseDao.insertCourse(courseEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 //        try {
 //            courseDriverDao.insertCourseDriver(courseDriverEntity);
 //        } catch (SQLException e) {
@@ -131,30 +157,31 @@ public class PrimaryController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            personalDataDao.insertPersonalData(personalDataEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            routeCityDao.insertRouteCity(routeCityEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            routeDao.insertRoute(routeEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            personalDataDao.insertPersonalData(personalDataEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            routeCityDao.insertRouteCity(routeCityEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            routeDao.insertRoute(routeEntity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
-    @ActionProxy(text = "Sign In")
+    @ActionProxy(text = "Zaloguj sie")
     private void signin() {
-        TextInputDialog input = new TextInputDialog(stateManager.getProperty("UserName").orElse("").toString());
+        TextInputDialog input = new TextInputDialog(stateManager.getProperty("Uzytkownik").orElse("").toString());
         input.setTitle("UserEntity name");
         input.setHeaderText(null);
         input.setContentText("Input your name:");
         input.showAndWait().ifPresent(this::addUser);
     }
+
 
 }
