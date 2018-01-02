@@ -19,7 +19,7 @@ public class RouteCityDao {
             "transport.trasa_miasto (trasa_pk, miasto_pk) " +
             "VALUES (?, ?);";
 
-    public void isnertRouteCity(RouteCityEntity newEntity) throws SQLException {
+    public void insertRouteCity(RouteCityEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
