@@ -18,7 +18,7 @@ public class CityDao {
     public void insertCity(CityEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
-        databaseService.setAutoCommit(false);
+        databaseService.setAutoCommit(true);
     }
 
     private void executeInsert(CityEntity newEntity) {
