@@ -37,10 +37,6 @@ public class InitController {
         }
     }
 
-    public void dispose() {
-
-    }
-
     @FXML
     void openLogin(ActionEvent event) {
         viewManager.switchView("login");
@@ -48,7 +44,6 @@ public class InitController {
 
     @FXML
     void openRegister(ActionEvent event) {
-
+        viewManager.switchView("register");
     }
-
 }

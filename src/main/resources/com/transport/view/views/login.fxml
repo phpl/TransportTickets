@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -20,6 +19,8 @@
                 <RowConstraints maxHeight="241.00000508626303" minHeight="10.0" prefHeight="120.33332316080728"
                                 vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="145.33334350585938" minHeight="0.0" prefHeight="77.66667683919269"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="145.33334350585938" minHeight="10.0" prefHeight="84.66668701171875"
                                 vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="145.33334350585938" minHeight="10.0" prefHeight="84.66668701171875"
                                 vgrow="SOMETIMES"/>
@@ -70,17 +71,19 @@
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                     <children>
                         <Button fx:id="loginButton" layoutX="224.0" layoutY="38.0" mnemonicParsing="false"
-                                onAction="#loginAsUser" text="Zaloguj się!" AnchorPane.bottomAnchor="0.0"
+                                onAction="#loginAsUser" text="Zaloguj się" AnchorPane.bottomAnchor="0.0"
                                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </children>
                 </AnchorPane>
                 <Button fx:id="loginGuestButton" mnemonicParsing="false" onAction="#loginAsGuest" prefHeight="68.0"
-                        prefWidth="500.0" text="Zaloguj się jako gość!" GridPane.rowIndex="3"/>
+                        prefWidth="500.0" text="Zaloguj się jako gość" GridPane.rowIndex="3"/>
                 <Label fx:id="loginLabel" alignment="CENTER" prefHeight="48.0" prefWidth="500.0" textFill="RED">
                     <font>
                         <Font size="14.0"/>
                     </font>
                 </Label>
+                <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" prefHeight="71.0"
+                        prefWidth="500.0" text="Wróć" GridPane.rowIndex="4"/>
             </children>
         </GridPane>
     </children>

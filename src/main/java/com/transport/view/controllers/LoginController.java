@@ -1,6 +1,7 @@
 package com.transport.view.controllers;
 
 
+import com.gluonhq.particle.view.ViewManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,9 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import javax.inject.Inject;
+
 public class LoginController {
 
-
+    @Inject
+    private ViewManager viewManager;
     @FXML
     private PasswordField passwordInput;
 
@@ -26,11 +30,12 @@ public class LoginController {
     @FXML
     private Label loginLabel;
 
-    public void postInit() {
-    }
+    @FXML
+    private Button backButton;
 
-    public void dispose() {
-
+    @FXML
+    void goBack(ActionEvent event) {
+        viewManager.switchView("init");
     }
 
     @FXML

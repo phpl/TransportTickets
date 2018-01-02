@@ -15,10 +15,4 @@ public class InitView extends FXMLView {
     public void start() {
         ((InitController) getController()).postInit();
     }
-
-    @Override
-    public void stop() {
-        ((InitController) getController()).dispose();
-    }
-
 }
