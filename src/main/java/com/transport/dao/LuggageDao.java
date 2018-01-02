@@ -17,7 +17,7 @@ public class LuggageDao {
             "transport.bagaz (bilet_pk, waga, uzytkownik_pk) " +
             "VALUES (?, ?, ?);";
 
-    public void insertDriver(LuggageEntity newEntity) throws SQLException {
+    public void insertLuggage(LuggageEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
