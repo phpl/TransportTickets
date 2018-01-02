@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.DriverEntity;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -11,7 +12,8 @@ import java.sql.SQLException;
 @Log4j
 @RequiredArgsConstructor
 public class DriverDao {
-    private DatabaseService databaseService = null;
+    @NonNull
+    private DatabaseService databaseService;
 
     private String insertNewDriver = "INSERT INTO " +
             "transport.kierowca (imie, nazwisko, numer_telefonu, termin_waznosci_badan, termin_waznosci_prawa_jazdy) " +

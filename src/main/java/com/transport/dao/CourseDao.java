@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CourseEntity;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -11,7 +12,8 @@ import java.sql.SQLException;
 @Log4j
 @RequiredArgsConstructor
 public class CourseDao {
-    private DatabaseService databaseService = null;
+    @NonNull
+    private DatabaseService databaseService;
 
     private String insertNewCourse = "INSERT INTO " +
             "transport.kurs (godzina_odjazdu, godzina_powrotu, maks_dostepna_ilosc_miejsc, trasa_pk) VALUES (?, ?, ?, ?);";

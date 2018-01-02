@@ -4,6 +4,7 @@ import com.gluonhq.particle.application.ParticleApplication;
 import com.gluonhq.particle.state.StateManager;
 import com.gluonhq.particle.view.ViewManager;
 import com.transport.DatabaseService;
+import com.transport.dao.AddressDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -69,6 +70,8 @@ public class PrimaryController {
     public void addUser(String userName) {
         label.setText(resources.getString("label.text") + (userName.isEmpty() ? "" : ", " + userName) + "!");
         stateManager.setProperty("UserName", userName);
+
+        AddressDao addressDao = new AddressDao(databaseService);
     }
 
     @ActionProxy(text = "Sign In")
