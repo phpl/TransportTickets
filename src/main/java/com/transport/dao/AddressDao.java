@@ -23,14 +23,14 @@ public class AddressDao {
 
     private void executeInsert(AddressEntity newEntity) {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewAddress)) {
-            log.info("Begin insertNewCity");
+            log.info("Begin insertNewAddress");
 
             preparedStatement.setString(1, newEntity.getCity());
             preparedStatement.setString(2, newEntity.getStreet());
             preparedStatement.setString(3, newEntity.getHouseNumber());
             preparedStatement.executeUpdate();
 
-            log.info("End insertNewCity");
+            log.info("End insertNewAddress");
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
