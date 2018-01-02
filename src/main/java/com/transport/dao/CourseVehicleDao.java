@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 @Log4j
 @RequiredArgsConstructor
-public class CourseVechicleDao {
+public class CourseVehicleDao {
     @NonNull
     private DatabaseService databaseService;
 
