@@ -19,7 +19,7 @@ public class CourseVehicleDao {
             "transport.kurs_pojazd (kurs_pk, pojazd_pk) " +
             "VALUES (?,?);";
 
-    public void insertRouteVehicle(CourseVehicleEntity newEntity) throws SQLException {
+    public void insertCourseVehicle(CourseVehicleEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
