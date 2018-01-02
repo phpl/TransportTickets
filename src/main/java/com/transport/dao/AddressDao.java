@@ -13,16 +13,24 @@ import java.sql.SQLException;
 public class AddressDao {
     private DatabaseService databaseService = null;
 
+    private String insertNewAddress = "INSERT INTO transport.adres (miasto, ulica, numer_domu) VALUES (?, ?, ?);";
+
     public void insertAddress(AddressEntity newEntity) throws SQLException {
-        String insertNewAddress = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
+        databaseService.setAutoCommit(false);
+        executeInsert(newEntity);
+        databaseService.setAutoCommit(true);
+    }
 
+    private void executeInsert(AddressEntity newEntity) {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewAddress)) {
-            log.info("Begin insertNewAddress");
+            log.info("Begin insertNewCity");
 
-//            preparedStatement.setString(1, newEntity.getName());
+            preparedStatement.setString(1, newEntity.getCity());
+            preparedStatement.setString(2, newEntity.getStreet());
+            preparedStatement.setString(3, newEntity.getHouseNumber());
             preparedStatement.executeUpdate();
 
-            log.info("End insertNewAddress");
+            log.info("End insertNewCity");
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
