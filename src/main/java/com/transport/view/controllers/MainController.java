@@ -34,12 +34,12 @@ public class MainController {
 
     @FXML
     void openDrivers(ActionEvent event) {
-
+        viewManager.switchView("drivers");
     }
 
     @FXML
     void openPassengers(ActionEvent event) {
-
+        viewManager.switchView("passengers");
     }
 
     @FXML
@@ -49,7 +49,7 @@ public class MainController {
 
     @FXML
     void openUsers(ActionEvent event) {
-
+        viewManager.switchView("users");
     }
 
 }

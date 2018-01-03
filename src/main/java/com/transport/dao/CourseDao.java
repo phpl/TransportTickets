@@ -2,11 +2,15 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CourseEntity;
+import com.transport.view.lists.ScheduleList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Log4j
@@ -15,8 +19,12 @@ public class CourseDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewCourse = "INSERT INTO " +
-            "transport.kurs (godzina_odjazdu, godzina_powrotu, maks_dostepna_ilosc_miejsc, trasa_pk) VALUES (?, ?, ?, ?);";
+    private final String insertNewCourse =
+            "INSERT INTO " +
+                    "transport.kurs (godzina_odjazdu, godzina_powrotu, maks_dostepna_ilosc_miejsc, trasa_pk) " +
+                    "VALUES (?, ?, ?, ?);";
+
+    private final String selectFromCourseView = "SELECT * FROM transport.trasy_view";
 
     public void insertCourse(CourseEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
@@ -40,4 +48,42 @@ public class CourseDao {
             databaseService.rollbackTransaction();
         }
     }
+
+    public ObservableList<ScheduleList> selectAllCourses() {
+        ResultSet resultSet;
+        ObservableList<ScheduleList> data = FXCollections.observableArrayList();
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromCourseView)) {
+            resultSet = preparedStatement.executeQuery();
+            data = retrieveData(resultSet);
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        return data;
+    }
+
+    private ObservableList<ScheduleList> retrieveData(ResultSet resultSet) throws SQLException {
+        ObservableList<ScheduleList> data = FXCollections.observableArrayList();
+        ScheduleList schedules;
+
+        while (resultSet.next()) {
+            schedules = new ScheduleList(
+                    resultSet.getInt("kurs_pk"),
+                    resultSet.getInt("trasa_pk"),
+                    resultSet.getInt("miasto_pk"),
+                    resultSet.getString("miasto"),
+                    resultSet.getTime("godzina_odjazdu").toLocalTime(),
+                    resultSet.getInt("wolne_miejsca"),
+                    resultSet.getInt("km"),
+                    resultSet.getInt("cena_biletu")
+            );
+            data.add(schedules);
+        }
+
+        return data;
+    }
 }
+
