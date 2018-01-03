@@ -117,7 +117,7 @@ public class ScheduleController {
                                 {
                                     ScheduleList schedule = getTableView().getItems().get(getIndex());
 //TODO add missing delete methods
-//                                    courseDriverDao.removeAssociation(schedule.getCourseId());
+                                    courseDriverDao.removeAssociation(schedule.getCourseId());
 //                                    courseVehicleDao.removeAssociation(schedule.getCourseId());
 //                                    ticketDao.removeTicket(schedule.getCourseId());
 //                                    courseDao.removeCourse(schedule.getCourseId());

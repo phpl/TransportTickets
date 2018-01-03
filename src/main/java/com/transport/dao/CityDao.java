@@ -14,7 +14,8 @@ import java.sql.SQLException;
 public class CityDao {
     @NonNull
     private DatabaseService databaseService;
-    private String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
+
+    private final String insertNewCity = "INSERT INTO transport.miasto (nazwa) VALUES (?);";
 
     public void insertCity(CityEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);

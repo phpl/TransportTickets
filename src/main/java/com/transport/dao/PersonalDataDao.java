@@ -15,7 +15,7 @@ public class PersonalDataDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewPersonalData = "INSERT INTO " +
+    private final String insertNewPersonalData = "INSERT INTO " +
             "transport.dane_osobowe (uzytkownik_pk, imie, nazwisko, numer_telefonu, adres_pk) " +
             "VALUES (?, ?, ?, ?, ?);";
 

@@ -15,7 +15,7 @@ public class CourseVehicleDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewCourseVechicle = "INSERT INTO " +
+    private final String insertNewCourseVechicle = "INSERT INTO " +
             "transport.kurs_pojazd (kurs_pk, pojazd_pk) " +
             "VALUES (?,?);";
 

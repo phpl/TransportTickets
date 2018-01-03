@@ -15,7 +15,7 @@ public class VehicleDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewVechicle = "INSERT INTO " +
+    private final String insertNewVechicle = "INSERT INTO " +
             "transport.pojazd (model, numer_rejestracji, ilosc_miejsc, dopuszczalny_bagaz) " +
             "VALUES (?, ?, ?, ?);";
 

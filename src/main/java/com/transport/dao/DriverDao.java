@@ -15,7 +15,7 @@ public class DriverDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewDriver = "INSERT INTO " +
+    private final String insertNewDriver = "INSERT INTO " +
             "transport.kierowca (imie, nazwisko, numer_telefonu, termin_waznosci_badan, termin_waznosci_prawa_jazdy) " +
             "VALUES (?, ?, ?, ?, ?);";
 

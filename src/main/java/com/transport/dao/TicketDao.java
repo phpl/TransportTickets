@@ -15,7 +15,7 @@ public class TicketDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String isnertNewTicket = "INSERT INTO " +
+    private final String isnertNewTicket = "INSERT INTO " +
             "transport.bilet (uzytkownik_pk, cena, kurs_pk) " +
             "VALUES (?, ?, ?);";
 

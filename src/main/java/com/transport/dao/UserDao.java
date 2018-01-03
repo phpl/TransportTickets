@@ -15,7 +15,7 @@ public class UserDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewUser = "INSERT INTO " +
+    private final String insertNewUser = "INSERT INTO " +
             "transport.uzytkownik (login, haslo) " +
             "VALUES (?, ?);";
 

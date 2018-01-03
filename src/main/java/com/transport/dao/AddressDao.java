@@ -15,7 +15,7 @@ public class AddressDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewAddress = "INSERT INTO transport.adres (miasto, ulica, numer_domu) VALUES (?, ?, ?);";
+    private final String insertNewAddress = "INSERT INTO transport.adres (miasto, ulica, numer_domu) VALUES (?, ?, ?);";
 
     public void insertAddress(AddressEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);

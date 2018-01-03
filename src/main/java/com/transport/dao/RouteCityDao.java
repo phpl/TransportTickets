@@ -15,7 +15,7 @@ public class RouteCityDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewRouteCity = "INSERT INTO " +
+    private final String insertNewRouteCity = "INSERT INTO " +
             "transport.trasa_miasto (trasa_pk, miasto_pk) " +
             "VALUES (?, ?);";
 

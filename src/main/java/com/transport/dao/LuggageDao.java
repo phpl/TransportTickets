@@ -15,7 +15,7 @@ public class LuggageDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewDriver = "INSERT INTO " +
+    private final String insertNewDriver = "INSERT INTO " +
             "transport.bagaz (bilet_pk, waga, uzytkownik_pk) " +
             "VALUES (?, ?, ?);";
 

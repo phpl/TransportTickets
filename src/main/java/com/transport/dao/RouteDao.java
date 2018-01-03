@@ -15,7 +15,7 @@ public class RouteDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewRoute = "INSERT INTO " +
+    private final String insertNewRoute = "INSERT INTO " +
             "transport.trasa (odleglosc) " +
             "VALUES (?);";
 
