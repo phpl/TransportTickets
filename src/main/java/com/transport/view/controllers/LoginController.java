@@ -15,6 +15,7 @@ public class LoginController {
 
     @Inject
     private ViewManager viewManager;
+
     @FXML
     private PasswordField passwordInput;
 
@@ -40,12 +41,12 @@ public class LoginController {
 
     @FXML
     void loginAsGuest(ActionEvent event) {
-
+        viewManager.switchView("main");
     }
 
     @FXML
     void loginAsUser(ActionEvent event) {
-
+        viewManager.switchView("main");
     }
 
 
