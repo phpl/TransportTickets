@@ -26,6 +26,9 @@ public class CourseDao {
 
     private final String selectFromCourseView = "SELECT * FROM transport.trasy_view";
 
+    private final String deleteCourse = "DELETE FROM transport.kurs WHERE kurs_pk = ?;";
+
+
     public void insertCourse(CourseEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
@@ -53,6 +56,7 @@ public class CourseDao {
         ResultSet resultSet;
         ObservableList<ScheduleList> data = FXCollections.observableArrayList();
 
+        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromCourseView)) {
             resultSet = preparedStatement.executeQuery();
             data = retrieveData(resultSet);
@@ -61,6 +65,8 @@ public class CourseDao {
             e.printStackTrace();
             databaseService.rollbackTransaction();
         }
+
+        databaseService.setAutoCommit(true);
 
         return data;
     }
@@ -84,6 +90,20 @@ public class CourseDao {
         }
 
         return data;
+    }
+
+    public void removeCourse(int courseId) {
+        databaseService.setAutoCommit(false);
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteCourse)) {
+            preparedStatement.setInt(1, courseId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
     }
 }
 

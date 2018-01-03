@@ -19,6 +19,8 @@ public class TicketDao {
             "transport.bilet (uzytkownik_pk, cena, kurs_pk) " +
             "VALUES (?, ?, ?);";
 
+    private final String deleteTicket = "DELETE FROM transport.bilet WHERE kurs_pk = ?;";
+
     public void insertTicket(TicketEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
@@ -39,5 +41,19 @@ public class TicketDao {
             e.printStackTrace();
             databaseService.rollbackTransaction();
         }
+    }
+
+    public void removeTicket(int courseId) {
+        databaseService.setAutoCommit(false);
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteTicket)) {
+            preparedStatement.setInt(1, courseId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
     }
 }

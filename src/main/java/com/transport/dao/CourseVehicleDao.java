@@ -19,6 +19,8 @@ public class CourseVehicleDao {
             "transport.kurs_pojazd (kurs_pk, pojazd_pk) " +
             "VALUES (?,?);";
 
+    private final String deleteAssociation = "DELETE FROM transport.kurs_pojazd WHERE kurs_pk = ?;";
+
     public void insertCourseVehicle(CourseVehicleEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
@@ -38,5 +40,19 @@ public class CourseVehicleDao {
             e.printStackTrace();
             databaseService.rollbackTransaction();
         }
+    }
+
+    public void removeAssociation(int courseId) {
+        databaseService.setAutoCommit(false);
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteAssociation)) {
+            preparedStatement.setInt(1, courseId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
     }
 }

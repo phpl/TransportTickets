@@ -2,10 +2,7 @@ package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
 import com.transport.DatabaseService;
-import com.transport.dao.CourseDao;
-import com.transport.dao.CourseDriverDao;
-import com.transport.dao.CourseVehicleDao;
-import com.transport.dao.TicketDao;
+import com.transport.dao.*;
 import com.transport.view.lists.ScheduleList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,6 +47,7 @@ public class ScheduleController {
     private CourseDriverDao courseDriverDao;
     private CourseVehicleDao courseVehicleDao;
     private TicketDao ticketDao;
+    private LuggageDao luggageDao;
 
     private ObservableList<ScheduleList> data = null;
 
@@ -59,6 +57,7 @@ public class ScheduleController {
         courseDriverDao = new CourseDriverDao(databaseService);
         courseVehicleDao = new CourseVehicleDao(databaseService);
         ticketDao = new TicketDao(databaseService);
+        luggageDao = new LuggageDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
     }
@@ -116,9 +115,10 @@ public class ScheduleController {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
                                     ScheduleList schedule = getTableView().getItems().get(getIndex());
-//TODO add missing delete methods
-                                    courseDriverDao.removeAssociation(schedule.getCourseId());
+//                                    courseDriverDao.removeAssociation(schedule.getCourseId());
 //                                    courseVehicleDao.removeAssociation(schedule.getCourseId());
+//                                    TODO add trigger deleting all luggages for specific course
+//                                    luggageDao.removeLuggage(schedule.getCourseId());
 //                                    ticketDao.removeTicket(schedule.getCourseId());
 //                                    courseDao.removeCourse(schedule.getCourseId());
                                     data.remove(getIndex());

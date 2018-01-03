@@ -15,8 +15,10 @@ public class CourseDriverDao {
     @NonNull
     private DatabaseService databaseService;
 
-    private String insertNewCourseDriver = "INSERT INTO " +
+    private final String insertNewCourseDriver = "INSERT INTO " +
             "transport.kurs_kierowca (kierowca_pk, kurs_pk) VALUES (?, ?);";
+
+    private final String deleteAssociation = "DELETE FROM transport.kurs_kierowca WHERE kurs_pk = ?;";
 
     public void insertCourseDriver(CourseDriverEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
@@ -37,5 +39,19 @@ public class CourseDriverDao {
             e.printStackTrace();
             databaseService.rollbackTransaction();
         }
+    }
+
+    public void removeAssociation(int courseId) {
+        databaseService.setAutoCommit(false);
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteAssociation)) {
+            preparedStatement.setInt(1, courseId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
     }
 }
