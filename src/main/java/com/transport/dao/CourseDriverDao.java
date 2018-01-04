@@ -2,23 +2,22 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CourseDriverEntity;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class CourseDriverDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class CourseDriverDao extends BasicDao {
 
     private final String insertNewCourseDriver = "INSERT INTO " +
             "transport.kurs_kierowca (kierowca_pk, kurs_pk) VALUES (?, ?);";
 
     private final String deleteAssociation = "DELETE FROM transport.kurs_kierowca WHERE kurs_pk = ?;";
+
+    public CourseDriverDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertCourseDriver(CourseDriverEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
@@ -42,16 +41,6 @@ public class CourseDriverDao {
     }
 
     public void removeAssociation(int courseId) {
-        databaseService.setAutoCommit(false);
-
-        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteAssociation)) {
-            preparedStatement.setInt(1, courseId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-        }
-
-        databaseService.setAutoCommit(true);
+        removeFromDatabase(courseId, deleteAssociation);
     }
 }

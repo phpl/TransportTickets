@@ -2,22 +2,21 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.PersonalDataEntity;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class PersonalDataDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class PersonalDataDao extends BasicDao {
 
     private final String insertNewPersonalData = "INSERT INTO " +
             "transport.dane_osobowe (uzytkownik_pk, imie, nazwisko, numer_telefonu, adres_pk) " +
             "VALUES (?, ?, ?, ?, ?);";
+
+    public PersonalDataDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertPersonalData(PersonalDataEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);

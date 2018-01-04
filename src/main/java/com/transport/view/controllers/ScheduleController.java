@@ -139,8 +139,7 @@ public class ScheduleController {
 
     @FXML
     void addRecord(ActionEvent event) {
-        clearTable();
-        viewManager.switchView("scheduleForm");
+
     }
 
     @FXML

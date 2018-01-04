@@ -5,8 +5,6 @@ import com.transport.entity.CourseEntity;
 import com.transport.view.lists.ScheduleList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -14,10 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class CourseDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class CourseDao extends BasicDao {
 
     private final String insertNewCourse =
             "INSERT INTO " +
@@ -28,6 +23,9 @@ public class CourseDao {
 
     private final String deleteCourse = "DELETE FROM transport.kurs WHERE kurs_pk = ?;";
 
+    public CourseDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertCourse(CourseEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
@@ -93,17 +91,7 @@ public class CourseDao {
     }
 
     public void removeCourse(int courseId) {
-        databaseService.setAutoCommit(false);
-
-        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteCourse)) {
-            preparedStatement.setInt(1, courseId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-        }
-
-        databaseService.setAutoCommit(true);
+        removeFromDatabase(courseId, deleteCourse);
     }
 }
 

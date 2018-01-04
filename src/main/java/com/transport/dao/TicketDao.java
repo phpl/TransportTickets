@@ -2,24 +2,23 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.TicketEntity;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class TicketDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class TicketDao extends BasicDao {
 
     private final String isnertNewTicket = "INSERT INTO " +
             "transport.bilet (uzytkownik_pk, cena, kurs_pk) " +
             "VALUES (?, ?, ?);";
 
     private final String deleteTicket = "DELETE FROM transport.bilet WHERE kurs_pk = ?;";
+
+    public TicketDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertTicket(TicketEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);
@@ -43,17 +42,7 @@ public class TicketDao {
         }
     }
 
-    public void removeTicket(int courseId) {
-        databaseService.setAutoCommit(false);
-
-        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteTicket)) {
-            preparedStatement.setInt(1, courseId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-        }
-
-        databaseService.setAutoCommit(true);
+    public void removeAssociation(int courseId) {
+        removeFromDatabase(courseId, deleteTicket);
     }
 }

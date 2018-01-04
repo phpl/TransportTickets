@@ -2,22 +2,21 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.DriverEntity;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class DriverDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class DriverDao extends BasicDao {
 
     private final String insertNewDriver = "INSERT INTO " +
             "transport.kierowca (imie, nazwisko, numer_telefonu, termin_waznosci_badan, termin_waznosci_prawa_jazdy) " +
             "VALUES (?, ?, ?, ?, ?);";
+
+    public DriverDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertDriver(DriverEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);

@@ -2,22 +2,21 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.RouteEntity;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class RouteDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class RouteDao extends BasicDao {
 
     private final String insertNewRoute = "INSERT INTO " +
             "transport.trasa (odleglosc) " +
             "VALUES (?);";
+
+    public RouteDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertRoute(RouteEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);

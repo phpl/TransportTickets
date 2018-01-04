@@ -2,22 +2,21 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.LuggageEntity;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class LuggageDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class LuggageDao extends BasicDao {
 
     private final String insertNewDriver = "INSERT INTO " +
             "transport.bagaz (bilet_pk, waga, uzytkownik_pk) " +
             "VALUES (?, ?, ?);";
+
+    public LuggageDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertLuggage(LuggageEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);

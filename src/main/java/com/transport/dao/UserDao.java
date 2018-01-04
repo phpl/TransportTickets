@@ -2,22 +2,21 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.UserEntity;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Log4j
-@RequiredArgsConstructor
-public class UserDao {
-    @NonNull
-    private DatabaseService databaseService;
+public class UserDao extends BasicDao {
 
     private final String insertNewUser = "INSERT INTO " +
             "transport.uzytkownik (login, haslo) " +
             "VALUES (?, ?);";
+
+    public UserDao(DatabaseService databaseService) {
+        super(databaseService);
+    }
 
     public void insertUser(UserEntity newEntity) throws SQLException {
         databaseService.setAutoCommit(false);

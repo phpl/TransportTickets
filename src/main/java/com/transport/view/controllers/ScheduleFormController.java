@@ -66,7 +66,7 @@ public class ScheduleFormController {
 
     @FXML
     void addCourse(ActionEvent event) {
-
+        //kurs, trasa, kierowca_trasa, pojazd
     }
 
     @FXML
