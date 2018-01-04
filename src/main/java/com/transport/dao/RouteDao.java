@@ -5,6 +5,7 @@ import com.transport.entity.RouteEntity;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Log4j
@@ -13,6 +14,9 @@ public class RouteDao extends BasicDao {
     private final String insertNewRoute = "INSERT INTO " +
             "transport.trasa (odleglosc, miasto_poczatkowe, miasto_koncowe) " +
             "VALUES (?,?,?);";
+
+    private final String selectIdFromRoute = "SELECT trasa.trasa_pk FROM transport.trasa" +
+            " WHERE trasa.odleglosc = ? AND trasa.miasto_poczatkowe = ? AND trasa.miasto_koncowe = ?;";
 
     public RouteDao(DatabaseService databaseService) {
         super(databaseService);
@@ -38,5 +42,35 @@ public class RouteDao extends BasicDao {
             e.printStackTrace();
             databaseService.rollbackTransaction();
         }
+    }
+
+    public int getRouteIdOfItem(RouteEntity entityToFind) {
+        ResultSet resultSet;
+
+        int idOfElement = -1;
+
+        databaseService.setAutoCommit(false);
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromRoute)) {
+            resultSet = preparedStatement.executeQuery();
+            idOfElement = retrieveId(resultSet);
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
+
+        return idOfElement;
+    }
+
+    private int retrieveId(ResultSet resultSet) throws SQLException {
+        int idOfElement = -1;
+
+        if (resultSet.next()) {
+            idOfElement = resultSet.getInt(0);
+        }
+
+        return idOfElement;
     }
 }
