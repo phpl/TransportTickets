@@ -139,7 +139,7 @@ public class ScheduleController {
 
     @FXML
     void addRecord(ActionEvent event) {
-
+        viewManager.switchView("scheduleForm");
     }
 
     @FXML
