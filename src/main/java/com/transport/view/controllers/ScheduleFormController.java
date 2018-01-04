@@ -1,8 +1,10 @@
 package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
+import com.jfoenix.controls.JFXTimePicker;
 import com.transport.DatabaseService;
 import com.transport.dao.*;
+import com.transport.entity.CourseEntity;
 import com.transport.entity.RouteEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,10 +30,10 @@ public class ScheduleFormController {
     private TextField distanceInput;
 
     @FXML
-    private TextField departureInput;
+    private JFXTimePicker departureInput;
 
     @FXML
-    private TextField arrivalInput;
+    private JFXTimePicker arrivalInput;
 
     @FXML
     private TextField phoneNumberInput;
@@ -67,11 +69,23 @@ public class ScheduleFormController {
 
     @FXML
     void addCourse(ActionEvent event) {
-        RouteEntity routeEntity = getRouteEntityFromForm();
+        RouteEntity routeEntity = createRouteEntity();
 
         databaseService.setAutoCommit(false);
         try {
             routeDao.insertRoute(routeEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
+        }
+        databaseService.setAutoCommit(true);
+
+
+        CourseEntity courseEntity = createCourseEntity(routeEntity);
+        databaseService.setAutoCommit(false);
+        try {
+            courseDao.insertCourse(courseEntity);
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
@@ -86,12 +100,18 @@ public class ScheduleFormController {
         //kurs, trasa, kierowca_trasa, pojazd
     }
 
-    private RouteEntity getRouteEntityFromForm() {
+    private RouteEntity createRouteEntity() {
         int distance = Integer.parseInt(distanceInput.getCharacters().toString());
         String beginCity = beginCityInput.getText();
         String endCity = endCityInput.getText();
 
         return new RouteEntity(distance, beginCity, endCity);
+    }
+
+    private CourseEntity createCourseEntity(RouteEntity routeEntity) {
+
+        int routeId = routeDao.getRouteIdOfItem(routeEntity);
+        return new CourseEntity(departureInput.getValue(), arrivalInput.getValue(), 3, routeId);
     }
 
     @FXML

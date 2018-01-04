@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.transport.view.controllers.ScheduleFormController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -37,8 +38,6 @@
                             </rowConstraints>
                             <children>
                                 <TextField fx:id="beginCityInput" promptText="Miasto początkowe"/>
-                                <TextField fx:id="departureInput" promptText="Godzina odjazdu" GridPane.rowIndex="3"/>
-                                <TextField fx:id="arrivalInput" promptText="Godzina powrotu" GridPane.rowIndex="4"/>
                                 <TextField fx:id="phoneNumberInput" promptText="Numer telefonu kierowcy"
                                            GridPane.rowIndex="5"/>
                                 <TextField fx:id="licencePlateInput" promptText="Numer rejestracyjny pojazdu"
@@ -46,6 +45,22 @@
                                 <TextField fx:id="endCityInput" promptText="Miasto końcowe" GridPane.rowIndex="1"/>
                                 <TextField fx:id="distanceInput" promptText="Odległość między miastami"
                                            GridPane.rowIndex="2"/>
+                                <AnchorPane GridPane.rowIndex="3">
+                                    <children>
+                                        <JFXTimePicker fx:id="departureInput" prefHeight="25.0" prefWidth="346.0"
+                                                       promptText="Godzina ojdazdu" AnchorPane.bottomAnchor="0.0"
+                                                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                       AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane GridPane.rowIndex="4">
+                                    <children>
+                                        <JFXTimePicker fx:id="arrivalInput" prefHeight="25.0" prefWidth="354.0"
+                                                       promptText="Godzina powrotu" AnchorPane.bottomAnchor="0.0"
+                                                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                       AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
                             </children>
                         </GridPane>
                         <AnchorPane GridPane.rowIndex="1">

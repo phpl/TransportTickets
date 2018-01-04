@@ -51,6 +51,10 @@ public class RouteDao extends BasicDao {
 
         databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromRoute)) {
+            preparedStatement.setInt(1, entityToFind.getDistance());
+            preparedStatement.setString(2, entityToFind.getBeginCity());
+            preparedStatement.setString(3, entityToFind.getEndCity());
+
             resultSet = preparedStatement.executeQuery();
             idOfElement = retrieveId(resultSet);
         } catch (
@@ -68,7 +72,7 @@ public class RouteDao extends BasicDao {
         int idOfElement = -1;
 
         if (resultSet.next()) {
-            idOfElement = resultSet.getInt(0);
+            idOfElement = resultSet.getInt(1);
         }
 
         return idOfElement;
