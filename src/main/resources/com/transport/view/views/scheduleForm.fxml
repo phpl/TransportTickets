@@ -37,15 +37,15 @@
                             </rowConstraints>
                             <children>
                                 <TextField fx:id="beginCityInput" promptText="Miasto początkowe"/>
-                                <PasswordField fx:id="endCityInput" promptText="Miasto końcowe" GridPane.rowIndex="1"/>
-                                <PasswordField fx:id="distanceInput" promptText="Odległość między miastami"
-                                               GridPane.rowIndex="2"/>
                                 <TextField fx:id="departureInput" promptText="Godzina odjazdu" GridPane.rowIndex="3"/>
                                 <TextField fx:id="arrivalInput" promptText="Godzina powrotu" GridPane.rowIndex="4"/>
                                 <TextField fx:id="phoneNumberInput" promptText="Numer telefonu kierowcy"
                                            GridPane.rowIndex="5"/>
                                 <TextField fx:id="licencePlateInput" promptText="Numer rejestracyjny pojazdu"
                                            GridPane.rowIndex="6"/>
+                                <TextField fx:id="endCityInput" promptText="Miasto końcowe" GridPane.rowIndex="1"/>
+                                <TextField fx:id="distanceInput" promptText="Odległość między miastami"
+                                           GridPane.rowIndex="2"/>
                             </children>
                         </GridPane>
                         <AnchorPane GridPane.rowIndex="1">

@@ -3,14 +3,15 @@ package com.transport.view.controllers;
 import com.gluonhq.particle.view.ViewManager;
 import com.transport.DatabaseService;
 import com.transport.dao.*;
+import com.transport.entity.RouteEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 
 public class ScheduleFormController {
 
@@ -21,10 +22,10 @@ public class ScheduleFormController {
     private TextField beginCityInput;
 
     @FXML
-    private PasswordField endCityInput;
+    private TextField endCityInput;
 
     @FXML
-    private PasswordField distanceInput;
+    private TextField distanceInput;
 
     @FXML
     private TextField departureInput;
@@ -52,7 +53,7 @@ public class ScheduleFormController {
     private CourseDriverDao courseDriverDao;
     private CourseVehicleDao courseVehicleDao;
     private TicketDao ticketDao;
-    private LuggageDao luggageDao;
+    private RouteDao routeDao;
 
     public void postInit() {
         databaseService = new DatabaseService();
@@ -60,13 +61,34 @@ public class ScheduleFormController {
         courseDriverDao = new CourseDriverDao(databaseService);
         courseVehicleDao = new CourseVehicleDao(databaseService);
         ticketDao = new TicketDao(databaseService);
-        luggageDao = new LuggageDao(databaseService);
+        routeDao = new RouteDao(databaseService);
         databaseService.connectToDatabase();
     }
 
     @FXML
     void addCourse(ActionEvent event) {
+        RouteEntity routeEntity = getRouteEntityFromForm();
+
+        databaseService.setAutoCommit(false);
+        try {
+            routeDao.insertRoute(routeEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+        databaseService.setAutoCommit(true);
+
+//        CourseEntity courseEntity = new CourseEntity(departureInput.getCharacters(), arrivalInput.getCharacters(), 2, );
+//        courseDao.insertCourse();
         //kurs, trasa, kierowca_trasa, pojazd
+    }
+
+    private RouteEntity getRouteEntityFromForm() {
+        int distance = Integer.parseInt(distanceInput.getCharacters().toString());
+        String beginCity = beginCityInput.getText();
+        String endCity = endCityInput.getText();
+
+        return new RouteEntity(distance, beginCity, endCity);
     }
 
     @FXML
