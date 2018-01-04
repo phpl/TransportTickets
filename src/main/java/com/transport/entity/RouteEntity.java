@@ -7,4 +7,8 @@ import lombok.NonNull;
 public class RouteEntity {
     @NonNull
     private int distance;
+    @NonNull
+    private String beginCity;
+    @NonNull
+    private String endCity;
 }
