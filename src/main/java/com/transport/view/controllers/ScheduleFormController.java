@@ -65,6 +65,8 @@ public class ScheduleFormController {
         ticketDao = new TicketDao(databaseService);
         routeDao = new RouteDao(databaseService);
         databaseService.connectToDatabase();
+        departureInput.setIs24HourView(true);
+        arrivalInput.setIs24HourView(true);
     }
 
     @FXML
@@ -94,10 +96,7 @@ public class ScheduleFormController {
         databaseService.setAutoCommit(true);
 
         ControllerHelper.succesRecordAdd();
-
-//        CourseEntity courseEntity = new CourseEntity(departureInput.getCharacters(), arrivalInput.getCharacters(), 2, );
-//        courseDao.insertCourse();
-        //kurs, trasa, kierowca_trasa, pojazd
+//TODO add kierowca_trasa, kierowca_pojazd
     }
 
     private RouteEntity createRouteEntity() {

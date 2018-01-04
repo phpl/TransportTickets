@@ -57,7 +57,7 @@ public class RegisterController {
 
     @FXML
     void registerAUser(ActionEvent event) {
-
+//TODO add uzytkownik, dane_osobowe_adres
     }
 
 }
