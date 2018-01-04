@@ -3,9 +3,9 @@ package com.transport.view.controllers;
 import com.gluonhq.particle.application.ParticleApplication;
 import com.gluonhq.particle.state.StateManager;
 import com.gluonhq.particle.view.ViewManager;
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.log4j.Log4j;
 
@@ -18,10 +18,13 @@ public class InitController {
     ParticleApplication app;
     @FXML
     private AnchorPane init;
+
     @FXML
-    private Button loginButton;
+    private JFXButton loginButton;
+
     @FXML
-    private Button registerButton;
+    private JFXButton registerButton;
+
     @Inject
     private ViewManager viewManager;
 

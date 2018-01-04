@@ -1,50 +1,51 @@
 package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
 
 public class RegisterController {
     @Inject
     private ViewManager viewManager;
-    @FXML
-    private PasswordField passwordInput;
 
     @FXML
-    private PasswordField repeatPasswordInput;
+    private JFXTextField userInput;
 
     @FXML
-    private TextField userInput;
+    private JFXTextField firstNameInput;
 
     @FXML
-    private TextField firstNameInput;
+    private JFXTextField lastNameInput;
 
     @FXML
-    private TextField lastNameInput;
+    private JFXTextField phoneNumber;
 
     @FXML
-    private TextField phoneNumber;
+    private JFXTextField cityInput;
 
     @FXML
-    private TextField cityInput;
+    private JFXTextField streetInput;
 
     @FXML
-    private TextField streetInput;
+    private JFXTextField houseNumberInput;
 
     @FXML
-    private TextField houseNumberInput;
+    private JFXPasswordField passwordInput;
 
     @FXML
-    private Button registerButton;
+    private JFXPasswordField repeatPasswordInput;
 
     @FXML
-    private Button backButton;
+    private JFXButton registerButton;
+
+    @FXML
+    private JFXButton backButton;
 
     @FXML
     private Label infoLabel;

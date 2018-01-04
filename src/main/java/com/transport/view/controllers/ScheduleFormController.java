@@ -1,6 +1,8 @@
 package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import com.transport.DatabaseService;
 import com.transport.dao.*;
@@ -8,9 +10,7 @@ import com.transport.entity.CourseEntity;
 import com.transport.entity.RouteEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
 import java.sql.SQLException;
@@ -21,31 +21,31 @@ public class ScheduleFormController {
     private ViewManager viewManager;
 
     @FXML
-    private TextField beginCityInput;
-
-    @FXML
-    private TextField endCityInput;
-
-    @FXML
-    private TextField distanceInput;
-
-    @FXML
     private JFXTimePicker departureInput;
 
     @FXML
     private JFXTimePicker arrivalInput;
 
     @FXML
-    private TextField phoneNumberInput;
+    private JFXTextField beginCityInput;
 
     @FXML
-    private TextField licencePlateInput;
+    private JFXTextField endCityInput;
 
     @FXML
-    private Button addButton;
+    private JFXTextField distanceInput;
 
     @FXML
-    private Button backButton;
+    private JFXTextField phoneNumberInput;
+
+    @FXML
+    private JFXTextField licencePlateInput;
+
+    @FXML
+    private JFXButton addButton;
+
+    @FXML
+    private JFXButton backButton;
 
     @FXML
     private Label infoLabel;

@@ -2,12 +2,12 @@ package com.transport.view.controllers;
 
 
 import com.gluonhq.particle.view.ViewManager;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
 
@@ -17,22 +17,22 @@ public class LoginController {
     private ViewManager viewManager;
 
     @FXML
-    private PasswordField passwordInput;
+    private JFXTextField loginInput;
 
     @FXML
-    private TextField loginInput;
+    private JFXPasswordField passwordInput;
 
     @FXML
-    private Button loginButton;
-
-    @FXML
-    private Button loginGuestButton;
+    private JFXButton loginButton;
 
     @FXML
     private Label loginLabel;
 
     @FXML
-    private Button backButton;
+    private JFXButton loginGuestButton;
+
+    @FXML
+    private JFXButton backButton;
 
     @FXML
     void goBack(ActionEvent event) {

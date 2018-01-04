@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.transport.view.controllers.RegisterController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -38,32 +39,31 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                             </rowConstraints>
                             <children>
-                                <PasswordField fx:id="passwordInput" promptText="Hasło" GridPane.rowIndex="1"/>
-                                <PasswordField fx:id="repeatPasswordInput" promptText="Powtórz hasło"
-                                               GridPane.rowIndex="2"/>
-                                <TextField fx:id="userInput" promptText="Nazwa użytkownika"/>
-                                <TextField fx:id="firstNameInput" promptText="Imię" GridPane.rowIndex="3"/>
-                                <TextField fx:id="lastNameInput" promptText="Nazwisko" GridPane.rowIndex="4"/>
-                                <TextField fx:id="phoneNumber" promptText="Numer telefonu" GridPane.rowIndex="5"/>
-                                <TextField fx:id="cityInput" promptText="Miasto" GridPane.rowIndex="6"/>
-                                <TextField fx:id="streetInput" promptText="Ulica" GridPane.rowIndex="7"/>
-                                <TextField fx:id="houseNumberInput" promptText="Numer domu" GridPane.rowIndex="8"/>
+                                <JFXTextField fx:id="userInput" promptText="Nazwa użytkownika"/>
+                                <JFXTextField fx:id="firstNameInput" promptText="Imię" GridPane.rowIndex="3"/>
+                                <JFXTextField fx:id="lastNameInput" promptText="Nazwisko" GridPane.rowIndex="4"/>
+                                <JFXTextField fx:id="phoneNumber" promptText="Numer telefonu" GridPane.rowIndex="5"/>
+                                <JFXTextField fx:id="cityInput" promptText="Miasto" GridPane.rowIndex="6"/>
+                                <JFXTextField fx:id="streetInput" promptText="Ulica" GridPane.rowIndex="7"/>
+                                <JFXTextField fx:id="houseNumberInput" promptText="Numer domu" GridPane.rowIndex="8"/>
+                                <JFXPasswordField fx:id="passwordInput" promptText="Hasło" GridPane.rowIndex="1"/>
+                                <JFXPasswordField fx:id="repeatPasswordInput" promptText="Powtórz hasło"
+                                                  GridPane.rowIndex="2"/>
                             </children>
                         </GridPane>
                         <AnchorPane GridPane.rowIndex="1">
                             <children>
-                                <Button fx:id="registerButton" alignment="CENTER" mnemonicParsing="false"
-                                        onAction="#registerAUser" prefHeight="25.0" prefWidth="368.0" text="Zarejestruj"
-                                        AnchorPane.bottomAnchor="0.6666666666666679" AnchorPane.leftAnchor="0.0"
-                                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                <JFXButton fx:id="registerButton" layoutX="144.0" layoutY="1.0"
+                                           onAction="#registerAUser" text="Zarejestruj" AnchorPane.bottomAnchor="0.0"
+                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                           AnchorPane.topAnchor="0.0"/>
                             </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="2">
                             <children>
-                                <Button fx:id="backButton" alignment="CENTER" mnemonicParsing="false" onAction="#goBack"
-                                        prefHeight="25.0" prefWidth="344.0" text="Wróć" AnchorPane.bottomAnchor="0.0"
-                                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                        AnchorPane.topAnchor="0.0"/>
+                                <JFXButton fx:id="backButton" layoutX="144.0" onAction="#goBack" text="Wróć"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                             </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="3">

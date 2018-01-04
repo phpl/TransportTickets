@@ -1,6 +1,7 @@
 package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
+import com.jfoenix.controls.JFXButton;
 import com.transport.DatabaseService;
 import com.transport.dao.*;
 import com.transport.view.lists.ScheduleList;
@@ -22,25 +23,25 @@ public class ScheduleController {
     private ViewManager viewManager;
 
     @FXML
-    private Button backButton;
-
-    @FXML
-    private Button driversButton;
-
-    @FXML
-    private Button usersButton;
-
-    @FXML
-    private Button passengersButton;
-
-    @FXML
-    private Button logoutButton;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
     private TableView<ScheduleList> tableView;
+
+    @FXML
+    private JFXButton backButton;
+
+    @FXML
+    private JFXButton driversButton1;
+
+    @FXML
+    private JFXButton usersButton1;
+
+    @FXML
+    private JFXButton passengersButton1;
+
+    @FXML
+    private JFXButton logoutButton1;
+
+    @FXML
+    private JFXButton addButton;
 
     private DatabaseService databaseService;
     private CourseDao courseDao;
@@ -143,7 +144,7 @@ public class ScheduleController {
     }
 
     @FXML
-    void backButton(ActionEvent event) {
+    void goBack(ActionEvent event) {
         clearTable();
         viewManager.switchView("main");
     }

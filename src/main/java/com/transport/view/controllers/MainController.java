@@ -1,9 +1,9 @@
 package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 import javax.inject.Inject;
 
@@ -13,19 +13,19 @@ public class MainController {
     private ViewManager viewManager;
 
     @FXML
-    private Button scheduleButton;
+    private JFXButton scheduleButton;
 
     @FXML
-    private Button driversButton;
+    private JFXButton driversButton;
 
     @FXML
-    private Button usersButton;
+    private JFXButton usersButton;
 
     @FXML
-    private Button passengersButton;
+    private JFXButton passengersButton;
 
     @FXML
-    private Button logoutButton;
+    private JFXButton logoutButton;
 
     @FXML
     void logout(ActionEvent event) {

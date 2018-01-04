@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.transport.view.controllers.LoginController">
     <children>
         <GridPane layoutX="200.0" layoutY="155.0" prefHeight="300.0" prefWidth="499.0" AnchorPane.bottomAnchor="50.0"
@@ -36,54 +36,47 @@
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints maxHeight="166.66665649414062" minHeight="10.0"
-                                                prefHeight="75.33334350585938" vgrow="SOMETIMES"/>
                                 <RowConstraints maxHeight="95.33334350585938" minHeight="10.0"
                                                 prefHeight="30.666656494140625" vgrow="SOMETIMES"/>
                             </rowConstraints>
                             <children>
-                                <Label alignment="BOTTOM_CENTER" prefHeight="143.0" prefWidth="250.0" text="Login:"
-                                       textAlignment="CENTER">
-                                    <font>
-                                        <Font size="36.0"/>
-                                    </font>
-                                </Label>
-                                <Label alignment="BOTTOM_CENTER" prefHeight="157.0" prefWidth="250.0" text="Hasło:"
-                                       textAlignment="CENTER" GridPane.columnIndex="1">
-                                    <font>
-                                        <Font size="36.0"/>
-                                    </font>
-                                </Label>
-                                <PasswordField fx:id="passwordInput" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="5.0" right="5.0"/>
-                                    </GridPane.margin>
-                                </PasswordField>
-                                <TextField fx:id="loginInput" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="5.0" right="5.0"/>
-                                    </GridPane.margin>
-                                </TextField>
+                                <JFXTextField fx:id="loginInput" promptText="Login"/>
+                                <JFXPasswordField fx:id="passwordInput" promptText="Hasło" GridPane.columnIndex="1"/>
                             </children>
                         </GridPane>
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                     <children>
-                        <Button fx:id="loginButton" layoutX="224.0" layoutY="38.0" mnemonicParsing="false"
-                                onAction="#loginAsUser" text="Zaloguj się" AnchorPane.bottomAnchor="0.0"
-                                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <JFXButton fx:id="loginButton" layoutX="224.0" layoutY="14.0" onAction="#loginAsUser"
+                                   text="Zaloguj się" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </children>
                 </AnchorPane>
-                <Button fx:id="loginGuestButton" mnemonicParsing="false" onAction="#loginAsGuest" prefHeight="68.0"
-                        prefWidth="500.0" text="Zaloguj się jako gość" GridPane.rowIndex="3"/>
-                <Label fx:id="loginLabel" alignment="CENTER" prefHeight="48.0" prefWidth="500.0" textFill="RED">
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                </Label>
-                <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" prefHeight="71.0"
-                        prefWidth="500.0" text="Wróć" GridPane.rowIndex="4"/>
+                <AnchorPane>
+                    <children>
+                        <Label fx:id="loginLabel" alignment="CENTER" prefHeight="48.0" prefWidth="500.0" textFill="RED"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                               AnchorPane.topAnchor="0.0">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane GridPane.rowIndex="3">
+                    <children>
+                        <JFXButton fx:id="loginGuestButton" onAction="#loginAsGuest" text="Zaloguj się jako gość"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
+                <AnchorPane GridPane.rowIndex="4">
+                    <children>
+                        <JFXButton fx:id="backButton" onAction="#goBack" text="Wróć" AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
             </children>
         </GridPane>
     </children>
