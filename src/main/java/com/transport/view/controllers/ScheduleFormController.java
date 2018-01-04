@@ -75,8 +75,11 @@ public class ScheduleFormController {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
         databaseService.setAutoCommit(true);
+
+        ControllerHelper.succesRecordAdd();
 
 //        CourseEntity courseEntity = new CourseEntity(departureInput.getCharacters(), arrivalInput.getCharacters(), 2, );
 //        courseDao.insertCourse();
