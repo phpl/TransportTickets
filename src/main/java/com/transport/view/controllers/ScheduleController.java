@@ -63,15 +63,19 @@ public class ScheduleController {
     }
 
     private void initializeTableView() {
-        TableColumn<ScheduleList, String> city = new TableColumn<>("Miasto");
+        TableColumn<ScheduleList, String> beginCity = new TableColumn<>("Miasto poczatkowe");
+        TableColumn<ScheduleList, String> endCity = new TableColumn<>("Miasto koncowe");
         TableColumn<ScheduleList, String> departureTime = new TableColumn<>("Godzina odjazdu");
         TableColumn<ScheduleList, String> freeSeats = new TableColumn<>("Wolne miejsca");
         TableColumn<ScheduleList, String> distance = new TableColumn<>("Odległość");
         TableColumn<ScheduleList, String> ticketPrice = new TableColumn<>("Cena biletu");
         TableColumn delete = new TableColumn("Akcja");
 
-        city.setCellValueFactory(
-                new PropertyValueFactory<>("city")
+        beginCity.setCellValueFactory(
+                new PropertyValueFactory<>("beginCity")
+        );
+        endCity.setCellValueFactory(
+                new PropertyValueFactory<>("endCity")
         );
         departureTime.setCellValueFactory(
                 new PropertyValueFactory<>("departureTime")
@@ -93,7 +97,7 @@ public class ScheduleController {
 
         data = courseDao.selectAllCourses();
         tableView.setItems(data);
-        tableView.getColumns().addAll(city, departureTime, freeSeats, distance, ticketPrice, delete);
+        tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, delete);
     }
 
     private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createRemoveButtonTableCellFactory() {

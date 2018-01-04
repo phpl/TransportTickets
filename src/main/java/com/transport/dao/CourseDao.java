@@ -79,8 +79,8 @@ public class CourseDao {
             schedules = new ScheduleList(
                     resultSet.getInt("kurs_pk"),
                     resultSet.getInt("trasa_pk"),
-                    resultSet.getInt("miasto_pk"),
-                    resultSet.getString("miasto"),
+                    resultSet.getString("miasto_poczatkowe"),
+                    resultSet.getString("miasto_koncowe"),
                     resultSet.getTime("godzina_odjazdu").toLocalTime(),
                     resultSet.getInt("wolne_miejsca"),
                     resultSet.getInt("km"),

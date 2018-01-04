@@ -12,9 +12,9 @@ public class ScheduleList {
     @NonNull
     private Integer routeId;
     @NonNull
-    private Integer cityId;
+    private final String beginCity;
     @NonNull
-    private final String city;
+    private final String endCity;
     @NonNull
     private LocalTime departureTime;
     @NonNull

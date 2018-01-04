@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1"
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.transport.view.controllers.RegisterController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -26,7 +25,6 @@
                         <GridPane>
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
@@ -40,70 +38,16 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                             </rowConstraints>
                             <children>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="274.0"
-                                       text="Nazwa użytkownika:" textAlignment="CENTER">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="271.0" text="Hasło:"
-                                       GridPane.rowIndex="1">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="277.0"
-                                       text="Powtórz hasło:" GridPane.rowIndex="2">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="270.0" text="Imię:"
-                                       GridPane.rowIndex="3">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="269.0" text="Nazwisko:"
-                                       GridPane.rowIndex="4">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="270.0"
-                                       text="Numer telefonu:" GridPane.rowIndex="5">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="273.0" text="Miasto:"
-                                       GridPane.rowIndex="6">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="277.0" text="Ulica:"
-                                       GridPane.rowIndex="7">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="273.0" text="Numer domu:"
-                                       GridPane.rowIndex="8">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                                <PasswordField fx:id="passwordInput" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                <PasswordField fx:id="repeatPasswordInput" GridPane.columnIndex="1"
+                                <PasswordField fx:id="passwordInput" promptText="Hasło" GridPane.rowIndex="1"/>
+                                <PasswordField fx:id="repeatPasswordInput" promptText="Powtórz hasło"
                                                GridPane.rowIndex="2"/>
-                                <TextField fx:id="userInput" GridPane.columnIndex="1"/>
-                                <TextField fx:id="firstNameInput" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                                <TextField fx:id="lastNameInput" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                                <TextField fx:id="phoneNumber" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                                <TextField fx:id="cityInput" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                                <TextField fx:id="streetInput" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-                                <TextField fx:id="houseNumberInput" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                                <TextField fx:id="userInput" promptText="Nazwa użytkownika"/>
+                                <TextField fx:id="firstNameInput" promptText="Imię" GridPane.rowIndex="3"/>
+                                <TextField fx:id="lastNameInput" promptText="Nazwisko" GridPane.rowIndex="4"/>
+                                <TextField fx:id="phoneNumber" promptText="Numer telefonu" GridPane.rowIndex="5"/>
+                                <TextField fx:id="cityInput" promptText="Miasto" GridPane.rowIndex="6"/>
+                                <TextField fx:id="streetInput" promptText="Ulica" GridPane.rowIndex="7"/>
+                                <TextField fx:id="houseNumberInput" promptText="Numer domu" GridPane.rowIndex="8"/>
                             </children>
                         </GridPane>
                         <AnchorPane GridPane.rowIndex="1">

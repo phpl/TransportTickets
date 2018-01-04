@@ -84,34 +84,18 @@ CREATE UNIQUE INDEX dane_osobowe_idx
  ON transport.dane_osobowe
  ( numer_telefonu );
 
-CREATE SEQUENCE transport.miasto_miasto_pk_seq_1;
-
-CREATE TABLE transport.miasto (
-                miasto_pk INTEGER NOT NULL DEFAULT nextval('transport.miasto_miasto_pk_seq_1'),
-                nazwa VARCHAR NOT NULL,
-                CONSTRAINT miasto_pk PRIMARY KEY (miasto_pk)
-);
-
-
-ALTER SEQUENCE transport.miasto_miasto_pk_seq_1 OWNED BY transport.miasto.miasto_pk;
-
 CREATE SEQUENCE transport.trasa_trasa_pk_seq;
 
 CREATE TABLE transport.trasa (
-                trasa_pk INTEGER NOT NULL DEFAULT nextval('transport.trasa_trasa_pk_seq'),
-                odleglosc INTEGER NOT NULL,
+  trasa_pk          INTEGER NOT NULL DEFAULT nextval('transport.trasa_trasa_pk_seq'),
+  odleglosc         INTEGER NOT NULL,
+  miasto_poczatkowe VARCHAR NOT NULL,
+  miasto_koncowe    VARCHAR NOT NULL,
                 CONSTRAINT trasa_pk PRIMARY KEY (trasa_pk)
 );
 
 
 ALTER SEQUENCE transport.trasa_trasa_pk_seq OWNED BY transport.trasa.trasa_pk;
-
-CREATE TABLE transport.trasa_miasto (
-                trasa_pk INTEGER NOT NULL,
-                miasto_pk INTEGER NOT NULL,
-                CONSTRAINT trasa_miasto_pk PRIMARY KEY (trasa_pk, miasto_pk)
-);
-
 
 CREATE SEQUENCE transport.kurs_kurs_pk_seq_2_1_1;
 
@@ -209,21 +193,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE transport.trasa_miasto ADD CONSTRAINT miasto_trasa_miasto_fk
-FOREIGN KEY (miasto_pk)
-REFERENCES transport.miasto (miasto_pk)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
 ALTER TABLE transport.kurs ADD CONSTRAINT trasa_kurs_fk
-FOREIGN KEY (trasa_pk)
-REFERENCES transport.trasa (trasa_pk)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE transport.trasa_miasto ADD CONSTRAINT trasa_trasa_miasto_fk
 FOREIGN KEY (trasa_pk)
 REFERENCES transport.trasa (trasa_pk)
 ON DELETE NO ACTION
@@ -262,51 +232,49 @@ CREATE OR REPLACE VIEW transport."trasy_view" AS
   SELECT
     kurs.kurs_pk,
     trasa.trasa_pk,
-    miasto.miasto_pk,
     kurs.godzina_odjazdu,
     kurs.maks_dostepna_ilosc_miejsc AS wolne_miejsca,
     trasa.odleglosc                 AS km,
-    miasto.nazwa                    AS miasto,
+    trasa.miasto_poczatkowe,
+    trasa.miasto_koncowe,
     (trasa.odleglosc * 2)           AS cena_biletu
   FROM transport.kurs kurs
     JOIN transport.trasa trasa ON kurs.trasa_pk = trasa.trasa_pk
-    JOIN transport.trasa_miasto ON trasa.trasa_pk = trasa_miasto.trasa_pk
-    JOIN transport.miasto ON trasa_miasto.miasto_pk = miasto.miasto_pk
-  ORDER BY godzina_odjazdu;
+  ORDER BY miasto_poczatkowe, godzina_odjazdu;
 
-CREATE OR REPLACE VIEW transport."uzytkownicy_view" AS
-    SELECT
-        uzytkownik.uzytkownik_pk AS "id",
-        dane.imie,
-        dane.nazwisko,
-        dane.numer_telefonu      AS "numer telefonu",
-        adres.miasto,
-        adres.ulica,
-        adres.numer_domu         AS "numer domu"
-    FROM transport.uzytkownik uzytkownik
-    JOIN transport.dane_osobowe dane ON uzytkownik.uzytkownik_pk = dane.uzytkownik_pk
-    JOIN transport.adres ON dane.adres_pk = adres.adres_pk
-    ORDER BY id;
+-- CREATE OR REPLACE VIEW transport."uzytkownicy_view" AS
+--     SELECT
+--         uzytkownik.uzytkownik_pk AS "id",
+--         dane.imie,
+--         dane.nazwisko,
+--         dane.numer_telefonu      AS "numer telefonu",
+--         adres.miasto,
+--         adres.ulica,
+--         adres.numer_domu         AS "numer domu"
+--     FROM transport.uzytkownik uzytkownik
+--     JOIN transport.dane_osobowe dane ON uzytkownik.uzytkownik_pk = dane.uzytkownik_pk
+--     JOIN transport.adres ON dane.adres_pk = adres.adres_pk
+--     ORDER BY id;
 
-CREATE OR REPLACE VIEW transport."pasazerowie_view" AS
-  SELECT
-    dane.imie,
-    dane.nazwisko,
-    bilet.cena
-  FROM transport.dane_osobowe dane
-    JOIN transport.uzytkownik ON dane.uzytkownik_pk = uzytkownik.uzytkownik_pk
-    JOIN transport.bilet ON uzytkownik.uzytkownik_pk = bilet.uzytkownik_pk
-    JOIN transport.kurs ON bilet.kurs_pk = kurs.kurs_pk
-  ORDER BY dane.nazwisko;
+-- CREATE OR REPLACE VIEW transport."pasazerowie_view" AS
+--   SELECT
+--     dane.imie,
+--     dane.nazwisko,
+--     bilet.cena
+--   FROM transport.dane_osobowe dane
+--     JOIN transport.uzytkownik ON dane.uzytkownik_pk = uzytkownik.uzytkownik_pk
+--     JOIN transport.bilet ON uzytkownik.uzytkownik_pk = bilet.uzytkownik_pk
+--     JOIN transport.kurs ON bilet.kurs_pk = kurs.kurs_pk
+--   ORDER BY dane.nazwisko;
 
- CREATE OR REPLACE VIEW transport."kierowca_pojazd_view" AS
-  SELECT
-    kierowca.imie,
-    kierowca.nazwisko,
-    kierowca.numer_telefonu AS "numer telefonu kierowcy",
-    numer_rejestracji       AS "rejestracja pojazdu"
-  FROM transport.kierowca kierowca
-    JOIN transport.kurs_kierowca ON kierowca.kierowca_pk = kurs_kierowca.kierowca_pk
-    JOIN transport.kurs ON kurs_kierowca.kurs_pk = kurs.kurs_pk
-    JOIN transport.kurs_pojazd ON kurs.kurs_pk = kurs_pojazd.kurs_pk
-    JOIN transport.pojazd ON kurs_pojazd.pojazd_pk = pojazd.pojazd_pk;
+--  CREATE OR REPLACE VIEW transport."kierowca_pojazd_view" AS
+--   SELECT
+--     kierowca.imie,
+--     kierowca.nazwisko,
+--     kierowca.numer_telefonu AS "numer telefonu kierowcy",
+--     numer_rejestracji       AS "rejestracja pojazdu"
+--   FROM transport.kierowca kierowca
+--     JOIN transport.kurs_kierowca ON kierowca.kierowca_pk = kurs_kierowca.kierowca_pk
+--     JOIN transport.kurs ON kurs_kierowca.kurs_pk = kurs.kurs_pk
+--     JOIN transport.kurs_pojazd ON kurs.kurs_pk = kurs_pojazd.kurs_pk
+--     JOIN transport.pojazd ON kurs_pojazd.pojazd_pk = pojazd.pojazd_pk;
