@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class RouteDao extends BasicDao {
 
     private final String insertNewRoute = "INSERT INTO " +
-            "transport.trasa (odleglosc) " +
-            "VALUES (?);";
+            "transport.trasa (odleglosc, miasto_poczatkowe, miasto_koncowe) " +
+            "VALUES (?,?,?);";
 
     public RouteDao(DatabaseService databaseService) {
         super(databaseService);
@@ -29,6 +29,8 @@ public class RouteDao extends BasicDao {
             log.info("Begin insertNewRoute");
 
             preparedStatement.setInt(1, newEntity.getDistance());
+            preparedStatement.setString(2, newEntity.getBeginCity());
+            preparedStatement.setString(3, newEntity.getEndCity());
             preparedStatement.executeUpdate();
 
             log.info("End insertNewRoute");
