@@ -77,7 +77,8 @@ public class ScheduleController {
         TableColumn<ScheduleList, String> freeSeats = new TableColumn<>("Wolne miejsca");
         TableColumn<ScheduleList, String> distance = new TableColumn<>("Odległość");
         TableColumn<ScheduleList, String> ticketPrice = new TableColumn<>("Cena biletu");
-        TableColumn delete = new TableColumn("Akcja");
+        TableColumn add = new TableColumn("");
+        TableColumn delete = new TableColumn("");
 
         beginCity.setCellValueFactory(
                 new PropertyValueFactory<>("beginCity")
@@ -97,7 +98,12 @@ public class ScheduleController {
         ticketPrice.setCellValueFactory(
                 new PropertyValueFactory<>("ticketPrice")
         );
+        add.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
         delete.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
+
+        Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> addButtonFactory =
+                createAddButtonTabCellFactory();
+        add.setCellFactory(addButtonFactory);
 
         Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> removeButtonFactory =
                 createRemoveButtonTableCellFactory();
@@ -105,7 +111,7 @@ public class ScheduleController {
 
         data = courseDao.selectAllCourses();
         tableView.setItems(data);
-        tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, delete);
+        tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add, delete);
     }
 
     private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createRemoveButtonTableCellFactory() {
@@ -115,7 +121,7 @@ public class ScheduleController {
                 {
                     return new TableCell<ScheduleList, String>() {
 
-                        final Button btn = new Button("Remove");
+                        final Button btn = new Button("Usuń");
 
                         @Override
                         public void updateItem(String item, boolean empty) {
@@ -127,13 +133,39 @@ public class ScheduleController {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
                                     ScheduleList schedule = getTableView().getItems().get(getIndex());
-//                                    courseDriverDao.removeAssociation(schedule.getCourseId());
-//                                    courseVehicleDao.removeAssociation(schedule.getCourseId());
 //                                    TODO add trigger deleting all luggages for specific course
-//                                    luggageDao.removeLuggage(schedule.getCourseId());
-//                                    ticketDao.removeTicket(schedule.getCourseId());
-//                                    courseDao.removeCourse(schedule.getCourseId());
                                     data.remove(getIndex());
+                                });
+                                setGraphic(btn);
+                                setText(null);
+                            }
+                        }
+                    };
+                }
+            }
+        };
+    }
+
+    private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createAddButtonTabCellFactory() {
+        return new Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>>() {
+            @Override
+            public TableCell<ScheduleList, String> call(TableColumn<ScheduleList, String> param) {
+                {
+                    return new TableCell<ScheduleList, String>() {
+
+                        final Button btn = new Button("Dodaj pasażera");
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setGraphic(null);
+                                setText(null);
+                            } else {
+                                btn.setOnAction((ActionEvent event) ->
+                                {
+                                    ScheduleList schedule = getTableView().getItems().get(getIndex());
+//TODO add kup bilet
                                 });
                                 setGraphic(btn);
                                 setText(null);
