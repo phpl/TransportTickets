@@ -113,7 +113,7 @@ public class UsersController {
                 {
                     return new TableCell<ScheduleList, String>() {
 
-                        final Button btn = new Button("Remove");
+                        final Button btn = new Button("Usuń");
 
                         @Override
                         public void updateItem(String item, boolean empty) {
