@@ -43,6 +43,9 @@ public class ScheduleController {
     @FXML
     private JFXButton addButton;
 
+    @FXML
+    private JFXButton vehiclesButton;
+
     private DatabaseService databaseService;
     private CourseDao courseDao;
     private CourseDriverDao courseDriverDao;
@@ -61,6 +64,10 @@ public class ScheduleController {
         luggageDao = new LuggageDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
+    }
+
+    public void dispose() {
+        databaseService.closeConnection();
     }
 
     private void initializeTableView() {
@@ -136,6 +143,12 @@ public class ScheduleController {
                 }
             }
         };
+    }
+
+    @FXML
+    void openVehicles(ActionEvent event) {
+        clearTable();
+        viewManager.switchView("vehicles");
     }
 
     @FXML

@@ -14,4 +14,9 @@ public class UsersView extends FXMLView {
     public void start() {
         ((UsersController) getController()).postInit();
     }
+
+    @Override
+    public void stop() {
+        ((UsersController) getController()).dispose();
+    }
 }

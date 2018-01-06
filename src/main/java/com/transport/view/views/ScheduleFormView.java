@@ -14,4 +14,9 @@ public class ScheduleFormView extends FXMLView {
     public void start() {
         ((ScheduleFormController) getController()).postInit();
     }
+
+    @Override
+    public void stop() {
+        ((ScheduleFormController) getController()).dispose()
+    }
 }

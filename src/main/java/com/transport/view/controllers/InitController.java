@@ -47,6 +47,6 @@ public class InitController {
 
     @FXML
     void openRegister(ActionEvent event) {
-        viewManager.switchView("register");
+        viewManager.switchView("registerForm");
     }
 }

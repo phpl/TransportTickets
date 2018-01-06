@@ -34,6 +34,10 @@ public class ScheduleFormLogic {
         databaseService.connectToDatabase();
     }
 
+    public void dispose() {
+        databaseService.closeConnection();
+    }
+
     public void insertCourseView(String beginCity,
                                  String endCity,
                                  int distance,

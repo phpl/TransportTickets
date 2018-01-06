@@ -28,6 +28,14 @@ public class MainController {
     private JFXButton logoutButton;
 
     @FXML
+    private JFXButton vehiclesButton;
+
+    @FXML
+    void openVehicles(ActionEvent event) {
+        viewManager.switchView("vehicles");
+    }
+
+    @FXML
     void logout(ActionEvent event) {
         viewManager.switchView("login");
     }

@@ -4,13 +4,13 @@ import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.transport.logic.RegisterLogic;
+import com.transport.logic.RegisterFormLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import javax.inject.Inject;
 
-public class RegisterController {
+public class RegisterFormController {
     @Inject
     private ViewManager viewManager;
 
@@ -44,10 +44,14 @@ public class RegisterController {
     @FXML
     private JFXButton backButton;
 
-    RegisterLogic logic;
+    RegisterFormLogic logic;
 
     public void postInit() {
-        logic = new RegisterLogic();
+        logic = new RegisterFormLogic();
+    }
+
+    public void dispose() {
+        logic.dispose();
     }
 
     @FXML

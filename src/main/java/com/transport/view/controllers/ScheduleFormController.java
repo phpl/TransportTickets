@@ -55,6 +55,10 @@ public class ScheduleFormController {
         arrivalInput.setIs24HourView(true);
     }
 
+    public void dispose() {
+        logic.dispose();
+    }
+
     @FXML
     void addCourse(ActionEvent event) {
         String beginCity = beginCityInput.getText();

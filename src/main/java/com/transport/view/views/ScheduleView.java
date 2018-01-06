@@ -14,4 +14,9 @@ public class ScheduleView extends FXMLView {
     public void start() {
         ((ScheduleController) getController()).postInit();
     }
+
+    @Override
+    public void stop() {
+        ((ScheduleController) getController()).postInit();
+    }
 }

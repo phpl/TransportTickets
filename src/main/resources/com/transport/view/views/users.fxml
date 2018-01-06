@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.transport.view.controllers.ScheduleController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.transport.view.controllers.UsersController">
     <children>
         <SplitPane dividerPositions="0.29797979797979796" layoutX="200.0" layoutY="120.0" prefHeight="160.0"
                    prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
@@ -33,15 +33,15 @@
                                     <children>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                             <children>
-                                                <JFXButton fx:id="backButton" layoutX="57.0" layoutY="27.0"
-                                                           onAction="#goBack" text="Wróć" AnchorPane.bottomAnchor="0.0"
-                                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                                           AnchorPane.topAnchor="0.0"/>
+                                                <JFXButton fx:id="schedulesButton" layoutX="57.0" layoutY="27.0"
+                                                           onAction="#openSchedules" text="Rozkład jazdy"
+                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                             <children>
-                                                <JFXButton fx:id="driversButton1" layoutX="57.0" layoutY="27.0"
+                                                <JFXButton fx:id="driversButton" layoutX="57.0" layoutY="27.0"
                                                            onAction="#openDrivers" text="Kierowcy"
                                                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
@@ -49,15 +49,15 @@
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                             <children>
-                                                <JFXButton fx:id="usersButton1" layoutX="57.0" layoutY="27.0"
-                                                           onAction="#openUsers" text="Użytkownicy"
-                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                                <JFXButton fx:id="backButton" layoutX="57.0" layoutY="27.0"
+                                                           onAction="#goBack" text="Wróć" AnchorPane.bottomAnchor="0.0"
+                                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                           AnchorPane.topAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                                             <children>
-                                                <JFXButton fx:id="passengersButton1" layoutX="57.0" layoutY="26.0"
+                                                <JFXButton fx:id="passengersButton" layoutX="57.0" layoutY="26.0"
                                                            onAction="#openPassengers" text="Pasażerowie"
                                                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
@@ -65,7 +65,7 @@
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                                             <children>
-                                                <JFXButton fx:id="logoutButton1" layoutX="57.0" layoutY="26.0"
+                                                <JFXButton fx:id="logoutButton" layoutX="57.0" layoutY="26.0"
                                                            onAction="#logout" text="Wyloguj się"
                                                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
@@ -91,29 +91,16 @@
                                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <SplitPane dividerPositions="0.9" layoutX="129.0" layoutY="99.0" orientation="VERTICAL"
-                                           prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0"
-                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                           AnchorPane.topAnchor="0.0">
-                                    <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                            <children>
-                                                <TableView fx:id="tableView" layoutX="108.0" layoutY="77.0"
-                                                           prefHeight="200.0" prefWidth="200.0"
-                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                                            </children>
-                                        </AnchorPane>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                            <children>
-                                                <JFXButton fx:id="addButton" layoutX="182.0" layoutY="6.0"
-                                                           onAction="#addRecord" text="Dodaj"
-                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                                            </children>
-                                        </AnchorPane>
-                                    </items>
-                                </SplitPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0"
+                                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <TableView fx:id="tableView" layoutX="108.0" layoutY="77.0" prefHeight="200.0"
+                                                   prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
                             </children>
                         </AnchorPane>
                     </children>

@@ -11,18 +11,22 @@ import com.transport.view.controllers.ControllerHelper;
 
 import java.sql.SQLException;
 
-public class RegisterLogic {
+public class RegisterFormLogic {
     private DatabaseService databaseService;
     private UserDao userDao;
     private PersonalDataDao personalDataDao;
     private AddressDao addressDao;
 
-    public RegisterLogic() {
+    public RegisterFormLogic() {
         databaseService = new DatabaseService();
         userDao = new UserDao(databaseService);
         personalDataDao = new PersonalDataDao(databaseService);
         addressDao = new AddressDao(databaseService);
         databaseService.connectToDatabase();
+    }
+
+    public void dispose() {
+        databaseService.closeConnection();
     }
 
     public void addUser(String username,

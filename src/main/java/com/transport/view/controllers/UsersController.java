@@ -39,6 +39,9 @@ public class UsersController {
     private JFXButton logoutButton;
 
     @FXML
+    private JFXButton vehiclesButton;
+
+    @FXML
     private TableView<UsersList> tableView;
 
     private DatabaseService databaseService;
@@ -51,6 +54,10 @@ public class UsersController {
         userDao = new UserDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
+    }
+
+    public void dispose() {
+        databaseService.closeConnection();
     }
 
     private void initializeTableView() {
@@ -129,6 +136,12 @@ public class UsersController {
                 }
             }
         };
+    }
+
+    @FXML
+    void openVehicles(ActionEvent event) {
+        clearTable();
+        viewManager.switchView("vehicles");
     }
 
     @FXML
