@@ -4,9 +4,9 @@ import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.transport.logic.RegisterLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 import javax.inject.Inject;
 
@@ -16,6 +16,9 @@ public class RegisterController {
 
     @FXML
     private JFXTextField userInput;
+
+    @FXML
+    private JFXPasswordField passwordInput;
 
     @FXML
     private JFXTextField firstNameInput;
@@ -36,19 +39,16 @@ public class RegisterController {
     private JFXTextField houseNumberInput;
 
     @FXML
-    private JFXPasswordField passwordInput;
-
-    @FXML
-    private JFXPasswordField repeatPasswordInput;
-
-    @FXML
     private JFXButton registerButton;
 
     @FXML
     private JFXButton backButton;
 
-    @FXML
-    private Label infoLabel;
+    RegisterLogic logic;
+
+    public void postInit() {
+        logic = new RegisterLogic();
+    }
 
     @FXML
     void goBack(ActionEvent event) {
@@ -57,7 +57,16 @@ public class RegisterController {
 
     @FXML
     void registerAUser(ActionEvent event) {
-//TODO add uzytkownik, dane_osobowe_adres
+        String userName = userInput.getText();
+        String password = passwordInput.getText();
+        String firstName = firstNameInput.getText();
+        String lastName = lastNameInput.getText();
+        String city = cityInput.getText();
+        String street = streetInput.getText();
+        String houseNumber = houseNumberInput.getText();
+        int phone = Integer.parseInt(phoneNumber.getCharacters().toString());
+
+        logic.addUser(userName, password, firstName, lastName, phone, city, street, houseNumber);
     }
 
 }

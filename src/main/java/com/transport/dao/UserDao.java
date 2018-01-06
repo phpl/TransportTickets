@@ -14,6 +14,9 @@ public class UserDao extends BasicDao {
             "transport.uzytkownik (login, haslo) " +
             "VALUES (?, ?);";
 
+    private final String selectIdFromUser = "SELECT uzytkownik.uzytkownik_pk FROM transport.uzytkownik" +
+            " WHERE login = ?;";
+
     public UserDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -38,4 +41,14 @@ public class UserDao extends BasicDao {
             databaseService.rollbackTransaction();
         }
     }
+
+    public int getUserId(String username) {
+        return getIntFromEntity(username, selectIdFromUser);
+    }
+
+    public boolean checkIfUserExist(String username) {
+        return getIntFromEntity(username, selectIdFromUser) != -1;
+    }
+
+
 }

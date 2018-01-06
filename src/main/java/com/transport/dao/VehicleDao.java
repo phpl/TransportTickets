@@ -5,7 +5,6 @@ import com.transport.entity.VehicleEntity;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Log4j
@@ -49,43 +48,10 @@ public class VehicleDao extends BasicDao {
     }
 
     public int getSeatsNumber(String licencePlate) {
-        return getIntFromVehicle(licencePlate, selectSeatNumberFromVechicle);
+        return getIntFromEntity(licencePlate, selectSeatNumberFromVechicle);
     }
 
     public int getVechicleId(String licencePlate) {
-        return getIntFromVehicle(licencePlate, selectIdFromVechicle);
-    }
-
-
-    private int getIntFromVehicle(String licencePlate, String statement) {
-        ResultSet resultSet;
-
-        int intValue = -1;
-
-        databaseService.setAutoCommit(false);
-        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(statement)) {
-
-            preparedStatement.setString(1, licencePlate);
-            resultSet = preparedStatement.executeQuery();
-            intValue = retrieveId(resultSet);
-        } catch (
-                SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-        }
-
-        databaseService.setAutoCommit(true);
-
-        return intValue;
-    }
-
-    private int retrieveId(ResultSet resultSet) throws SQLException {
-        int idOfElement = -1;
-
-        if (resultSet.next()) {
-            idOfElement = resultSet.getInt(1);
-        }
-
-        return idOfElement;
+        return getIntFromEntity(licencePlate, selectIdFromVechicle);
     }
 }

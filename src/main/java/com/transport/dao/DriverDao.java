@@ -67,14 +67,4 @@ public class DriverDao extends BasicDao {
 
         return idOfElement;
     }
-
-    private int retrieveId(ResultSet resultSet) throws SQLException {
-        int idOfElement = -1;
-
-        if (resultSet.next()) {
-            idOfElement = resultSet.getInt(1);
-        }
-
-        return idOfElement;
-    }
 }
