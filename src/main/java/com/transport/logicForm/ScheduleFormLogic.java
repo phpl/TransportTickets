@@ -78,8 +78,8 @@ public class ScheduleFormLogic {
         int routeId = routeDao.getRouteIdOfItem(routeEntity);
         int seatsNumber = vehicleDao.getSeatsNumber(licencePlate);
 
-        validateIds(routeId);
-        validateIds(seatsNumber);
+        ControllerHelper.validateIds(routeId);
+        ControllerHelper.validateIds(seatsNumber);
 
         return new CourseEntity(departureTime, arrivalTime, seatsNumber, routeId);
     }
@@ -89,8 +89,8 @@ public class ScheduleFormLogic {
         int courseId = courseDao.getCourseId(courseEntity);
         int vehicleId = vehicleDao.getVechicleId(licencePlate);
 
-        validateIds(courseId);
-        validateIds(vehicleId);
+        ControllerHelper.validateIds(courseId);
+        ControllerHelper.validateIds(vehicleId);
 
         return new CourseVehicleEntity(courseId, vehicleId);
     }
@@ -100,15 +100,9 @@ public class ScheduleFormLogic {
         int courseId = courseDao.getCourseId(courseEntity);
         int driverId = driverDao.getDriverId(phoneNumber);
 
-        validateIds(courseId);
-        validateIds(driverId);
+        ControllerHelper.validateIds(courseId);
+        ControllerHelper.validateIds(driverId);
 
         return new CourseDriverEntity(courseId, driverId);
-    }
-
-    private void validateIds(int id) throws DatabaseException {
-        if (id == -1) {
-            throw new DatabaseException();
-        }
     }
 }

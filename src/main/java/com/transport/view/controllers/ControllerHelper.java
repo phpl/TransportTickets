@@ -1,5 +1,6 @@
 package com.transport.view.controllers;
 
+import com.transport.exceptions.DatabaseException;
 import javafx.scene.control.Alert;
 
 public class ControllerHelper {
@@ -19,5 +20,11 @@ public class ControllerHelper {
         alert.setHeaderText("Błąd!");
         alert.setContentText("Rekord nie mógł być dodany");
         alert.showAndWait();
+    }
+
+    public static void validateIds(int id) throws DatabaseException {
+        if (id == -1) {
+            throw new DatabaseException();
+        }
     }
 }
