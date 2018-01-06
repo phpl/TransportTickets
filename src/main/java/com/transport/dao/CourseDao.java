@@ -19,6 +19,9 @@ public class CourseDao extends BasicDao {
                     "transport.kurs (godzina_odjazdu, godzina_powrotu, maks_dostepna_ilosc_miejsc, trasa_pk) " +
                     "VALUES (?, ?, ?, ?);";
 
+    private final String selectIdFromCourse = "SELECT kurs.kurs_pk FROM transport.kurs" +
+            " WHERE kurs.godzina_odjazdu = ? AND kurs.godzina_powrotu = ? AND maks_dostepna_ilosc_miejsc = ? AND trasa_pk = ?;";
+
     private final String selectFromCourseView = "SELECT * FROM transport.trasy_view";
 
     private final String deleteCourse = "DELETE FROM transport.kurs WHERE kurs_pk = ?;";
@@ -92,6 +95,41 @@ public class CourseDao extends BasicDao {
 
     public void removeCourse(int courseId) {
         removeFromDatabase(courseId, deleteCourse);
+    }
+
+    public int getCourseId(CourseEntity entityToFind) {
+        ResultSet resultSet;
+
+        int idOfElement = -1;
+
+        databaseService.setAutoCommit(false);
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromCourse)) {
+
+            preparedStatement.setObject(1, entityToFind.getDepartureTime());
+            preparedStatement.setObject(2, entityToFind.getArrivalTime());
+            preparedStatement.setInt(3, entityToFind.getMaxAvailableSeats());
+            preparedStatement.setInt(4, entityToFind.getRouteId());
+            resultSet = preparedStatement.executeQuery();
+            idOfElement = retrieveId(resultSet);
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
+
+        return idOfElement;
+    }
+
+    private int retrieveId(ResultSet resultSet) throws SQLException {
+        int idOfElement = -1;
+
+        if (resultSet.next()) {
+            idOfElement = resultSet.getInt(1);
+        }
+
+        return idOfElement;
     }
 }
 

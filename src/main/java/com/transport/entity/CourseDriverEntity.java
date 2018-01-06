@@ -6,7 +6,7 @@ import lombok.NonNull;
 @Data
 public class CourseDriverEntity {
     @NonNull
-    private int driverId;
-    @NonNull
     private int courseId;
+    @NonNull
+    private int driverId;
 }

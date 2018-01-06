@@ -5,6 +5,7 @@ import com.transport.entity.DriverEntity;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Log4j
@@ -13,6 +14,9 @@ public class DriverDao extends BasicDao {
     private final String insertNewDriver = "INSERT INTO " +
             "transport.kierowca (imie, nazwisko, numer_telefonu, termin_waznosci_badan, termin_waznosci_prawa_jazdy) " +
             "VALUES (?, ?, ?, ?, ?);";
+
+    private final String selectIdFromDriver = "SELECT kierowca.kierowca_pk FROM transport.kierowca" +
+            " WHERE numer_telefonu = ?;";
 
     public DriverDao(DatabaseService databaseService) {
         super(databaseService);
@@ -40,5 +44,37 @@ public class DriverDao extends BasicDao {
             e.printStackTrace();
             databaseService.rollbackTransaction();
         }
+    }
+
+    public int getDriverId(int phoneNumber) {
+        ResultSet resultSet;
+
+        int idOfElement = -1;
+
+        databaseService.setAutoCommit(false);
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromDriver)) {
+
+            preparedStatement.setInt(1, phoneNumber);
+            resultSet = preparedStatement.executeQuery();
+            idOfElement = retrieveId(resultSet);
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
+
+        return idOfElement;
+    }
+
+    private int retrieveId(ResultSet resultSet) throws SQLException {
+        int idOfElement = -1;
+
+        if (resultSet.next()) {
+            idOfElement = resultSet.getInt(1);
+        }
+
+        return idOfElement;
     }
 }

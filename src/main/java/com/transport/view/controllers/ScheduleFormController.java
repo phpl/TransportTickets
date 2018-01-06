@@ -4,27 +4,18 @@ import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
-import com.transport.DatabaseService;
-import com.transport.dao.*;
-import com.transport.entity.CourseEntity;
-import com.transport.entity.RouteEntity;
+import com.transport.logic.ScheduleFormLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import javax.inject.Inject;
-import java.sql.SQLException;
+import java.time.LocalTime;
 
 public class ScheduleFormController {
 
     @Inject
     private ViewManager viewManager;
-
-    @FXML
-    private JFXTimePicker departureInput;
-
-    @FXML
-    private JFXTimePicker arrivalInput;
 
     @FXML
     private JFXTextField beginCityInput;
@@ -34,6 +25,12 @@ public class ScheduleFormController {
 
     @FXML
     private JFXTextField distanceInput;
+
+    @FXML
+    private JFXTimePicker departureInput;
+
+    @FXML
+    private JFXTimePicker arrivalInput;
 
     @FXML
     private JFXTextField phoneNumberInput;
@@ -50,67 +47,27 @@ public class ScheduleFormController {
     @FXML
     private Label infoLabel;
 
-    private DatabaseService databaseService;
-    private CourseDao courseDao;
-    private CourseDriverDao courseDriverDao;
-    private CourseVehicleDao courseVehicleDao;
-    private TicketDao ticketDao;
-    private RouteDao routeDao;
+    private ScheduleFormLogic logic;
 
     public void postInit() {
-        databaseService = new DatabaseService();
-        courseDao = new CourseDao(databaseService);
-        courseDriverDao = new CourseDriverDao(databaseService);
-        courseVehicleDao = new CourseVehicleDao(databaseService);
-        ticketDao = new TicketDao(databaseService);
-        routeDao = new RouteDao(databaseService);
-        databaseService.connectToDatabase();
+        logic = new ScheduleFormLogic();
         departureInput.setIs24HourView(true);
         arrivalInput.setIs24HourView(true);
     }
 
     @FXML
     void addCourse(ActionEvent event) {
-        RouteEntity routeEntity = createRouteEntity();
-
-        databaseService.setAutoCommit(false);
-        try {
-            routeDao.insertRoute(routeEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-        databaseService.setAutoCommit(true);
-
-
-        CourseEntity courseEntity = createCourseEntity(routeEntity);
-        databaseService.setAutoCommit(false);
-        try {
-            courseDao.insertCourse(courseEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-        databaseService.setAutoCommit(true);
-
-        ControllerHelper.succesRecordAdd();
-//TODO add kierowca_trasa, kierowca_pojazd
-    }
-
-    private RouteEntity createRouteEntity() {
-        int distance = Integer.parseInt(distanceInput.getCharacters().toString());
         String beginCity = beginCityInput.getText();
         String endCity = endCityInput.getText();
+        int distance = Integer.parseInt(distanceInput.getCharacters().toString());
+        LocalTime departureTime = departureInput.getValue();
+        LocalTime arrivalTime = arrivalInput.getValue();
+        int phoneNumber = Integer.parseInt(phoneNumberInput.getCharacters().toString());
+        String licencePlate = licencePlateInput.getCharacters().toString();
 
-        return new RouteEntity(distance, beginCity, endCity);
-    }
+        logic.insertCourseView(beginCity, endCity, distance, departureTime, arrivalTime, phoneNumber, licencePlate);
 
-    private CourseEntity createCourseEntity(RouteEntity routeEntity) {
-
-        int routeId = routeDao.getRouteIdOfItem(routeEntity);
-        return new CourseEntity(departureInput.getValue(), arrivalInput.getValue(), 3, routeId);
+        viewManager.switchView("schedule");
     }
 
     @FXML
