@@ -4,7 +4,7 @@ import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.transport.logic.RegisterFormLogic;
+import com.transport.logicForm.RegisterFormLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
