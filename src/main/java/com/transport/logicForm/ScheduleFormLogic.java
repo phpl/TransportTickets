@@ -6,6 +6,7 @@ import com.transport.entity.CourseDriverEntity;
 import com.transport.entity.CourseEntity;
 import com.transport.entity.CourseVehicleEntity;
 import com.transport.entity.RouteEntity;
+import com.transport.exceptions.DatabaseException;
 import com.transport.view.controllers.ControllerHelper;
 
 import java.sql.SQLException;
@@ -46,90 +47,68 @@ public class ScheduleFormLogic {
                                  int phoneNumber,
                                  String licencePlate
     ) {
-        RouteEntity routeEntity = new RouteEntity(distance, beginCity, endCity);
-        insertRoute(routeEntity);
-
-        CourseEntity courseEntity = createCourseEntity(routeEntity, departureTime, arrivalTime, licencePlate);
-        insertCourse(courseEntity);
-
-        CourseVehicleEntity courseVehicleEntity = createCourseVehicleEntity(courseEntity, licencePlate);
-        insertCourseVehicle(courseVehicleEntity);
-
-        CourseDriverEntity courseDriverEntity = createCourseDriverEntity(courseEntity, phoneNumber);
-        insertCourseDriver(courseDriverEntity);
-    }
-
-    private void insertRoute(RouteEntity routeEntity) {
         databaseService.setAutoCommit(false);
         try {
+            RouteEntity routeEntity = new RouteEntity(distance, beginCity, endCity);
             routeDao.insertRoute(routeEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-        databaseService.setAutoCommit(true);
-    }
 
-    private void insertCourse(CourseEntity courseEntity) {
-        databaseService.setAutoCommit(false);
-        try {
+            CourseEntity courseEntity = createCourseEntity(routeEntity, departureTime, arrivalTime, licencePlate);
             courseDao.insertCourse(courseEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-        databaseService.setAutoCommit(true);
-    }
 
-    private void insertCourseVehicle(CourseVehicleEntity courseVehicleEntity) {
-        databaseService.setAutoCommit(false);
-        try {
+
+            CourseVehicleEntity courseVehicleEntity = createCourseVehicleEntity(courseEntity, licencePlate);
             courseVehicleDao.insertCourseVehicle(courseVehicleEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-        databaseService.setAutoCommit(true);
-    }
 
-    private void insertCourseDriver(CourseDriverEntity courseDriverEntity) {
-        databaseService.setAutoCommit(false);
-        try {
+            CourseDriverEntity courseDriverEntity = createCourseDriverEntity(courseEntity, phoneNumber);
             courseDriverDao.insertCourseDriver(courseDriverEntity);
-        } catch (SQLException e) {
+
+        } catch (SQLException | DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();
         }
         databaseService.setAutoCommit(true);
+
     }
 
     private CourseEntity createCourseEntity(RouteEntity routeEntity,
                                             LocalTime departureTime,
                                             LocalTime arrivalTime,
-                                            String licencePlate) {
+                                            String licencePlate) throws DatabaseException {
         int routeId = routeDao.getRouteIdOfItem(routeEntity);
         int seatsNumber = vehicleDao.getSeatsNumber(licencePlate);
+
+        validateIds(routeId);
+        validateIds(seatsNumber);
 
         return new CourseEntity(departureTime, arrivalTime, seatsNumber, routeId);
     }
 
     private CourseVehicleEntity createCourseVehicleEntity(CourseEntity courseEntity,
-                                                          String licencePlate) {
+                                                          String licencePlate) throws DatabaseException {
         int courseId = courseDao.getCourseId(courseEntity);
         int vehicleId = vehicleDao.getVechicleId(licencePlate);
+
+        validateIds(courseId);
+        validateIds(vehicleId);
 
         return new CourseVehicleEntity(courseId, vehicleId);
     }
 
     private CourseDriverEntity createCourseDriverEntity(CourseEntity courseEntity,
-                                                        int phoneNumber) {
+                                                        int phoneNumber) throws DatabaseException {
         int courseId = courseDao.getCourseId(courseEntity);
         int driverId = driverDao.getDriverId(phoneNumber);
 
+        validateIds(courseId);
+        validateIds(driverId);
+
         return new CourseDriverEntity(courseId, driverId);
+    }
+
+    private void validateIds(int id) throws DatabaseException {
+        if (id == -1) {
+            throw new DatabaseException();
+        }
     }
 }
