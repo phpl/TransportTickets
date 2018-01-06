@@ -2,9 +2,13 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.VehicleEntity;
+import com.transport.view.lists.VehiclesList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Log4j
@@ -19,6 +23,9 @@ public class VehicleDao extends BasicDao {
 
     private final String selectSeatNumberFromVechicle = "SELECT pojazd.ilosc_miejsc FROM transport.pojazd" +
             " WHERE numer_rejestracji = ?;";
+
+    private final String selectFromVehicles = "SELECT * FROM transport.pojazd " +
+            "LEFT JOIN transport.kurs_pojazd ON pojazd.pojazd_pk = kurs_pojazd.pojazd_pk;";
 
     public VehicleDao(DatabaseService databaseService) {
         super(databaseService);
@@ -53,5 +60,43 @@ public class VehicleDao extends BasicDao {
 
     public int getVechicleId(String licencePlate) {
         return getIntFromEntity(licencePlate, selectIdFromVechicle);
+    }
+
+    public ObservableList<VehiclesList> selectAllVehicles() {
+        ResultSet resultSet;
+        ObservableList<VehiclesList> data = FXCollections.observableArrayList();
+
+        databaseService.setAutoCommit(false);
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromVehicles)) {
+            resultSet = preparedStatement.executeQuery();
+            data = retrieveData(resultSet);
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
+
+        return data;
+    }
+
+    private ObservableList<VehiclesList> retrieveData(ResultSet resultSet) throws SQLException {
+        ObservableList<VehiclesList> data = FXCollections.observableArrayList();
+        VehiclesList vehicles;
+
+        while (resultSet.next()) {
+            vehicles = new VehiclesList(
+                    resultSet.getInt("pojazd_pk"),
+                    resultSet.getString("model"),
+                    resultSet.getString("numer_rejestracji"),
+                    resultSet.getInt("ilosc_miejsc"),
+                    resultSet.getDouble("dopuszczalny_bagaz"),
+                    resultSet.getInt("kurs_pk")
+            );
+            data.add(vehicles);
+        }
+
+        return data;
     }
 }
