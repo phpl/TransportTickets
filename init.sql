@@ -19,8 +19,6 @@ CREATE TABLE transport.kierowca (
                 imie VARCHAR NOT NULL,
                 nazwisko VARCHAR NOT NULL,
                 numer_telefonu INTEGER NOT NULL,
-                termin_waznosci_badan DATE NOT NULL,
-                termin_waznosci_prawa_jazdy DATE NOT NULL,
                 CONSTRAINT kierowca_pk PRIMARY KEY (kierowca_pk)
 );
 
@@ -87,10 +85,10 @@ CREATE UNIQUE INDEX dane_osobowe_idx
 CREATE SEQUENCE transport.trasa_trasa_pk_seq;
 
 CREATE TABLE transport.trasa (
-  trasa_pk          INTEGER NOT NULL DEFAULT nextval('transport.trasa_trasa_pk_seq'),
-  odleglosc         INTEGER NOT NULL,
-  miasto_poczatkowe VARCHAR NOT NULL,
-  miasto_koncowe    VARCHAR NOT NULL,
+                trasa_pk INTEGER NOT NULL DEFAULT nextval('transport.trasa_trasa_pk_seq'),
+                odleglosc INTEGER NOT NULL,
+                miasto_poczatkowe VARCHAR NOT NULL,
+                miasto_koncowe VARCHAR NOT NULL,
                 CONSTRAINT trasa_pk PRIMARY KEY (trasa_pk)
 );
 

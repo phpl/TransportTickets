@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class DriverDao extends BasicDao {
 
     private final String insertNewDriver = "INSERT INTO " +
-            "transport.kierowca (imie, nazwisko, numer_telefonu, termin_waznosci_badan, termin_waznosci_prawa_jazdy) " +
-            "VALUES (?, ?, ?, ?, ?);";
+            "transport.kierowca (imie, nazwisko, numer_telefonu) " +
+            "VALUES (?, ?, ?);";
 
     private final String selectIdFromDriver = "SELECT kierowca.kierowca_pk FROM transport.kierowca" +
             " WHERE numer_telefonu = ?;";
@@ -35,8 +35,6 @@ public class DriverDao extends BasicDao {
             preparedStatement.setString(1, newEntity.getFirstName());
             preparedStatement.setString(2, newEntity.getLastName());
             preparedStatement.setInt(3, newEntity.getPhoneNumber());
-            preparedStatement.setObject(4, newEntity.getPeriodOfMedicalCheckUpValidation());
-            preparedStatement.setObject(5, newEntity.getPeriodOfDriverLicenceValidation());
             preparedStatement.executeUpdate();
 
             log.info("End insertNewDriver");

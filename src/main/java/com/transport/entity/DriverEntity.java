@@ -13,8 +13,4 @@ public class DriverEntity {
     private String lastName;
     @NonNull
     private int phoneNumber;
-    @NonNull
-    private LocalDate periodOfMedicalCheckUpValidation;
-    @NonNull
-    private LocalDate periodOfDriverLicenceValidation;
 }
