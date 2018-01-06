@@ -22,7 +22,7 @@ public class DriverDao extends BasicDao {
             " WHERE numer_telefonu = ?;";
 
     private final String selectFromDrivers = "SELECT * FROM transport.kierowca " +
-            "JOIN transport.kurs_kierowca ON kierowca.kierowca_pk = kurs_kierowca.kierowca_pk;";
+            "LEFT JOIN transport.kurs_kierowca ON kierowca.kierowca_pk = kurs_kierowca.kierowca_pk;";
 
     public DriverDao(DatabaseService databaseService) {
         super(databaseService);
