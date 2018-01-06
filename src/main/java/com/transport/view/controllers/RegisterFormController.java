@@ -71,6 +71,7 @@ public class RegisterFormController {
         int phone = Integer.parseInt(phoneNumber.getCharacters().toString());
 
         logic.addUser(userName, password, firstName, lastName, phone, city, street, houseNumber);
+        viewManager.switchView("init");
     }
 
 }
