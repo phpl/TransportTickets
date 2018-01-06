@@ -52,9 +52,8 @@ public class PassengersController {
 
     @FXML
     void addRecord(ActionEvent event) {
-
+        viewManager.switchView("passengersForm");
     }
-
 
     @FXML
     void openVehicles(ActionEvent event) {

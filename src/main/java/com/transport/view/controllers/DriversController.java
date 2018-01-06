@@ -52,7 +52,7 @@ public class DriversController {
 
     @FXML
     void addRecord(ActionEvent event) {
-
+        viewManager.switchView("driversForm");
     }
 
     @FXML

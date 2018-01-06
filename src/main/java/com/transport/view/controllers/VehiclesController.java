@@ -52,7 +52,7 @@ public class VehiclesController {
 
     @FXML
     void addRecord(ActionEvent event) {
-
+        viewManager.switchView("vehiclesForm");
     }
 
     @FXML
