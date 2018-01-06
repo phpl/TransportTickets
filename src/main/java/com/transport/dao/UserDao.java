@@ -2,9 +2,13 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.UserEntity;
+import com.transport.view.lists.UsersList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Log4j
@@ -13,6 +17,8 @@ public class UserDao extends BasicDao {
     private final String insertNewUser = "INSERT INTO " +
             "transport.uzytkownik (login, haslo) " +
             "VALUES (?, ?);";
+
+    private final String selectFromUsersView = "SELECT * FROM transport.uzytkownicy_view";
 
     private final String selectIdFromUser = "SELECT uzytkownik.uzytkownik_pk FROM transport.uzytkownik" +
             " WHERE login = ?;";
@@ -50,5 +56,41 @@ public class UserDao extends BasicDao {
         return getIntFromEntity(username, selectIdFromUser) != -1;
     }
 
+    public ObservableList<UsersList> selectAllUsers() {
+        ResultSet resultSet;
+        ObservableList<UsersList> data = FXCollections.observableArrayList();
 
+        databaseService.setAutoCommit(false);
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromUsersView)) {
+            resultSet = preparedStatement.executeQuery();
+            data = retrieveData(resultSet);
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
+
+        return data;
+    }
+
+    private ObservableList<UsersList> retrieveData(ResultSet resultSet) throws SQLException {
+        ObservableList<UsersList> data = FXCollections.observableArrayList();
+        UsersList users;
+
+        while (resultSet.next()) {
+            users = new UsersList(
+                    resultSet.getInt("id"),
+                    resultSet.getString("nazwa_uzytkownika"),
+                    resultSet.getString("imie"),
+                    resultSet.getString("nazwisko"),
+                    resultSet.getInt("numer_telefonu"),
+                    resultSet.getString("miasto"),
+                    resultSet.getString("ulica"),
+                    resultSet.getString("numer_domu"));
+            data.add(users);
+        }
+        return data;
+    }
 }
