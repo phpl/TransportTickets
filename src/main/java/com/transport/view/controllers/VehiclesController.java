@@ -56,33 +56,33 @@ public class VehiclesController {
     }
 
     @FXML
-    void goBack(ActionEvent event) {
-
-    }
-
-    @FXML
     void logout(ActionEvent event) {
-
-    }
-
-    @FXML
-    void openDrivers(ActionEvent event) {
-
+        viewManager.switchView("login");
     }
 
     @FXML
     void openPassengers(ActionEvent event) {
-
+        viewManager.switchView("passengers");
     }
 
     @FXML
     void openSchedules(ActionEvent event) {
-
+        viewManager.switchView("schedule");
     }
 
     @FXML
     void openUsers(ActionEvent event) {
+        viewManager.switchView("users");
+    }
 
+    @FXML
+    void goBack(ActionEvent event) {
+        viewManager.switchView("main");
+    }
+
+    @FXML
+    void openDrivers(ActionEvent event) {
+        viewManager.switchView("drivers");
     }
 
 }
