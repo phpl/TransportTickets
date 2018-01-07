@@ -133,7 +133,7 @@
                                                                     GridPane.columnIndex="1">
                                                             <children>
                                                                 <JFXButton fx:id="addButton" onAction="#addRecord"
-                                                                           text="Dodaj" AnchorPane.bottomAnchor="0.0"
+                                                                           text="Szukaj" AnchorPane.bottomAnchor="0.0"
                                                                            AnchorPane.leftAnchor="0.0"
                                                                            AnchorPane.rightAnchor="0.0"
                                                                            AnchorPane.topAnchor="0.0"/>
