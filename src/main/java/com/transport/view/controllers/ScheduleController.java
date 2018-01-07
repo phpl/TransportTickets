@@ -54,6 +54,8 @@ public class ScheduleController {
     private TicketDao ticketDao;
     private LuggageDao luggageDao;
 
+    public static Integer selectedCourseId = null;
+
     private ObservableList<ScheduleList> data = null;
 
     public void postInit() {
@@ -190,7 +192,15 @@ public class ScheduleController {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
                                     ScheduleList schedule = getTableView().getItems().get(getIndex());
-//TODO add kup bilet
+                                    selectedCourseId = schedule.getCourseId();
+                                    switch (Account.type) {
+                                        case ADMINISTRATOR:
+                                            viewManager.switchView("passengerFormAdmin");
+                                            break;
+                                        case USER:
+                                            viewManager.switchView("passengerFormUser");
+                                            break;
+                                    }
                                 });
                                 setGraphic(btn);
                                 setText(null);
