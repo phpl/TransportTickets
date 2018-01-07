@@ -43,7 +43,9 @@ public class DriversFormController {
     void add(ActionEvent event) {
         String firstName = firstNameInput.getText();
         String lastName = lastNameInput.getText();
-        String phoneNumber = phoneNumberInput.getText();
+        int phoneNumber = Integer.parseInt(phoneNumberInput.getCharacters().toString());
+
+        logic.addDriver(firstName, lastName, phoneNumber);
     }
 
     @FXML
