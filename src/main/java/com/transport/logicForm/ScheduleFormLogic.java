@@ -47,7 +47,6 @@ public class ScheduleFormLogic {
                                  int phoneNumber,
                                  String licencePlate
     ) {
-        databaseService.setAutoCommit(false);
         try {
             RouteEntity routeEntity = new RouteEntity(distance, beginCity, endCity);
             routeDao.insertRoute(routeEntity);
@@ -67,8 +66,6 @@ public class ScheduleFormLogic {
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();
         }
-        databaseService.setAutoCommit(true);
-
     }
 
     private CourseEntity createCourseEntity(RouteEntity routeEntity,
