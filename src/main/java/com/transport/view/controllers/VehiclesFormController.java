@@ -48,6 +48,8 @@ public class VehiclesFormController {
         String licencePlate = licencePlateInput.getText();
         int seatsNumber = Integer.parseInt(seatsNumberInput.getCharacters().toString());
         double luggageWeight = Double.parseDouble(luggageWeightInput.getCharacters().toString());
+
+        logic.addVehicle(model, licencePlate, seatsNumber, luggageWeight);
     }
 
     @FXML
