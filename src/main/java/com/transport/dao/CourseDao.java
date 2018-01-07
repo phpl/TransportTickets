@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CourseEntity;
+import com.transport.view.controllers.ControllerHelper;
 import com.transport.view.lists.ScheduleList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,11 +27,13 @@ public class CourseDao extends BasicDao {
 
     private final String deleteCourse = "DELETE FROM transport.kurs WHERE kurs_pk = ?;";
 
+    private final String checkCourse = "SELECT * FROM transport.kurs WHERE kurs_pk = ?;";
+
     public CourseDao(DatabaseService databaseService) {
         super(databaseService);
     }
 
-    public void insertCourse(CourseEntity newEntity) throws SQLException {
+    public void insertCourse(CourseEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -50,6 +53,7 @@ public class CourseDao extends BasicDao {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -120,6 +124,32 @@ public class CourseDao extends BasicDao {
         databaseService.setAutoCommit(true);
 
         return idOfElement;
+    }
+
+    public boolean checkIfCourseExist(int courseId) {
+        ResultSet resultSet;
+
+        boolean exist = false;
+
+        databaseService.setAutoCommit(false);
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(checkCourse)) {
+
+            preparedStatement.setInt(1, courseId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                exist = true;
+            }
+
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+
+        databaseService.setAutoCommit(true);
+
+        return exist;
     }
 }
 

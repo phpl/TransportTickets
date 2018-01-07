@@ -46,6 +46,7 @@ public class DriversFormController {
         int phoneNumber = Integer.parseInt(phoneNumberInput.getCharacters().toString());
 
         logic.addDriver(firstName, lastName, phoneNumber);
+        viewManager.switchView("drivers");
     }
 
     @FXML

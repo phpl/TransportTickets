@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.UserEntity;
+import com.transport.view.controllers.ControllerHelper;
 import com.transport.view.lists.UsersList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +31,7 @@ public class UserDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertUser(UserEntity newEntity) throws SQLException {
+    public void insertUser(UserEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -48,6 +49,7 @@ public class UserDao extends BasicDao {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
     }
 

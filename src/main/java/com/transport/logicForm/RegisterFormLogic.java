@@ -10,8 +10,6 @@ import com.transport.entity.UserEntity;
 import com.transport.exceptions.DatabaseException;
 import com.transport.view.controllers.ControllerHelper;
 
-import java.sql.SQLException;
-
 public class RegisterFormLogic {
     private DatabaseService databaseService;
     private UserDao userDao;
@@ -49,7 +47,7 @@ public class RegisterFormLogic {
             PersonalDataEntity personalDataEntity =
                     createPersonalDataEntity(addressEntity, username, firstName, lastName, phone);
             personalDataDao.insertPersonalData(personalDataEntity);
-        } catch (SQLException | DatabaseException e) {
+        } catch (DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();

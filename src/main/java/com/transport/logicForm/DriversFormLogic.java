@@ -3,9 +3,6 @@ package com.transport.logicForm;
 import com.transport.DatabaseService;
 import com.transport.dao.DriverDao;
 import com.transport.entity.DriverEntity;
-import com.transport.view.controllers.ControllerHelper;
-
-import java.sql.SQLException;
 
 public class DriversFormLogic {
     private DatabaseService databaseService;
@@ -24,13 +21,7 @@ public class DriversFormLogic {
     public void addDriver(String firstName,
                           String lastName,
                           int phoneNumber) {
-        try {
-            DriverEntity driverEntity = new DriverEntity(firstName, lastName, phoneNumber);
-            driverDao.insertDriver(driverEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
+        DriverEntity driverEntity = new DriverEntity(firstName, lastName, phoneNumber);
+        driverDao.insertDriver(driverEntity);
     }
 }

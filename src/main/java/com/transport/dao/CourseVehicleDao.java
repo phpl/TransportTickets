@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CourseVehicleEntity;
+import com.transport.view.controllers.ControllerHelper;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public class CourseVehicleDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertCourseVehicle(CourseVehicleEntity newEntity) throws SQLException {
+    public void insertCourseVehicle(CourseVehicleEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -38,6 +39,7 @@ public class CourseVehicleDao extends BasicDao {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
     }
 

@@ -3,9 +3,6 @@ package com.transport.logicForm;
 import com.transport.DatabaseService;
 import com.transport.dao.VehicleDao;
 import com.transport.entity.VehicleEntity;
-import com.transport.view.controllers.ControllerHelper;
-
-import java.sql.SQLException;
 
 public class VehiclesFormLogic {
     private DatabaseService databaseService;
@@ -24,13 +21,7 @@ public class VehiclesFormLogic {
     public void addVehicle(String model,
                            String licencePlate,
                            int seatsNumber) {
-        try {
-            VehicleEntity vehicleEntity = new VehicleEntity(model, licencePlate, seatsNumber);
-            vehicleDao.insertVechicle(vehicleEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
+        VehicleEntity vehicleEntity = new VehicleEntity(model, licencePlate, seatsNumber);
+        vehicleDao.insertVehicle(vehicleEntity);
     }
 }

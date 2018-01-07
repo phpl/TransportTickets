@@ -268,25 +268,17 @@ CREATE OR REPLACE VIEW transport."uzytkownicy_view" AS
     JOIN transport.adres ON dane.adres_pk = adres.adres_pk
   ORDER BY id;
 
--- CREATE OR REPLACE VIEW transport."pasazerowie_view" AS
---   SELECT
---     dane.imie,
---     dane.nazwisko,
---     bilet.cena
---   FROM transport.dane_osobowe dane
---     JOIN transport.uzytkownik ON dane.uzytkownik_pk = uzytkownik.uzytkownik_pk
---     JOIN transport.bilet ON uzytkownik.uzytkownik_pk = bilet.uzytkownik_pk
---     JOIN transport.kurs ON bilet.kurs_pk = kurs.kurs_pk
---   ORDER BY dane.nazwisko;
-
---  CREATE OR REPLACE VIEW transport."kierowca_pojazd_view" AS
---   SELECT
---     kierowca.imie,
---     kierowca.nazwisko,
---     kierowca.numer_telefonu AS "numer telefonu kierowcy",
---     numer_rejestracji       AS "rejestracja pojazdu"
---   FROM transport.kierowca kierowca
---     JOIN transport.kurs_kierowca ON kierowca.kierowca_pk = kurs_kierowca.kierowca_pk
---     JOIN transport.kurs ON kurs_kierowca.kurs_pk = kurs.kurs_pk
---     JOIN transport.kurs_pojazd ON kurs.kurs_pk = kurs_pojazd.kurs_pk
---     JOIN transport.pojazd ON kurs_pojazd.pojazd_pk = pojazd.pojazd_pk;
+CREATE OR REPLACE VIEW transport."pasazerowie_view" AS
+  SELECT
+    uzytkownik.uzytkownik_pk,
+    bilet.bilet_pk,
+    bagaz.bagaz_pk,
+    dane_osobowe.imie,
+    dane_osobowe.nazwisko,
+    dane_osobowe.numer_telefonu,
+    bagaz.waga
+  FROM transport.uzytkownik
+    JOIN transport.dane_osobowe ON uzytkownik.uzytkownik_pk = dane_osobowe.uzytkownik_pk
+    JOIN transport.bilet ON uzytkownik.uzytkownik_pk = bilet.uzytkownik_pk
+    LEFT JOIN transport.bagaz ON uzytkownik.uzytkownik_pk = bagaz.uzytkownik_pk
+    JOIN transport.kurs ON bilet.kurs_pk = kurs.kurs_pk;

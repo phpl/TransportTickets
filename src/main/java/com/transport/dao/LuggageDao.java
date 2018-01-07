@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.LuggageEntity;
+import com.transport.view.controllers.ControllerHelper;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ public class LuggageDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertLuggage(LuggageEntity newEntity) throws SQLException {
+    public void insertLuggage(LuggageEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -37,6 +38,7 @@ public class LuggageDao extends BasicDao {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
     }
 }

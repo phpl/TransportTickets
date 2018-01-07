@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.PersonalDataEntity;
+import com.transport.view.controllers.ControllerHelper;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ public class PersonalDataDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertPersonalData(PersonalDataEntity newEntity) throws SQLException {
+    public void insertPersonalData(PersonalDataEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -39,6 +40,7 @@ public class PersonalDataDao extends BasicDao {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
     }
 }

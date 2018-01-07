@@ -9,7 +9,6 @@ import com.transport.entity.RouteEntity;
 import com.transport.exceptions.DatabaseException;
 import com.transport.view.controllers.ControllerHelper;
 
-import java.sql.SQLException;
 import java.time.LocalTime;
 
 public class ScheduleFormLogic {
@@ -61,7 +60,7 @@ public class ScheduleFormLogic {
             CourseDriverEntity courseDriverEntity = createCourseDriverEntity(courseEntity, phoneNumber);
             courseDriverDao.insertCourseDriver(courseDriverEntity);
 
-        } catch (SQLException | DatabaseException e) {
+        } catch (DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();

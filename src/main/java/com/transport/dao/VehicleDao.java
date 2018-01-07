@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.VehicleEntity;
+import com.transport.view.controllers.ControllerHelper;
 import com.transport.view.lists.VehiclesList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +32,7 @@ public class VehicleDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertVechicle(VehicleEntity newEntity) {
+    public void insertVehicle(VehicleEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -50,6 +51,7 @@ public class VehicleDao extends BasicDao {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
     }
 

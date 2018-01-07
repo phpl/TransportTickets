@@ -2,6 +2,7 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.DriverEntity;
+import com.transport.view.controllers.ControllerHelper;
 import com.transport.view.lists.DriversList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +29,7 @@ public class DriverDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertDriver(DriverEntity newEntity) throws SQLException {
+    public void insertDriver(DriverEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -47,6 +48,7 @@ public class DriverDao extends BasicDao {
         } catch (SQLException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
+            ControllerHelper.errorWhileRecordAdd();
         }
     }
 

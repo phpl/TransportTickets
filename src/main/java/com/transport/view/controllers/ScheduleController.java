@@ -88,6 +88,7 @@ public class ScheduleController {
     }
 
     private void initializeTableView() {
+        TableColumn<ScheduleList, String> courseId = new TableColumn<>("Id");
         TableColumn<ScheduleList, String> beginCity = new TableColumn<>("Miasto poczatkowe");
         TableColumn<ScheduleList, String> endCity = new TableColumn<>("Miasto koncowe");
         TableColumn<ScheduleList, String> departureTime = new TableColumn<>("Godzina odjazdu");
@@ -97,6 +98,9 @@ public class ScheduleController {
         TableColumn add = new TableColumn("");
         TableColumn delete = new TableColumn("");
 
+        courseId.setCellValueFactory(
+                new PropertyValueFactory<>("courseId")
+        );
         beginCity.setCellValueFactory(
                 new PropertyValueFactory<>("beginCity")
         );
@@ -131,10 +135,10 @@ public class ScheduleController {
 
         switch (Account.type) {
             case ADMINISTRATOR:
-                tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add, delete);
+                tableView.getColumns().addAll(courseId, beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add, delete);
                 break;
             case USER:
-                tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add);
+                tableView.getColumns().addAll(courseId, beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add);
                 break;
             case GUEST:
                 tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice);

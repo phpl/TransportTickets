@@ -8,8 +8,6 @@ import com.transport.entity.TicketEntity;
 import com.transport.exceptions.DatabaseException;
 import com.transport.view.controllers.ControllerHelper;
 
-import java.sql.SQLException;
-
 public class PassengersFormLogic {
     private DatabaseService databaseService;
     private LuggageDao luggageDao;
@@ -37,7 +35,7 @@ public class PassengersFormLogic {
 
             addLuggage(luggageWeight, ticketEntity, passengerId);
 
-        } catch (SQLException | DatabaseException e) {
+        } catch (DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();
@@ -50,7 +48,7 @@ public class PassengersFormLogic {
         }
     }
 
-    private void addLuggage(Double luggageWeight, TicketEntity ticketEntity, Integer passengerId) throws DatabaseException, SQLException {
+    private void addLuggage(Double luggageWeight, TicketEntity ticketEntity, Integer passengerId) throws DatabaseException {
         if (luggageWeight != null) {
             int ticketId = ticketDao.getTicketId(ticketEntity);
             ControllerHelper.validateIds(ticketId);
