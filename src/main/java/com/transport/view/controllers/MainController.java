@@ -32,11 +32,11 @@ public class MainController {
     private JFXButton vehiclesButton;
 
     public void postInit() {
+        ControllerHelper.resetButtonTexts(driversButton, usersButton, passengersButton, vehiclesButton);
         ControllerHelper.hideButtonDependindOnAccountType(driversButton, usersButton, passengersButton, vehiclesButton);
     }
 
     public void dispose() {
-        ControllerHelper.showButtonAfterDispose(driversButton, usersButton, passengersButton, vehiclesButton);
     }
 
     @FXML
@@ -48,6 +48,7 @@ public class MainController {
 
     @FXML
     void logout(ActionEvent event) {
+        Account.type = null;
         viewManager.switchView("login");
     }
 

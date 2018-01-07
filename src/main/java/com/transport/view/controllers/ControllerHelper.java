@@ -34,6 +34,10 @@ public class ControllerHelper {
                                                         JFXButton usersButton,
                                                         JFXButton passengersButton,
                                                         JFXButton vehiclesButton) {
+        if (Account.type == null) {
+            return;
+        }
+
         switch (Account.type) {
             case USER:
                 setDriverButton(driversButton, "");
@@ -46,13 +50,15 @@ public class ControllerHelper {
                 setVehiclesButton(vehiclesButton, "");
                 setPassengersButton(passengersButton, "");
                 break;
+            default:
+                break;
         }
     }
 
-    public static void showButtonAfterDispose(JFXButton driversButton,
-                                              JFXButton usersButton,
-                                              JFXButton passengersButton,
-                                              JFXButton vehiclesButton) {
+    public static void resetButtonTexts(JFXButton driversButton,
+                                        JFXButton usersButton,
+                                        JFXButton passengersButton,
+                                        JFXButton vehiclesButton) {
         setDriverButton(driversButton, "Kierowcy");
         setUserButton(usersButton, "Użytkownicy");
         setPassengersButton(passengersButton, "Pasażerowie");

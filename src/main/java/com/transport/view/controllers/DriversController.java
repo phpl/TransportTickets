@@ -2,6 +2,7 @@ package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
+import com.transport.Account;
 import com.transport.DatabaseService;
 import com.transport.dao.DriverDao;
 import com.transport.view.lists.DriversList;
@@ -57,15 +58,13 @@ public class DriversController {
         driverDao = new DriverDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
-
-
+        ControllerHelper.resetButtonTexts(null, usersButton1, passengersButton1, vehiclesButton);
+        ControllerHelper.hideButtonDependindOnAccountType(null, usersButton1, passengersButton1, vehiclesButton);
     }
 
     public void dispose() {
         clearTable();
         databaseService.closeConnection();
-
-
     }
 
     private void initializeTableView() {
@@ -147,6 +146,7 @@ public class DriversController {
 
     @FXML
     void logout(ActionEvent event) {
+        Account.type = null;
         clearTable();
         viewManager.switchView("login");
     }

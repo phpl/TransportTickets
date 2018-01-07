@@ -2,6 +2,7 @@ package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
+import com.transport.Account;
 import com.transport.DatabaseService;
 import com.transport.dao.*;
 import com.transport.view.lists.ScheduleList;
@@ -56,6 +57,8 @@ public class ScheduleController {
     private ObservableList<ScheduleList> data = null;
 
     public void postInit() {
+        ControllerHelper.resetButtonTexts(driversButton1, usersButton1, passengersButton1, vehiclesButton);
+        ControllerHelper.hideButtonDependindOnAccountType(driversButton1, usersButton1, passengersButton1, vehiclesButton);
         databaseService = new DatabaseService();
         courseDao = new CourseDao(databaseService);
         courseDriverDao = new CourseDriverDao(databaseService);
@@ -199,6 +202,7 @@ public class ScheduleController {
     @FXML
     void logout(ActionEvent event) {
         clearTable();
+        Account.type = null;
         viewManager.switchView("login");
     }
 
