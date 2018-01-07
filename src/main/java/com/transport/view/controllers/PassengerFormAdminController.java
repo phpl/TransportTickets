@@ -41,7 +41,7 @@ public class PassengerFormAdminController {
         int id = Integer.parseInt(passengerId.getCharacters().toString());
         String luggageWeightString = luggageWeightInput.getCharacters().toString();
         Double luggageWeight = luggageWeightString.isEmpty() ? null :
-                Double.parseDouble(luggageWeightString) == 0 ? null : Double.parseDouble(luggageWeightString);
+                Double.parseDouble(luggageWeightString) <= 0 ? null : Double.parseDouble(luggageWeightString);
 
         if (ScheduleController.selectedCourseId != null) {
             logic.addPassenger(
