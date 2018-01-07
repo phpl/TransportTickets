@@ -52,6 +52,7 @@ public class LoginController {
     private UserDao userDao;
 
     public void postInit() {
+        Account.currentUserId = null;
         databaseService = new DatabaseService();
         userDao = new UserDao(databaseService);
         databaseService.connectToDatabase();
@@ -69,8 +70,8 @@ public class LoginController {
         boolean isValidCredentials = userDao.checkUserCredentials(username, password);
         boolean canLogin = checkIfCanLogin(isValidCredentials, username);
 
-
         if (canLogin) {
+            Account.currentUserId = userDao.getUserId(username);
             viewManager.switchView("main");
         }
     }
