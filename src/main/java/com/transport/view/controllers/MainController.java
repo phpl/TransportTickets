@@ -32,26 +32,11 @@ public class MainController {
     private JFXButton vehiclesButton;
 
     public void postInit() {
-        switch (Account.type) {
-            case USER:
-                driversButton.setText("");
-                usersButton.setText("");
-                vehiclesButton.setText("");
-                break;
-            case GUEST:
-                driversButton.setText("");
-                usersButton.setText("");
-                passengersButton.setText("");
-                vehiclesButton.setText("");
-                break;
-        }
+        ControllerHelper.hideButtonDependindOnAccountType(driversButton, usersButton, passengersButton, vehiclesButton);
     }
 
     public void dispose() {
-        driversButton.setText("Kierowcy");
-        usersButton.setText("Użytkownicy");
-        passengersButton.setText("Pasażerowie");
-        vehiclesButton.setText("Pojazdy");
+        ControllerHelper.showButtonAfterDispose(driversButton, usersButton, passengersButton, vehiclesButton);
     }
 
     @FXML

@@ -57,11 +57,15 @@ public class DriversController {
         driverDao = new DriverDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
+
+
     }
 
     public void dispose() {
         clearTable();
         databaseService.closeConnection();
+
+
     }
 
     private void initializeTableView() {

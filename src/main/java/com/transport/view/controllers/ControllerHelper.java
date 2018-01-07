@@ -1,5 +1,7 @@
 package com.transport.view.controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.transport.Account;
 import com.transport.exceptions.DatabaseException;
 import javafx.scene.control.Alert;
 
@@ -25,6 +27,59 @@ public class ControllerHelper {
     public static void validateIds(int id) throws DatabaseException {
         if (id == -1) {
             throw new DatabaseException();
+        }
+    }
+
+    public static void hideButtonDependindOnAccountType(JFXButton driversButton,
+                                                        JFXButton usersButton,
+                                                        JFXButton passengersButton,
+                                                        JFXButton vehiclesButton) {
+        switch (Account.type) {
+            case USER:
+                setDriverButton(driversButton, "");
+                setUserButton(usersButton, "");
+                setVehiclesButton(vehiclesButton, "");
+                break;
+            case GUEST:
+                setDriverButton(driversButton, "");
+                setUserButton(usersButton, "");
+                setVehiclesButton(vehiclesButton, "");
+                setPassengersButton(passengersButton, "");
+                break;
+        }
+    }
+
+    public static void showButtonAfterDispose(JFXButton driversButton,
+                                              JFXButton usersButton,
+                                              JFXButton passengersButton,
+                                              JFXButton vehiclesButton) {
+        setDriverButton(driversButton, "Kierowcy");
+        setUserButton(usersButton, "Użytkownicy");
+        setPassengersButton(passengersButton, "Pasażerowie");
+        setVehiclesButton(vehiclesButton, "Pojazdy");
+    }
+
+    private static void setDriverButton(JFXButton driversButton, String text) {
+        if (driversButton != null) {
+            driversButton.setText(text);
+        }
+    }
+
+    private static void setUserButton(JFXButton usersButton, String text) {
+        if (usersButton != null) {
+            usersButton.setText(text);
+        }
+    }
+
+    private static void setPassengersButton(JFXButton passengersButton, String text) {
+        if (passengersButton != null) {
+            passengersButton.setText(text);
+        }
+    }
+
+    private static void setVehiclesButton(JFXButton vehiclesButton, String text) {
+        if (vehiclesButton != null) {
+            vehiclesButton.setText(text);
         }
     }
 }
