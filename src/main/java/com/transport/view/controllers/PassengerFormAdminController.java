@@ -18,6 +18,9 @@ public class PassengerFormAdminController {
     private JFXTextField passengerId;
 
     @FXML
+    private JFXTextField luggageWeightInput;
+
+    @FXML
     private JFXButton addButton;
 
     @FXML
@@ -36,11 +39,25 @@ public class PassengerFormAdminController {
     @FXML
     void add(ActionEvent event) {
         int id = Integer.parseInt(passengerId.getCharacters().toString());
-        viewManager.switchView("main");
+        String luggageWeightString = luggageWeightInput.getCharacters().toString();
+        Double luggageWeight = luggageWeightString.isEmpty() ? null :
+                Double.parseDouble(luggageWeightString) == 0 ? null : Double.parseDouble(luggageWeightString);
+
+        if (ScheduleController.selectedCourseId != null) {
+            logic.addPassenger(
+                    id,
+                    ScheduleController.selectedCourseId,
+                    ScheduleController.selectedCoursePrice,
+                    luggageWeight);
+            ScheduleController.selectedCourseId = null;
+            ScheduleController.selectedCoursePrice = null;
+        }
+
+        viewManager.switchView("schedule");
     }
 
     @FXML
     void goBack(ActionEvent event) {
-        viewManager.switchView("main");
+        viewManager.switchView("schedule");
     }
 }

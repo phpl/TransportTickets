@@ -55,6 +55,7 @@ public class ScheduleController {
     private LuggageDao luggageDao;
 
     public static Integer selectedCourseId = null;
+    public static Double selectedCoursePrice = null;
 
     private ObservableList<ScheduleList> data = null;
 
@@ -193,6 +194,7 @@ public class ScheduleController {
                                 {
                                     ScheduleList schedule = getTableView().getItems().get(getIndex());
                                     selectedCourseId = schedule.getCourseId();
+                                    selectedCoursePrice = schedule.getTicketPrice().doubleValue();
                                     switch (Account.type) {
                                         case ADMINISTRATOR:
                                             viewManager.switchView("passengerFormAdmin");
