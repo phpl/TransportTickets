@@ -38,7 +38,6 @@ public class RegisterFormLogic {
                         String city,
                         String street,
                         String houseNumber) {
-        databaseService.setAutoCommit(false);
         try {
             validateUserExist(username);
             AddressEntity addressEntity = new AddressEntity(city, street, houseNumber);
@@ -55,7 +54,6 @@ public class RegisterFormLogic {
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();
         }
-        databaseService.setAutoCommit(true);
     }
 
     private void validateUserExist(String username) throws DatabaseException {
