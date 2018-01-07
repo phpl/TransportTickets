@@ -67,6 +67,7 @@ public class ScheduleController {
     }
 
     public void dispose() {
+        clearTable();
         databaseService.closeConnection();
     }
 

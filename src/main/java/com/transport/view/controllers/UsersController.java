@@ -57,6 +57,7 @@ public class UsersController {
     }
 
     public void dispose() {
+        clearTable();
         databaseService.closeConnection();
     }
 

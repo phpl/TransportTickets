@@ -60,6 +60,7 @@ public class DriversController {
     }
 
     public void dispose() {
+        clearTable();
         databaseService.closeConnection();
     }
 

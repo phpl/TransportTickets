@@ -226,6 +226,19 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+INSERT INTO transport.adres (miasto, ulica, numer_domu) VALUES ('Krakow', 'Reymonta', '10');
+INSERT INTO transport.uzytkownik (login, haslo) VALUES ('admin', 'admin');
+INSERT INTO transport.dane_osobowe (uzytkownik_pk, imie, nazwisko, numer_telefonu, adres_pk) VALUES
+  ((SELECT uzytkownik.uzytkownik_pk
+    FROM transport.uzytkownik
+    WHERE login = 'admin' AND haslo = 'admin'),
+   'admin',
+   'admin',
+   1,
+   (SELECT adres.adres_pk
+    FROM transport.adres
+    WHERE miasto = 'Krakow' AND ulica = 'Reymonta' AND numer_domu = '10'));
+
 CREATE OR REPLACE VIEW transport."trasy_view" AS
   SELECT
     kurs.kurs_pk,

@@ -60,6 +60,7 @@ public class VehiclesController {
     }
 
     public void dispose() {
+        clearTable();
         databaseService.closeConnection();
     }
 
