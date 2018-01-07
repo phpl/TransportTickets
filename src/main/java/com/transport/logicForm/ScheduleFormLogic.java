@@ -19,7 +19,6 @@ public class ScheduleFormLogic {
     private DriverDao driverDao;
     private CourseVehicleDao courseVehicleDao;
     private VehicleDao vehicleDao;
-    private TicketDao ticketDao;
     private RouteDao routeDao;
 
     public ScheduleFormLogic() {
@@ -27,7 +26,6 @@ public class ScheduleFormLogic {
         courseDao = new CourseDao(databaseService);
         courseDriverDao = new CourseDriverDao(databaseService);
         courseVehicleDao = new CourseVehicleDao(databaseService);
-        ticketDao = new TicketDao(databaseService);
         routeDao = new RouteDao(databaseService);
         driverDao = new DriverDao(databaseService);
         vehicleDao = new VehicleDao(databaseService);
