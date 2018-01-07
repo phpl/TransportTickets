@@ -1,12 +1,13 @@
+CREATE SCHEMA transport;
 
 CREATE SEQUENCE transport.adres_adres_pk_seq_1;
 
 CREATE TABLE transport.adres (
-                adres_pk INTEGER NOT NULL DEFAULT nextval('transport.adres_adres_pk_seq_1'),
-                miasto VARCHAR NOT NULL,
-                ulica VARCHAR NOT NULL,
-                numer_domu VARCHAR NOT NULL,
-                CONSTRAINT adres_pk PRIMARY KEY (adres_pk)
+  adres_pk   INTEGER NOT NULL DEFAULT nextval('transport.adres_adres_pk_seq_1'),
+  miasto     VARCHAR NOT NULL,
+  ulica      VARCHAR NOT NULL,
+  numer_domu VARCHAR NOT NULL,
+  CONSTRAINT adres_pk PRIMARY KEY (adres_pk)
 );
 
 
@@ -15,81 +16,80 @@ ALTER SEQUENCE transport.adres_adres_pk_seq_1 OWNED BY transport.adres.adres_pk;
 CREATE SEQUENCE transport.kierowca_kierowca_pk_seq;
 
 CREATE TABLE transport.kierowca (
-                kierowca_pk INTEGER NOT NULL DEFAULT nextval('transport.kierowca_kierowca_pk_seq'),
-                imie VARCHAR NOT NULL,
-                nazwisko VARCHAR NOT NULL,
-                numer_telefonu INTEGER NOT NULL,
-                CONSTRAINT kierowca_pk PRIMARY KEY (kierowca_pk)
+  kierowca_pk    INTEGER NOT NULL DEFAULT nextval('transport.kierowca_kierowca_pk_seq'),
+  imie           VARCHAR NOT NULL,
+  nazwisko       VARCHAR NOT NULL,
+  numer_telefonu INTEGER NOT NULL,
+  CONSTRAINT kierowca_pk PRIMARY KEY (kierowca_pk)
 );
 
 
 ALTER SEQUENCE transport.kierowca_kierowca_pk_seq OWNED BY transport.kierowca.kierowca_pk;
 
 CREATE UNIQUE INDEX kierowca_idx
- ON transport.kierowca
- ( numer_telefonu );
+  ON transport.kierowca
+  ( numer_telefonu );
 
 CREATE SEQUENCE transport.pojazd_pojazd_pk_seq;
 
 CREATE TABLE transport.pojazd (
-                pojazd_pk INTEGER NOT NULL DEFAULT nextval('transport.pojazd_pojazd_pk_seq'),
-                model VARCHAR NOT NULL,
-                numer_rejestracji VARCHAR NOT NULL,
-                ilosc_miejsc INTEGER NOT NULL,
-                dopuszczalny_bagaz NUMERIC NOT NULL,
-                CONSTRAINT pojazd_pk PRIMARY KEY (pojazd_pk)
+  pojazd_pk         INTEGER NOT NULL DEFAULT nextval('transport.pojazd_pojazd_pk_seq'),
+  model             VARCHAR NOT NULL,
+  numer_rejestracji VARCHAR NOT NULL,
+  ilosc_miejsc      INTEGER NOT NULL,
+  CONSTRAINT pojazd_pk PRIMARY KEY (pojazd_pk)
 );
 
 
 ALTER SEQUENCE transport.pojazd_pojazd_pk_seq OWNED BY transport.pojazd.pojazd_pk;
 
 CREATE UNIQUE INDEX pojazd_idx
- ON transport.pojazd
- ( numer_rejestracji );
+  ON transport.pojazd
+  ( numer_rejestracji );
 
 CREATE SEQUENCE transport.uzytkownik_uzytkownik_pk_seq;
 
 CREATE TABLE transport.uzytkownik (
-                uzytkownik_pk INTEGER NOT NULL DEFAULT nextval('transport.uzytkownik_uzytkownik_pk_seq'),
-                login VARCHAR NOT NULL,
-                haslo VARCHAR NOT NULL,
-                CONSTRAINT uzytkownik_pk PRIMARY KEY (uzytkownik_pk)
+  uzytkownik_pk INTEGER NOT NULL DEFAULT nextval('transport.uzytkownik_uzytkownik_pk_seq'),
+  login         VARCHAR NOT NULL,
+  haslo         VARCHAR NOT NULL,
+  CONSTRAINT uzytkownik_pk PRIMARY KEY (uzytkownik_pk)
 );
 
 
 ALTER SEQUENCE transport.uzytkownik_uzytkownik_pk_seq OWNED BY transport.uzytkownik.uzytkownik_pk;
 
 CREATE UNIQUE INDEX uzytkownik_idx
- ON transport.uzytkownik
- ( login );
+  ON transport.uzytkownik
+  ( login );
 
 CREATE SEQUENCE transport.dane_osobowe_dane_pk_seq;
 
 CREATE TABLE transport.dane_osobowe (
-                dane_pk INTEGER NOT NULL DEFAULT nextval('transport.dane_osobowe_dane_pk_seq'),
-                uzytkownik_pk INTEGER NOT NULL,
-                imie VARCHAR NOT NULL,
-                nazwisko VARCHAR NOT NULL,
-                numer_telefonu INTEGER NOT NULL,
-                adres_pk INTEGER NOT NULL,
-                CONSTRAINT dane_osobowe_pk PRIMARY KEY (dane_pk)
+  dane_pk        INTEGER NOT NULL DEFAULT nextval('transport.dane_osobowe_dane_pk_seq'),
+  uzytkownik_pk  INTEGER NOT NULL,
+  imie           VARCHAR NOT NULL,
+  nazwisko       VARCHAR NOT NULL,
+  numer_telefonu INTEGER NOT NULL,
+  adres_pk       INTEGER NOT NULL,
+  CONSTRAINT dane_osobowe_pk PRIMARY KEY (dane_pk)
 );
 
 
 ALTER SEQUENCE transport.dane_osobowe_dane_pk_seq OWNED BY transport.dane_osobowe.dane_pk;
 
 CREATE UNIQUE INDEX dane_osobowe_idx
- ON transport.dane_osobowe
- ( numer_telefonu );
+  ON transport.dane_osobowe
+  ( numer_telefonu );
 
 CREATE SEQUENCE transport.trasa_trasa_pk_seq;
 
 CREATE TABLE transport.trasa (
-                trasa_pk INTEGER NOT NULL DEFAULT nextval('transport.trasa_trasa_pk_seq'),
-                odleglosc INTEGER NOT NULL,
-                miasto_poczatkowe VARCHAR NOT NULL,
-                miasto_koncowe VARCHAR NOT NULL,
-                CONSTRAINT trasa_pk PRIMARY KEY (trasa_pk)
+  trasa_pk          INTEGER NOT NULL DEFAULT nextval('transport.trasa_trasa_pk_seq'),
+  odleglosc         INTEGER NOT NULL,
+  miasto_poczatkowe VARCHAR NOT NULL,
+  miasto_koncowe    VARCHAR NOT NULL,
+  CONSTRAINT trasa_pk PRIMARY KEY (trasa_pk)
 );
 
 
@@ -98,12 +98,12 @@ ALTER SEQUENCE transport.trasa_trasa_pk_seq OWNED BY transport.trasa.trasa_pk;
 CREATE SEQUENCE transport.kurs_kurs_pk_seq_2_1_1;
 
 CREATE TABLE transport.kurs (
-                kurs_pk INTEGER NOT NULL DEFAULT nextval('transport.kurs_kurs_pk_seq_2_1_1'),
-                godzina_odjazdu TIME NOT NULL,
-                godzina_powrotu TIME NOT NULL,
-                maks_dostepna_ilosc_miejsc INTEGER NOT NULL,
-                trasa_pk INTEGER NOT NULL,
-                CONSTRAINT kurs_pk PRIMARY KEY (kurs_pk)
+  kurs_pk                    INTEGER NOT NULL DEFAULT nextval('transport.kurs_kurs_pk_seq_2_1_1'),
+  godzina_odjazdu            TIME    NOT NULL,
+  godzina_powrotu            TIME    NOT NULL,
+  maks_dostepna_ilosc_miejsc INTEGER NOT NULL,
+  trasa_pk                   INTEGER NOT NULL,
+  CONSTRAINT kurs_pk PRIMARY KEY (kurs_pk)
 );
 
 
@@ -112,11 +112,11 @@ ALTER SEQUENCE transport.kurs_kurs_pk_seq_2_1_1 OWNED BY transport.kurs.kurs_pk;
 CREATE SEQUENCE transport.bilet_bilet_pk_seq_1;
 
 CREATE TABLE transport.bilet (
-                bilet_pk INTEGER NOT NULL DEFAULT nextval('transport.bilet_bilet_pk_seq_1'),
-                uzytkownik_pk INTEGER NOT NULL,
-                cena NUMERIC NOT NULL,
-                kurs_pk INTEGER NOT NULL,
-                CONSTRAINT bilet_pk PRIMARY KEY (bilet_pk)
+  bilet_pk      INTEGER NOT NULL DEFAULT nextval('transport.bilet_bilet_pk_seq_1'),
+  uzytkownik_pk INTEGER NOT NULL,
+  cena          NUMERIC NOT NULL,
+  kurs_pk       INTEGER NOT NULL,
+  CONSTRAINT bilet_pk PRIMARY KEY (bilet_pk)
 );
 
 
@@ -125,27 +125,27 @@ ALTER SEQUENCE transport.bilet_bilet_pk_seq_1 OWNED BY transport.bilet.bilet_pk;
 CREATE SEQUENCE transport.bagaz_bagaz_pk_seq;
 
 CREATE TABLE transport.bagaz (
-                bagaz_pk INTEGER NOT NULL DEFAULT nextval('transport.bagaz_bagaz_pk_seq'),
-                bilet_pk INTEGER NOT NULL,
-                waga NUMERIC,
-                uzytkownik_pk INTEGER NOT NULL,
-                CONSTRAINT bagaz_pk PRIMARY KEY (bagaz_pk)
+  bagaz_pk      INTEGER NOT NULL DEFAULT nextval('transport.bagaz_bagaz_pk_seq'),
+  bilet_pk      INTEGER NOT NULL,
+  waga          NUMERIC,
+  uzytkownik_pk INTEGER NOT NULL,
+  CONSTRAINT bagaz_pk PRIMARY KEY (bagaz_pk)
 );
 
 
 ALTER SEQUENCE transport.bagaz_bagaz_pk_seq OWNED BY transport.bagaz.bagaz_pk;
 
 CREATE TABLE transport.kurs_pojazd (
-                kurs_pk INTEGER NOT NULL,
-                pojazd_pk INTEGER NOT NULL,
-                CONSTRAINT kurs_pojazd_pk PRIMARY KEY (kurs_pk, pojazd_pk)
+  kurs_pk   INTEGER NOT NULL,
+  pojazd_pk INTEGER NOT NULL,
+  CONSTRAINT kurs_pojazd_pk PRIMARY KEY (kurs_pk, pojazd_pk)
 );
 
 
 CREATE TABLE transport.kurs_kierowca (
-                kierowca_pk INTEGER NOT NULL,
-                kurs_pk INTEGER NOT NULL,
-                CONSTRAINT kurs_kierowca_pk PRIMARY KEY (kierowca_pk, kurs_pk)
+  kierowca_pk INTEGER NOT NULL,
+  kurs_pk     INTEGER NOT NULL,
+  CONSTRAINT kurs_kierowca_pk PRIMARY KEY (kierowca_pk, kurs_pk)
 );
 
 

@@ -11,6 +11,4 @@ public class VehicleEntity {
     private String licencePlate;
     @NonNull
     private int seatsNumber;
-    @NonNull
-    private double acceptableLuggageWeight;
 }

@@ -14,7 +14,5 @@ public class VehiclesList {
     @NonNull
     private int seatsNumber;
     @NonNull
-    private double luggageWeight;
-    @NonNull
     private int courseId;
 }

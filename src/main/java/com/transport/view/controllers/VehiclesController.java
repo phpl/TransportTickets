@@ -71,7 +71,6 @@ public class VehiclesController {
         TableColumn<VehiclesList, String> model = new TableColumn<>("Model");
         TableColumn<VehiclesList, String> licencePlate = new TableColumn<>("Numer rejestracji");
         TableColumn<VehiclesList, Integer> seatsNumber = new TableColumn<>("Ilość miejsc");
-        TableColumn<VehiclesList, Double> luggageWeight = new TableColumn<>("Dopuszczalna waga bagażu");
         TableColumn<VehiclesList, Integer> courseId = new TableColumn<>("Id kursu");
         TableColumn delete = new TableColumn("Usuń");
 
@@ -87,9 +86,6 @@ public class VehiclesController {
         seatsNumber.setCellValueFactory(
                 new PropertyValueFactory<>("seatsNumber")
         );
-        luggageWeight.setCellValueFactory(
-                new PropertyValueFactory<>("luggageWeight")
-        );
         courseId.setCellValueFactory(
                 new PropertyValueFactory<>("courseId")
         );
@@ -101,7 +97,7 @@ public class VehiclesController {
 
         data = vehicleDao.selectAllVehicles();
         tableView.setItems(data);
-        tableView.getColumns().addAll(vehicleId, model, licencePlate, seatsNumber, luggageWeight, courseId, delete);
+        tableView.getColumns().addAll(vehicleId, model, licencePlate, seatsNumber, courseId, delete);
     }
 
     private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createRemoveButtonTableCellFactory() {

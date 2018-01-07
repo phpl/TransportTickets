@@ -23,10 +23,9 @@ public class VehiclesFormLogic {
 
     public void addVehicle(String model,
                            String licencePlate,
-                           int seatsNumber,
-                           double luggageWeight) {
+                           int seatsNumber) {
         try {
-            VehicleEntity vehicleEntity = new VehicleEntity(model, licencePlate, seatsNumber, luggageWeight);
+            VehicleEntity vehicleEntity = new VehicleEntity(model, licencePlate, seatsNumber);
             vehicleDao.insertVechicle(vehicleEntity);
         } catch (SQLException e) {
             e.printStackTrace();

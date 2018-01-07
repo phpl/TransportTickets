@@ -15,8 +15,8 @@ import java.sql.SQLException;
 public class VehicleDao extends BasicDao {
 
     private final String insertNewVechicle = "INSERT INTO " +
-            "transport.pojazd (model, numer_rejestracji, ilosc_miejsc, dopuszczalny_bagaz) " +
-            "VALUES (?, ?, ?, ?);";
+            "transport.pojazd (model, numer_rejestracji, ilosc_miejsc) " +
+            "VALUES (?, ?, ?);";
 
     private final String selectIdFromVechicle = "SELECT pojazd.pojazd_pk FROM transport.pojazd" +
             " WHERE numer_rejestracji = ?;";
@@ -31,7 +31,7 @@ public class VehicleDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertVechicle(VehicleEntity newEntity) throws SQLException {
+    public void insertVechicle(VehicleEntity newEntity) {
         databaseService.setAutoCommit(false);
         executeInsert(newEntity);
         databaseService.setAutoCommit(true);
@@ -44,7 +44,6 @@ public class VehicleDao extends BasicDao {
             preparedStatement.setString(1, newEntity.getModel());
             preparedStatement.setString(2, newEntity.getLicencePlate());
             preparedStatement.setInt(3, newEntity.getSeatsNumber());
-            preparedStatement.setDouble(4, newEntity.getAcceptableLuggageWeight());
             preparedStatement.executeUpdate();
 
             log.info("End insertNewVechicle");
@@ -91,7 +90,6 @@ public class VehicleDao extends BasicDao {
                     resultSet.getString("model"),
                     resultSet.getString("numer_rejestracji"),
                     resultSet.getInt("ilosc_miejsc"),
-                    resultSet.getDouble("dopuszczalny_bagaz"),
                     resultSet.getInt("kurs_pk")
             );
             data.add(vehicles);

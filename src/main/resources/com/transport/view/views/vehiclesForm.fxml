@@ -29,7 +29,6 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                             </rowConstraints>
                             <children>
                                 <JFXTextField fx:id="modelInput" promptText="Model pojazdu"/>
@@ -37,14 +36,6 @@
                                               GridPane.rowIndex="1"/>
                                 <JFXTextField fx:id="seatsNumberInput" promptText="Ilość miejsc w pojeździe"
                                               GridPane.rowIndex="2"/>
-                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
-                                    <children>
-                                        <JFXTextField fx:id="luggageWeightInput" layoutX="103.0" layoutY="18.0"
-                                                      promptText="Dopuszczalna waga bagażu"
-                                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                                    </children>
-                                </AnchorPane>
                             </children>
                         </GridPane>
                         <AnchorPane GridPane.rowIndex="1">

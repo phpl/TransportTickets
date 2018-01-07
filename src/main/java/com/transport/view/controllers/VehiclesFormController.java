@@ -24,9 +24,6 @@ public class VehiclesFormController {
     private JFXTextField seatsNumberInput;
 
     @FXML
-    private JFXTextField luggageWeightInput;
-
-    @FXML
     private JFXButton addButton;
 
     @FXML
@@ -47,9 +44,9 @@ public class VehiclesFormController {
         String model = modelInput.getText();
         String licencePlate = licencePlateInput.getText();
         int seatsNumber = Integer.parseInt(seatsNumberInput.getCharacters().toString());
-        double luggageWeight = Double.parseDouble(luggageWeightInput.getCharacters().toString());
 
-        logic.addVehicle(model, licencePlate, seatsNumber, luggageWeight);
+        logic.addVehicle(model, licencePlate, seatsNumber);
+        viewManager.switchView("vehicles");
     }
 
     @FXML
