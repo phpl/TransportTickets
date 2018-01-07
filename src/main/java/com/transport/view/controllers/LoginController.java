@@ -45,7 +45,6 @@ public class LoginController {
     @FXML
     void loginAsGuest(ActionEvent event) {
         Account.type = Account.AccountType.GUEST;
-        System.out.println(Account.type);
         viewManager.switchView("main");
     }
 
@@ -72,7 +71,6 @@ public class LoginController {
 
 
         if (canLogin) {
-            System.out.println(Account.type);
             viewManager.switchView("main");
         }
     }

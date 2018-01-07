@@ -48,7 +48,6 @@ public class MainController {
 
     @FXML
     void logout(ActionEvent event) {
-        Account.type = null;
         viewManager.switchView("login");
     }
 

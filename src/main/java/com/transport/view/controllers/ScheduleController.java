@@ -66,6 +66,7 @@ public class ScheduleController {
         ticketDao = new TicketDao(databaseService);
         luggageDao = new LuggageDao(databaseService);
         databaseService.connectToDatabase();
+        clearTable();
         initializeTableView();
     }
 
@@ -115,7 +116,18 @@ public class ScheduleController {
 
         data = courseDao.selectAllCourses();
         tableView.setItems(data);
-        tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add, delete);
+
+        switch (Account.type) {
+            case ADMINISTRATOR:
+                tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add, delete);
+                break;
+            case USER:
+                tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add);
+                break;
+            case GUEST:
+                tableView.getColumns().addAll(beginCity, endCity, departureTime, freeSeats, distance, ticketPrice);
+                break;
+        }
     }
 
     private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createRemoveButtonTableCellFactory() {
@@ -202,7 +214,6 @@ public class ScheduleController {
     @FXML
     void logout(ActionEvent event) {
         clearTable();
-        Account.type = null;
         viewManager.switchView("login");
     }
 

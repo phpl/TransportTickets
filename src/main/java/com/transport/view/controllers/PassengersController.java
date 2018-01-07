@@ -3,7 +3,6 @@ package com.transport.view.controllers;
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.transport.Account;
 import com.transport.DatabaseService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -69,7 +68,6 @@ public class PassengersController {
 
     @FXML
     void logout(ActionEvent event) {
-        Account.type = null;
         viewManager.switchView("login");
     }
 

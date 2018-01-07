@@ -2,7 +2,6 @@ package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
-import com.transport.Account;
 import com.transport.DatabaseService;
 import com.transport.dao.DriverDao;
 import com.transport.view.lists.DriversList;
@@ -146,7 +145,6 @@ public class DriversController {
 
     @FXML
     void logout(ActionEvent event) {
-        Account.type = null;
         clearTable();
         viewManager.switchView("login");
     }

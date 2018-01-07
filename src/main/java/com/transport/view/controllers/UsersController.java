@@ -2,7 +2,6 @@ package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
-import com.transport.Account;
 import com.transport.DatabaseService;
 import com.transport.dao.UserDao;
 import com.transport.view.lists.ScheduleList;
@@ -157,7 +156,6 @@ public class UsersController {
     @FXML
     void logout(ActionEvent event) {
         clearTable();
-        Account.type = null;
         viewManager.switchView("login");
     }
 
