@@ -23,6 +23,9 @@ public class UserDao extends BasicDao {
     private final String selectIdFromUser = "SELECT uzytkownik.uzytkownik_pk FROM transport.uzytkownik" +
             " WHERE login = ?;";
 
+    private final String checkUser = "SELECT uzytkownik.uzytkownik_pk FROM transport.uzytkownik" +
+            " WHERE login = ? AND haslo = ?;";
+
     public UserDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -92,5 +95,29 @@ public class UserDao extends BasicDao {
             data.add(users);
         }
         return data;
+    }
+
+    public boolean checkUserCredentials(String username, String password) {
+        ResultSet resultSet;
+        boolean canLogin = false;
+
+        databaseService.setAutoCommit(false);
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(checkUser)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                canLogin = true;
+            }
+
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+            databaseService.rollbackTransaction();
+        }
+        databaseService.setAutoCommit(true);
+
+        return canLogin;
     }
 }
