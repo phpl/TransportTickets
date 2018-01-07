@@ -2,6 +2,7 @@ package com.transport.view.controllers;
 
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
+import com.transport.Account;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -30,9 +31,34 @@ public class MainController {
     @FXML
     private JFXButton vehiclesButton;
 
+    public void postInit() {
+        switch (Account.type) {
+            case USER:
+                driversButton.setText("");
+                usersButton.setText("");
+                vehiclesButton.setText("");
+                break;
+            case GUEST:
+                driversButton.setText("");
+                usersButton.setText("");
+                passengersButton.setText("");
+                vehiclesButton.setText("");
+                break;
+        }
+    }
+
+    public void dispose() {
+        driversButton.setText("Kierowcy");
+        usersButton.setText("Użytkownicy");
+        passengersButton.setText("Pasażerowie");
+        vehiclesButton.setText("Pojazdy");
+    }
+
     @FXML
     void openVehicles(ActionEvent event) {
-        viewManager.switchView("vehicles");
+        if (Account.type == Account.AccountType.ADMINISTRATOR) {
+            viewManager.switchView("vehicles");
+        }
     }
 
     @FXML
@@ -42,12 +68,16 @@ public class MainController {
 
     @FXML
     void openDrivers(ActionEvent event) {
-        viewManager.switchView("drivers");
+        if (Account.type == Account.AccountType.ADMINISTRATOR) {
+            viewManager.switchView("drivers");
+        }
     }
 
     @FXML
     void openPassengers(ActionEvent event) {
-        viewManager.switchView("passengers");
+        if (Account.type != Account.AccountType.GUEST) {
+            viewManager.switchView("passengers");
+        }
     }
 
     @FXML
@@ -57,7 +87,9 @@ public class MainController {
 
     @FXML
     void openUsers(ActionEvent event) {
-        viewManager.switchView("users");
+        if (Account.type == Account.AccountType.ADMINISTRATOR) {
+            viewManager.switchView("users");
+        }
     }
 
 }
