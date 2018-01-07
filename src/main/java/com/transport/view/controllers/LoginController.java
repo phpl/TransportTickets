@@ -13,8 +13,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import javax.inject.Inject;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class LoginController {
+
+    private Properties properties = null;
 
     @Inject
     private ViewManager viewManager;
@@ -52,6 +57,7 @@ public class LoginController {
     private UserDao userDao;
 
     public void postInit() {
+        loadProperties();
         Account.currentUserId = null;
         databaseService = new DatabaseService();
         userDao = new UserDao(databaseService);
@@ -81,12 +87,31 @@ public class LoginController {
 
         if (isValidCredentials) {
             canLogin = true;
-            Account.type = username.equals("admin") ?
+            Account.type = username.equals(properties.getProperty("ADMIN_LOGIN")) ?
                     Account.AccountType.ADMINISTRATOR : Account.AccountType.USER;
         }
 
         return canLogin;
     }
 
+    private void loadProperties() {
+        properties = new Properties();
+        InputStream stream = null;
 
+        ClassLoader classLoader = getClass().getClassLoader();
+        try {
+            stream = classLoader.getResourceAsStream("application.properties");
+            properties.load(stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
