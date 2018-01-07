@@ -40,7 +40,7 @@ public class DriversFormController {
     }
 
     @FXML
-    void addCourse(ActionEvent event) {
+    void add(ActionEvent event) {
         String firstName = firstNameInput.getText();
         String lastName = lastNameInput.getText();
         String phoneNumber = phoneNumberInput.getText();
