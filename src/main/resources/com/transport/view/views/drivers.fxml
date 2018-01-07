@@ -39,7 +39,7 @@
                                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                             <children>
                                                 <JFXButton fx:id="backButton" layoutX="57.0" layoutY="27.0"
                                                            onAction="#goBack" text="Wróć" AnchorPane.bottomAnchor="0.0"
@@ -47,7 +47,7 @@
                                                            AnchorPane.topAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                                             <children>
                                                 <JFXButton fx:id="usersButton1" layoutX="57.0" layoutY="27.0"
                                                            onAction="#openUsers" text="Użytkownicy"
@@ -55,7 +55,7 @@
                                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                             <children>
                                                 <JFXButton fx:id="passengersButton1" layoutX="57.0" layoutY="26.0"
                                                            onAction="#openPassengers" text="Pasażerowie"
@@ -71,7 +71,7 @@
                                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                             <children>
                                                 <JFXButton fx:id="vehiclesButton" layoutX="62.0" layoutY="21.0"
                                                            onAction="#openVehicles" text="Pojazdy"
