@@ -59,6 +59,15 @@ public class ScheduleController {
     public void postInit() {
         ControllerHelper.resetButtonTexts(driversButton1, usersButton1, passengersButton1, vehiclesButton);
         ControllerHelper.hideButtonDependindOnAccountType(driversButton1, usersButton1, passengersButton1, vehiclesButton);
+
+        if (Account.type != Account.AccountType.ADMINISTRATOR) {
+            addButton.setText("");
+            addButton.setVisible(false);
+        } else {
+            addButton.setText("Dodaj kurs");
+            addButton.setVisible(true);
+        }
+
         databaseService = new DatabaseService();
         courseDao = new CourseDao(databaseService);
         courseDriverDao = new CourseDriverDao(databaseService);
@@ -201,8 +210,10 @@ public class ScheduleController {
 
     @FXML
     void addRecord(ActionEvent event) {
-        clearTable();
-        viewManager.switchView("scheduleForm");
+        if (Account.type == Account.AccountType.ADMINISTRATOR) {
+            clearTable();
+            viewManager.switchView("scheduleForm");
+        }
     }
 
     @FXML
