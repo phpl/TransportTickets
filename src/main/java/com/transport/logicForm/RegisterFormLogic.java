@@ -7,6 +7,7 @@ import com.transport.dao.UserDao;
 import com.transport.entity.AddressEntity;
 import com.transport.entity.PersonalDataEntity;
 import com.transport.entity.UserEntity;
+import com.transport.exceptions.DatabaseException;
 import com.transport.view.controllers.ControllerHelper;
 
 import java.sql.SQLException;
@@ -37,25 +38,19 @@ public class RegisterFormLogic {
                         String city,
                         String street,
                         String houseNumber) {
-
-        AddressEntity addressEntity = new AddressEntity(city, street, houseNumber);
-        if (!userDao.checkIfUserExist(username)) {
-            addAddress(addressEntity);
-        }
-
-        UserEntity userEntity = new UserEntity(username, password);
-        addUser(userEntity);
-
-        PersonalDataEntity personalDataEntity =
-                createPersonalDataEntity(addressEntity, username, firstName, lastName, phone);
-        addPersonalData(personalDataEntity);
-    }
-
-    private void addAddress(AddressEntity addressEntity) {
         databaseService.setAutoCommit(false);
         try {
+            validateUserExist(username);
+            AddressEntity addressEntity = new AddressEntity(city, street, houseNumber);
             addressDao.insertAddress(addressEntity);
-        } catch (SQLException e) {
+
+            UserEntity userEntity = new UserEntity(username, password);
+            userDao.insertUser(userEntity);
+
+            PersonalDataEntity personalDataEntity =
+                    createPersonalDataEntity(addressEntity, username, firstName, lastName, phone);
+            personalDataDao.insertPersonalData(personalDataEntity);
+        } catch (SQLException | DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();
@@ -63,38 +58,23 @@ public class RegisterFormLogic {
         databaseService.setAutoCommit(true);
     }
 
-    private void addUser(UserEntity userEntity) {
-        databaseService.setAutoCommit(false);
-        try {
-            userDao.insertUser(userEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
+    private void validateUserExist(String username) throws DatabaseException {
+        if (userDao.checkIfUserExist(username)) {
+            throw new DatabaseException();
         }
-        databaseService.setAutoCommit(true);
     }
 
     private PersonalDataEntity createPersonalDataEntity(AddressEntity addressEntity,
                                                         String username,
                                                         String firstName,
                                                         String lastName,
-                                                        int phone) {
+                                                        int phone) throws DatabaseException {
         int addressId = addressDao.getAddressId(addressEntity);
         int userId = userDao.getUserId(username);
 
-        return new PersonalDataEntity(userId, firstName, lastName, phone, addressId);
-    }
+        ControllerHelper.validateIds(addressId);
+        ControllerHelper.validateIds(userId);
 
-    private void addPersonalData(PersonalDataEntity personalDataEntity) {
-        databaseService.setAutoCommit(false);
-        try {
-            personalDataDao.insertPersonalData(personalDataEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-        databaseService.setAutoCommit(true);
+        return new PersonalDataEntity(userId, firstName, lastName, phone, addressId);
     }
 }
