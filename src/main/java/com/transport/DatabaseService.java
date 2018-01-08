@@ -84,8 +84,19 @@ public class DatabaseService {
     public void rollbackTransaction() {
         if (getConnection() != null) {
             try {
-                System.err.print("Rollbacking transaction");
+                log.error("Rollbacking transaction");
                 getConnection().rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void commitTransaction() {
+        if (getConnection() != null) {
+            try {
+                log.error("Commiting transaction");
+                getConnection().commit();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
