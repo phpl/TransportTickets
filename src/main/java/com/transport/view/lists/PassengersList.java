@@ -12,6 +12,8 @@ public class PassengersList {
     @NonNull
     private Integer luggageId;
     @NonNull
+    private Integer courseId;
+    @NonNull
     private String firstName;
     @NonNull
     private String lastName;

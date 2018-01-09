@@ -273,6 +273,7 @@ CREATE OR REPLACE VIEW transport."pasazerowie_view" AS
     uzytkownik.uzytkownik_pk,
     bilet.bilet_pk,
     bagaz.bagaz_pk,
+    kurs.kurs_pk,
     dane_osobowe.imie,
     dane_osobowe.nazwisko,
     dane_osobowe.numer_telefonu,

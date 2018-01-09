@@ -65,16 +65,19 @@ public class PassengersController {
         courseDao = new CourseDao(databaseService);
         ticketDao = new TicketDao(databaseService);
         databaseService.connectToDatabase();
+        clearTable();
         ControllerHelper.resetButtonTexts(driversButton, usersButton1, null, vehiclesButton);
         ControllerHelper.hideButtonDependindOnAccountType(driversButton, usersButton1, null, vehiclesButton);
     }
 
     public void dispose() {
+        clearTable();
         databaseService.closeConnection();
     }
 
     @FXML
     void addRecord(ActionEvent event) {
+        clearTable();
         String courseString = courseId.getCharacters().toString();
         course = courseString.isEmpty() ? null :
                 Integer.parseInt(courseString) <= 0 ? null : Integer.parseInt(courseString);
@@ -160,32 +163,42 @@ public class PassengersController {
 
     @FXML
     void openVehicles(ActionEvent event) {
+        clearTable();
         viewManager.switchView("vehicles");
     }
 
     @FXML
     void logout(ActionEvent event) {
+        clearTable();
         viewManager.switchView("login");
     }
 
     @FXML
     void openSchedules(ActionEvent event) {
+        clearTable();
         viewManager.switchView("schedule");
     }
 
     @FXML
     void openUsers(ActionEvent event) {
+        clearTable();
         viewManager.switchView("users");
     }
 
     @FXML
     void goBack(ActionEvent event) {
+        clearTable();
         viewManager.switchView("main");
     }
 
     @FXML
     void openDrivers(ActionEvent event) {
+        clearTable();
         viewManager.switchView("drivers");
     }
 
+    private void clearTable() {
+        tableView.getItems().clear();
+        tableView.getColumns().clear();
+    }
 }

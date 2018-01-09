@@ -24,7 +24,7 @@ public class TicketDao extends BasicDao {
     private final String selectIdFromTicket = "SELECT bilet.bilet_pk FROM transport.bilet" +
             " WHERE uzytkownik_pk = ? AND kurs_pk = ?;";
 
-    private final String selectFromPassengersView = "SELECT  * FROM transport.pasazerowie_view;";
+    private final String selectFromPassengersView = "SELECT  * FROM transport.pasazerowie_view WHERE kurs_pk = ?;";
 
     public TicketDao(DatabaseService databaseService) {
         super(databaseService);
@@ -84,6 +84,8 @@ public class TicketDao extends BasicDao {
         ObservableList<PassengersList> data = FXCollections.observableArrayList();
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromPassengersView)) {
+            preparedStatement.setInt(1, courseId);
+
             resultSet = preparedStatement.executeQuery();
             data = retrieveData(resultSet);
         } catch (
@@ -103,6 +105,7 @@ public class TicketDao extends BasicDao {
                     resultSet.getInt("uzytkownik_pk"),
                     resultSet.getInt("bilet_pk"),
                     resultSet.getInt("bagaz_pk"),
+                    resultSet.getInt("kurs_pk"),
                     resultSet.getString("imie"),
                     resultSet.getString("nazwisko"),
                     resultSet.getInt("numer_telefonu"),
