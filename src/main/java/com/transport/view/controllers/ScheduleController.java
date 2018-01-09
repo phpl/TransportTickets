@@ -99,6 +99,7 @@ public class ScheduleController {
         TableColumn<ScheduleList, String> ticketPrice = new TableColumn<>("Cena biletu");
         TableColumn add = new TableColumn("");
         TableColumn delete = new TableColumn("");
+        TableColumn addDriverVehicle = new TableColumn("");
 
         courseId.setCellValueFactory(
                 new PropertyValueFactory<>("courseId")
@@ -123,6 +124,7 @@ public class ScheduleController {
         );
         add.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
         delete.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
+        addDriverVehicle.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 
         Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> addButtonFactory =
                 createAddButtonTabCellFactory();
@@ -132,12 +134,16 @@ public class ScheduleController {
                 createRemoveButtonTableCellFactory();
         delete.setCellFactory(removeButtonFactory);
 
+        Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> addDriverVehicleButtonFactory =
+                createAddDriverVehicleButtonTabCellFactory();
+        addDriverVehicle.setCellFactory(addDriverVehicleButtonFactory);
+
         data = courseDao.selectAllCourses();
         tableView.setItems(data);
 
         switch (Account.type) {
             case ADMINISTRATOR:
-                tableView.getColumns().addAll(courseId, beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add, delete);
+                tableView.getColumns().addAll(courseId, beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add, addDriverVehicle, delete);
                 break;
             case USER:
                 tableView.getColumns().addAll(courseId, beginCity, endCity, departureTime, freeSeats, distance, ticketPrice, add);
@@ -221,6 +227,38 @@ public class ScheduleController {
                                             viewManager.switchView("passengerFormUser");
                                             break;
                                     }
+                                });
+                                setGraphic(btn);
+                                setText(null);
+                            }
+                        }
+                    };
+                }
+            }
+        };
+    }
+
+    private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createAddDriverVehicleButtonTabCellFactory() {
+        return new Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>>() {
+            @Override
+            public TableCell<ScheduleList, String> call(TableColumn<ScheduleList, String> param) {
+                {
+                    return new TableCell<ScheduleList, String>() {
+
+                        final Button btn = new Button("Dodaj kierowce i pojazd");
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setGraphic(null);
+                                setText(null);
+                            } else {
+                                btn.setOnAction((ActionEvent event) ->
+                                {
+                                    ScheduleList schedule = getTableView().getItems().get(getIndex());
+                                    selectedCourseId = schedule.getCourseId();
+                                    viewManager.switchView("scheduleUpdateForm");
                                 });
                                 setGraphic(btn);
                                 setText(null);
