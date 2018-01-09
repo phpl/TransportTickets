@@ -8,6 +8,10 @@ public class UsersList {
     @NonNull
     int userId;
     @NonNull
+    int personalDataId;
+    @NonNull
+    int addressId;
+    @NonNull
     private String username;
     @NonNull
     private String firstName;

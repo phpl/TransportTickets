@@ -3,6 +3,8 @@ package com.transport.view.controllers;
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.transport.DatabaseService;
+import com.transport.dao.AddressDao;
+import com.transport.dao.PersonalDataDao;
 import com.transport.dao.UserDao;
 import com.transport.view.lists.UsersList;
 import javafx.collections.ObservableList;
@@ -16,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 
 public class UsersController {
 
@@ -45,6 +48,8 @@ public class UsersController {
 
     private DatabaseService databaseService;
     private UserDao userDao;
+    private AddressDao addressDao;
+    private PersonalDataDao personalDataDao;
 
     private ObservableList<UsersList> data = null;
 
@@ -53,6 +58,8 @@ public class UsersController {
         ControllerHelper.hideButtonDependindOnAccountType(driversButton, null, passengersButton, vehiclesButton);
         databaseService = new DatabaseService();
         userDao = new UserDao(databaseService);
+        addressDao = new AddressDao(databaseService);
+        personalDataDao = new PersonalDataDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
     }
@@ -127,8 +134,19 @@ public class UsersController {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
                                     UsersList user = getTableView().getItems().get(getIndex());
-//TODO add delete user
-                                    data.remove(getIndex());
+                                    databaseService.setAutoCommit(false);
+                                    try {
+                                        personalDataDao.deletePersonalDataTransaction(user.getUserId(), user.getAddressId());
+                                        userDao.deleteUserTransaction(user.getUserId());
+                                        addressDao.deleteAddressTransaction(user.getAddressId());
+                                        databaseService.commitTransaction();
+                                        data.remove(getIndex());
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        databaseService.rollbackTransaction();
+                                        ControllerHelper.showErrorAlertMessage(e.getMessage());
+                                    }
+                                    databaseService.setAutoCommit(true);
                                 });
                                 setGraphic(btn);
                                 setText(null);

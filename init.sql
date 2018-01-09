@@ -253,20 +253,22 @@ CREATE OR REPLACE VIEW transport."trasy_view" AS
     JOIN transport.trasa trasa ON kurs.trasa_pk = trasa.trasa_pk
   ORDER BY miasto_poczatkowe, godzina_odjazdu;
 
-CREATE OR REPLACE VIEW transport."uzytkownicy_view" AS
+CREATE VIEW transport."uzytkownicy_view" AS
   SELECT
-    uzytkownik.uzytkownik_pk AS id,
-    uzytkownik.login         AS nazwa_uzytkownika,
+    uzytkownik.uzytkownik_pk,
+    dane.dane_pk,
+    adres.adres_pk,
+    uzytkownik.login,
     dane.imie,
     dane.nazwisko,
-    dane.numer_telefonu      AS numer_telefonu,
+    dane.numer_telefonu,
     adres.miasto,
     adres.ulica,
     adres.numer_domu
-  FROM transport.uzytkownik uzytkownik
-    JOIN transport.dane_osobowe dane ON uzytkownik.uzytkownik_pk = dane.uzytkownik_pk
-    JOIN transport.adres ON dane.adres_pk = adres.adres_pk
-  ORDER BY id;
+  FROM ((transport.uzytkownik uzytkownik
+    JOIN transport.dane_osobowe dane ON ((uzytkownik.uzytkownik_pk = dane.uzytkownik_pk)))
+    JOIN transport.adres ON ((dane.adres_pk = adres.adres_pk)))
+  ORDER BY uzytkownik.uzytkownik_pk;
 
 CREATE OR REPLACE VIEW transport."pasazerowie_view" AS
   SELECT

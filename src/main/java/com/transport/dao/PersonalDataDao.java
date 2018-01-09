@@ -36,4 +36,18 @@ public class PersonalDataDao extends BasicDao {
             log.info("End insertNewPersonalData");
         }
     }
+
+    public void deletePersonalDataTransaction(int userId, int addressId) throws SQLException {
+        String deletePersonalData = "DELETE FROM transport.dane_osobowe WHERE uzytkownik_pk = ? AND adres_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deletePersonalData)) {
+            log.info("Begin deletePersonalData");
+
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, addressId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deletePersonalData");
+        }
+    }
 }

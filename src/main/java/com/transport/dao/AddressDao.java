@@ -54,4 +54,17 @@ public class AddressDao extends BasicDao {
 
         return idOfElement;
     }
+
+    public void deleteAddressTransaction(int addressId) throws SQLException {
+        String deleteAddress = "DELETE FROM transport.adres WHERE adres_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteAddress)) {
+            log.info("Begin deletAddress");
+
+            preparedStatement.setInt(1, addressId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteAddress");
+        }
+    }
 }

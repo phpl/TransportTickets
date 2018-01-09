@@ -71,8 +71,10 @@ public class UserDao extends BasicDao {
 
         while (resultSet.next()) {
             users = new UsersList(
-                    resultSet.getInt("id"),
-                    resultSet.getString("nazwa_uzytkownika"),
+                    resultSet.getInt("uzytkownik_pk"),
+                    resultSet.getInt("dane_pk"),
+                    resultSet.getInt("adres_pk"),
+                    resultSet.getString("login"),
                     resultSet.getString("imie"),
                     resultSet.getString("nazwisko"),
                     resultSet.getInt("numer_telefonu"),
@@ -105,5 +107,18 @@ public class UserDao extends BasicDao {
         }
 
         return canLogin;
+    }
+
+    public void deleteUserTransaction(int userId) throws SQLException {
+        String deleteUser = "DELETE FROM transport.uzytkownik WHERE uzytkownik_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteUser)) {
+            log.info("Begin deleteUser");
+
+            preparedStatement.setInt(1, userId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteUser");
+        }
     }
 }
