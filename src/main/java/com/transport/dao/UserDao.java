@@ -32,12 +32,15 @@ public class UserDao extends BasicDao {
     }
 
     public void insertUser(UserEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(UserEntity newEntity) {
+    private void executeInsert(UserEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewUser)) {
             log.info("Begin insertNewUser");
 
@@ -46,10 +49,6 @@ public class UserDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewUser");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -65,17 +64,13 @@ public class UserDao extends BasicDao {
         ResultSet resultSet;
         ObservableList<UsersList> data = FXCollections.observableArrayList();
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromUsersView)) {
             resultSet = preparedStatement.executeQuery();
             data = retrieveData(resultSet);
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return data;
     }
@@ -103,7 +98,6 @@ public class UserDao extends BasicDao {
         ResultSet resultSet;
         boolean canLogin = false;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(checkUser)) {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
@@ -116,9 +110,7 @@ public class UserDao extends BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-        databaseService.setAutoCommit(true);
 
         return canLogin;
     }

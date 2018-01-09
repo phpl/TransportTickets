@@ -30,12 +30,15 @@ public class DriverDao extends BasicDao {
     }
 
     public void insertDriver(DriverEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(DriverEntity newEntity) {
+    private void executeInsert(DriverEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewDriver)) {
             log.info("Begin insertNewDriver");
 
@@ -45,10 +48,6 @@ public class DriverDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewDriver");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -57,7 +56,6 @@ public class DriverDao extends BasicDao {
 
         int idOfElement = -1;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromDriver)) {
 
             preparedStatement.setInt(1, phoneNumber);
@@ -66,10 +64,8 @@ public class DriverDao extends BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
 
-        databaseService.setAutoCommit(true);
 
         return idOfElement;
     }
@@ -78,17 +74,14 @@ public class DriverDao extends BasicDao {
         ResultSet resultSet;
         ObservableList<DriversList> data = FXCollections.observableArrayList();
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromDrivers)) {
             resultSet = preparedStatement.executeQuery();
             data = retrieveData(resultSet);
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
 
-        databaseService.setAutoCommit(true);
 
         return data;
     }

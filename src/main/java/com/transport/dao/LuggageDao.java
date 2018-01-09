@@ -20,12 +20,15 @@ public class LuggageDao extends BasicDao {
     }
 
     public void insertLuggage(LuggageEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(LuggageEntity newEntity) {
+    private void executeInsert(LuggageEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewDriver)) {
             log.info("Begin insertNewLuggage");
 
@@ -35,10 +38,6 @@ public class LuggageDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewLuggage");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 }

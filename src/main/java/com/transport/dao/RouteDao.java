@@ -24,12 +24,15 @@ public class RouteDao extends BasicDao {
     }
 
     public void insertRoute(RouteEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(RouteEntity newEntity) {
+    private void executeInsert(RouteEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewRoute)) {
             log.info("Begin insertNewRoute");
 
@@ -39,10 +42,6 @@ public class RouteDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewRoute");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -51,7 +50,6 @@ public class RouteDao extends BasicDao {
 
         int idOfElement = -1;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromRoute)) {
             preparedStatement.setInt(1, entityToFind.getDistance());
             preparedStatement.setString(2, entityToFind.getBeginCity());
@@ -62,10 +60,7 @@ public class RouteDao extends BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return idOfElement;
     }

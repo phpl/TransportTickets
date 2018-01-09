@@ -34,12 +34,15 @@ public class CourseDao extends BasicDao {
     }
 
     public void insertCourse(CourseEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(CourseEntity newEntity) {
+    private void executeInsert(CourseEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCourse)) {
             log.info("Begin insertNewCourse");
 
@@ -50,10 +53,6 @@ public class CourseDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewCourse");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -61,17 +60,13 @@ public class CourseDao extends BasicDao {
         ResultSet resultSet;
         ObservableList<ScheduleList> data = FXCollections.observableArrayList();
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromCourseView)) {
             resultSet = preparedStatement.executeQuery();
             data = retrieveData(resultSet);
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return data;
     }
@@ -106,7 +101,6 @@ public class CourseDao extends BasicDao {
 
         int idOfElement = -1;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromCourse)) {
 
             preparedStatement.setObject(1, entityToFind.getDepartureTime());
@@ -118,10 +112,7 @@ public class CourseDao extends BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return idOfElement;
     }
@@ -131,7 +122,6 @@ public class CourseDao extends BasicDao {
 
         boolean exist = false;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(checkCourse)) {
 
             preparedStatement.setInt(1, courseId);
@@ -144,10 +134,7 @@ public class CourseDao extends BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return exist;
     }

@@ -81,7 +81,7 @@ public class ScheduleFormLogic {
     private CourseVehicleEntity createCourseVehicleEntity(CourseEntity courseEntity,
                                                           String licencePlate) throws DatabaseException {
         int courseId = courseDao.getCourseId(courseEntity);
-        int vehicleId = vehicleDao.getVechicleId(licencePlate);
+        int vehicleId = vehicleDao.getVehicleId(licencePlate);
 
         ControllerHelper.validateIds(courseId);
         ControllerHelper.validateIds(vehicleId);

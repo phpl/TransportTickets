@@ -31,12 +31,15 @@ public class TicketDao extends BasicDao {
     }
 
     public void insertTicket(TicketEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(TicketEntity newEntity) {
+    private void executeInsert(TicketEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(isnertNewTicket)) {
             log.info("Begin insertNewTicket");
 
@@ -46,10 +49,6 @@ public class TicketDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewTicket");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -62,7 +61,6 @@ public class TicketDao extends BasicDao {
 
         int idOfElement = -1;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromTicket)) {
 
             preparedStatement.setInt(1, entityToFind.getUserId());
@@ -72,10 +70,7 @@ public class TicketDao extends BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return idOfElement;
     }
@@ -84,17 +79,13 @@ public class TicketDao extends BasicDao {
         ResultSet resultSet;
         ObservableList<PassengersList> data = FXCollections.observableArrayList();
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromPassengersView)) {
             resultSet = preparedStatement.executeQuery();
             data = retrieveData(resultSet);
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return data;
     }

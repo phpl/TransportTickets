@@ -19,25 +19,18 @@ public class BasicDao {
     protected DatabaseService databaseService;
 
     public void removeFromDatabase(int idOfEntity, String statement) {
-        databaseService.setAutoCommit(false);
-
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(statement)) {
             preparedStatement.setInt(1, idOfEntity);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
     }
 
     public int getIntFromEntity(String value, String statement) {
         ResultSet resultSet;
-
         int intValue = -1;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(statement)) {
 
             preparedStatement.setString(1, value);
@@ -46,10 +39,7 @@ public class BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return intValue;
     }

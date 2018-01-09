@@ -20,12 +20,15 @@ public class PersonalDataDao extends BasicDao {
     }
 
     public void insertPersonalData(PersonalDataEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(PersonalDataEntity newEntity) {
+    private void executeInsert(PersonalDataEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewPersonalData)) {
             log.info("Begin insertNewPersonalData");
 
@@ -37,10 +40,6 @@ public class PersonalDataDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewPersonalData");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 }

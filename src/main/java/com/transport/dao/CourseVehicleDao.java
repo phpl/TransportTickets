@@ -22,12 +22,15 @@ public class CourseVehicleDao extends BasicDao {
     }
 
     public void insertCourseVehicle(CourseVehicleEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(CourseVehicleEntity newEntity) {
+    private void executeInsert(CourseVehicleEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCourseVechicle)) {
             log.info("Begin insertNewCourseVehicle");
 
@@ -36,10 +39,6 @@ public class CourseVehicleDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewCourseVehicle");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 

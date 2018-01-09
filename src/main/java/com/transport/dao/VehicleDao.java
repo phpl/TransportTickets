@@ -33,12 +33,15 @@ public class VehicleDao extends BasicDao {
     }
 
     public void insertVehicle(VehicleEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(VehicleEntity newEntity) {
+    private void executeInsert(VehicleEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewVechicle)) {
             log.info("Begin insertNewVechicle");
 
@@ -48,10 +51,6 @@ public class VehicleDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewVechicle");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -59,7 +58,7 @@ public class VehicleDao extends BasicDao {
         return getIntFromEntity(licencePlate, selectSeatNumberFromVechicle);
     }
 
-    public int getVechicleId(String licencePlate) {
+    public int getVehicleId(String licencePlate) {
         return getIntFromEntity(licencePlate, selectIdFromVechicle);
     }
 
@@ -67,17 +66,13 @@ public class VehicleDao extends BasicDao {
         ResultSet resultSet;
         ObservableList<VehiclesList> data = FXCollections.observableArrayList();
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromVehicles)) {
             resultSet = preparedStatement.executeQuery();
             data = retrieveData(resultSet);
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return data;
     }

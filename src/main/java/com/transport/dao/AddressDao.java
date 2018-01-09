@@ -22,12 +22,15 @@ public class AddressDao extends BasicDao {
     }
 
     public void insertAddress(AddressEntity newEntity) {
-        databaseService.setAutoCommit(false);
-        executeInsert(newEntity);
-        databaseService.setAutoCommit(true);
+        try {
+            executeInsert(newEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ControllerHelper.errorWhileRecordAdd();
+        }
     }
 
-    private void executeInsert(AddressEntity newEntity) {
+    private void executeInsert(AddressEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewAddress)) {
             log.info("Begin insertNewAddress");
 
@@ -37,10 +40,6 @@ public class AddressDao extends BasicDao {
             preparedStatement.executeUpdate();
 
             log.info("End insertNewAddress");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
         }
     }
 
@@ -49,7 +48,6 @@ public class AddressDao extends BasicDao {
 
         int idOfElement = -1;
 
-        databaseService.setAutoCommit(false);
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromAddress)) {
 
             preparedStatement.setString(1, entityToFind.getCity());
@@ -60,10 +58,7 @@ public class AddressDao extends BasicDao {
         } catch (
                 SQLException e) {
             e.printStackTrace();
-            databaseService.rollbackTransaction();
         }
-
-        databaseService.setAutoCommit(true);
 
         return idOfElement;
     }
