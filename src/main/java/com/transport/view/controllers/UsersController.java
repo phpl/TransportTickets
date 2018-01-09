@@ -4,7 +4,6 @@ import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.transport.DatabaseService;
 import com.transport.dao.UserDao;
-import com.transport.view.lists.ScheduleList;
 import com.transport.view.lists.UsersList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -100,7 +99,7 @@ public class UsersController {
         );
         delete.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 
-        Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> removeButtonFactory =
+        Callback<TableColumn<UsersList, String>, TableCell<UsersList, String>> removeButtonFactory =
                 createRemoveButtonTableCellFactory();
         delete.setCellFactory(removeButtonFactory);
 
@@ -109,12 +108,12 @@ public class UsersController {
         tableView.getColumns().addAll(userId, username, firstName, lastName, phoneNumber, city, street, houseNumber, delete);
     }
 
-    private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createRemoveButtonTableCellFactory() {
-        return new Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>>() {
+    private Callback<TableColumn<UsersList, String>, TableCell<UsersList, String>> createRemoveButtonTableCellFactory() {
+        return new Callback<TableColumn<UsersList, String>, TableCell<UsersList, String>>() {
             @Override
-            public TableCell<ScheduleList, String> call(TableColumn<ScheduleList, String> param) {
+            public TableCell<UsersList, String> call(TableColumn<UsersList, String> param) {
                 {
-                    return new TableCell<ScheduleList, String>() {
+                    return new TableCell<UsersList, String>() {
 
                         final Button btn = new Button("Usuń");
 
@@ -127,7 +126,7 @@ public class UsersController {
                             } else {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
-                                    ScheduleList schedule = getTableView().getItems().get(getIndex());
+                                    UsersList user = getTableView().getItems().get(getIndex());
 //TODO add delete user
                                     data.remove(getIndex());
                                 });
