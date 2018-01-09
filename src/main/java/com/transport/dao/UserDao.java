@@ -2,7 +2,6 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.UserEntity;
-import com.transport.view.controllers.ControllerHelper;
 import com.transport.view.lists.UsersList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,15 +28,6 @@ public class UserDao extends BasicDao {
 
     public UserDao(DatabaseService databaseService) {
         super(databaseService);
-    }
-
-    public void insertUser(UserEntity newEntity) {
-        try {
-            executeInsert(newEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
-        }
     }
 
     public void insertUserTransaction(UserEntity newEntity) throws SQLException {

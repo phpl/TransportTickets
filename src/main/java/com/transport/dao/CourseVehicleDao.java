@@ -2,7 +2,6 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CourseVehicleEntity;
-import com.transport.view.controllers.ControllerHelper;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -21,15 +20,6 @@ public class CourseVehicleDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertCourseVehicle(CourseVehicleEntity newEntity) {
-        try {
-            executeInsert(newEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-    }
-
     public void insertCourseVehicleTransaction(CourseVehicleEntity newEntity) throws SQLException {
         executeInsert(newEntity);
     }
@@ -44,9 +34,5 @@ public class CourseVehicleDao extends BasicDao {
 
             log.info("End insertNewCourseVehicle");
         }
-    }
-
-    public void removeAssociation(int courseId) {
-        removeFromDatabase(courseId, deleteAssociation);
     }
 }

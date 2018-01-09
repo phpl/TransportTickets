@@ -2,7 +2,6 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.TicketEntity;
-import com.transport.view.controllers.ControllerHelper;
 import com.transport.view.lists.PassengersList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,15 +29,6 @@ public class TicketDao extends BasicDao {
         super(databaseService);
     }
 
-    public void insertTicket(TicketEntity newEntity) {
-        try {
-            executeInsert(newEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
-        }
-    }
-
     public void insertTicketTransaction(TicketEntity newEntity) throws SQLException {
         executeInsert(newEntity);
     }
@@ -54,10 +44,6 @@ public class TicketDao extends BasicDao {
 
             log.info("End insertNewTicket");
         }
-    }
-
-    public void removeAssociation(int courseId) {
-        removeFromDatabase(courseId, deleteTicket);
     }
 
     public int getTicketId(TicketEntity entityToFind) {

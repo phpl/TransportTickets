@@ -2,7 +2,6 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.CourseEntity;
-import com.transport.view.controllers.ControllerHelper;
 import com.transport.view.lists.ScheduleList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,15 +30,6 @@ public class CourseDao extends BasicDao {
 
     public CourseDao(DatabaseService databaseService) {
         super(databaseService);
-    }
-
-    public void insertCourse(CourseEntity newEntity) {
-        try {
-            executeInsert(newEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
-        }
     }
 
     public void insertCourseTransaction(CourseEntity newEntity) throws SQLException {
@@ -94,10 +84,6 @@ public class CourseDao extends BasicDao {
         }
 
         return data;
-    }
-
-    public void removeCourse(int courseId) {
-        removeFromDatabase(courseId, deleteCourse);
     }
 
     public int getCourseId(CourseEntity entityToFind) {

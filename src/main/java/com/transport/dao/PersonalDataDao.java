@@ -2,7 +2,6 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.PersonalDataEntity;
-import com.transport.view.controllers.ControllerHelper;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -17,15 +16,6 @@ public class PersonalDataDao extends BasicDao {
 
     public PersonalDataDao(DatabaseService databaseService) {
         super(databaseService);
-    }
-
-    public void insertPersonalData(PersonalDataEntity newEntity) {
-        try {
-            executeInsert(newEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
-        }
     }
 
     public void insertPersonalDataTransaction(PersonalDataEntity newEntity) throws SQLException {

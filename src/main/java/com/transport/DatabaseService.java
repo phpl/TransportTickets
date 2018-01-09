@@ -14,7 +14,7 @@ public class DatabaseService {
 
     private Connection connection = null;
 
-    private Properties properties = null;
+    private Properties properties;
 
     public DatabaseService() {
         properties = loadProperties();

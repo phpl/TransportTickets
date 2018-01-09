@@ -2,7 +2,6 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.AddressEntity;
-import com.transport.view.controllers.ControllerHelper;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -19,15 +18,6 @@ public class AddressDao extends BasicDao {
 
     public AddressDao(DatabaseService databaseService) {
         super(databaseService);
-    }
-
-    public void insertAddress(AddressEntity newEntity) {
-        try {
-            executeInsert(newEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
-        }
     }
 
     public void insertAddressTransaction(AddressEntity newEntity) throws SQLException {

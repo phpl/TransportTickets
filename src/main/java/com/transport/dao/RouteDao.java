@@ -2,7 +2,6 @@ package com.transport.dao;
 
 import com.transport.DatabaseService;
 import com.transport.entity.RouteEntity;
-import com.transport.view.controllers.ControllerHelper;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.PreparedStatement;
@@ -21,15 +20,6 @@ public class RouteDao extends BasicDao {
 
     public RouteDao(DatabaseService databaseService) {
         super(databaseService);
-    }
-
-    public void insertRoute(RouteEntity newEntity) {
-        try {
-            executeInsert(newEntity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
-        }
     }
 
     public void insertRouteTransaction(RouteEntity newEntity) throws SQLException {
