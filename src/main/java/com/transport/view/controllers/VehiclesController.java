@@ -126,7 +126,7 @@ public class VehiclesController {
                                     databaseService.setAutoCommit(false);
                                     try {
                                         vehicleDao.deleteVehicleTransaction(vehicle.getVehicleId());
-                                        courseVehicleDao.deleteAssociation(vehicle.getVehicleId());
+                                        courseVehicleDao.deleteAssociationVehicle(vehicle.getVehicleId());
                                         databaseService.commitTransaction();
                                         data.remove(getIndex());
                                     } catch (SQLException e) {

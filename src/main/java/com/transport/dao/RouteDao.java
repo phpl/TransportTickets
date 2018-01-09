@@ -56,4 +56,17 @@ public class RouteDao extends BasicDao {
 
         return idOfElement;
     }
+
+    public void deleteRouteTransaction(Integer routeId) throws SQLException {
+        String deleteRoute = "DELETE FROM transport.trasa WHERE trasa_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteRoute)) {
+            log.info("Begin deleteRoute");
+
+            preparedStatement.setInt(1, routeId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteRoute");
+        }
+    }
 }

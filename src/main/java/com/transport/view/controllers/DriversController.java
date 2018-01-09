@@ -126,7 +126,7 @@ public class DriversController {
                                     databaseService.setAutoCommit(false);
                                     try {
                                         driverDao.deleteDriverTransaction(driver.getDriverId());
-                                        courseDriverDao.deleteAssociation(driver.getDriverId());
+                                        courseDriverDao.deleteAssociationDriver(driver.getDriverId());
                                         databaseService.commitTransaction();
                                         data.remove(getIndex());
                                     } catch (SQLException e) {

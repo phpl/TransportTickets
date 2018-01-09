@@ -5,6 +5,9 @@ import com.jfoenix.controls.JFXButton;
 import com.transport.Account;
 import com.transport.DatabaseService;
 import com.transport.dao.CourseDao;
+import com.transport.dao.CourseDriverDao;
+import com.transport.dao.CourseVehicleDao;
+import com.transport.dao.RouteDao;
 import com.transport.view.lists.ScheduleList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 
 public class ScheduleController {
 
@@ -49,6 +53,9 @@ public class ScheduleController {
 
     private DatabaseService databaseService;
     private CourseDao courseDao;
+    private CourseVehicleDao courseVehicleDao;
+    private CourseDriverDao courseDriverDao;
+    private RouteDao routeDao;
 
     public static Integer selectedCourseId = null;
     public static Double selectedCoursePrice = null;
@@ -69,6 +76,9 @@ public class ScheduleController {
 
         databaseService = new DatabaseService();
         courseDao = new CourseDao(databaseService);
+        courseDriverDao = new CourseDriverDao(databaseService);
+        courseVehicleDao = new CourseVehicleDao(databaseService);
+        routeDao = new RouteDao(databaseService);
         databaseService.connectToDatabase();
         clearTable();
         initializeTableView();
@@ -157,8 +167,20 @@ public class ScheduleController {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
                                     ScheduleList schedule = getTableView().getItems().get(getIndex());
-//                                    TODO add trigger deleting all luggages for specific course
-                                    data.remove(getIndex());
+                                    databaseService.setAutoCommit(false);
+                                    try {
+                                        courseDriverDao.deleteAssociationCourse(schedule.getCourseId());
+                                        courseVehicleDao.deleteAssociationCourse(schedule.getCourseId());
+                                        courseDao.deleteCourseTransaction(schedule.getCourseId());
+                                        routeDao.deleteRouteTransaction(schedule.getRouteId());
+                                        databaseService.commitTransaction();
+                                        data.remove(getIndex());
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        databaseService.rollbackTransaction();
+                                        ControllerHelper.showErrorAlertMessage(e.getMessage());
+                                    }
+                                    databaseService.setAutoCommit(true);
                                 });
                                 setGraphic(btn);
                                 setText(null);

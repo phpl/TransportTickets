@@ -120,5 +120,18 @@ public class CourseDao extends BasicDao {
 
         return exist;
     }
+
+    public void deleteCourseTransaction(Integer courseId) throws SQLException {
+        String deleteCourse = "DELETE FROM transport.kurs WHERE kurs_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteCourse)) {
+            log.info("Begin deleteCourse");
+
+            preparedStatement.setInt(1, courseId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteCourse");
+        }
+    }
 }
 
