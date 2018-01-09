@@ -91,4 +91,17 @@ public class VehicleDao extends BasicDao {
 
         return data;
     }
+
+    public void deleteVehicleTransaction(int vehicleId) throws SQLException {
+        String deleteVehicle = "DELETE FROM transport.pojazd WHERE pojazd_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteVehicle)) {
+            log.info("Begin deleteVehicle");
+
+            preparedStatement.setInt(1, vehicleId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteVehicle");
+        }
+    }
 }

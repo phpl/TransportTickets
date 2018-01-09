@@ -3,6 +3,7 @@ package com.transport.view.controllers;
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.transport.DatabaseService;
+import com.transport.dao.CourseVehicleDao;
 import com.transport.dao.VehicleDao;
 import com.transport.view.lists.VehiclesList;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 
 public class VehiclesController {
 
@@ -47,7 +49,8 @@ public class VehiclesController {
     private JFXButton addButton;
 
     private DatabaseService databaseService;
-    VehicleDao vehicleDao;
+    private VehicleDao vehicleDao;
+    private CourseVehicleDao courseVehicleDao;
 
     private ObservableList<VehiclesList> data = null;
 
@@ -56,6 +59,7 @@ public class VehiclesController {
         ControllerHelper.hideButtonDependindOnAccountType(driversButton, usersButton1, passengersButton1, null);
         databaseService = new DatabaseService();
         vehicleDao = new VehicleDao(databaseService);
+        courseVehicleDao = new CourseVehicleDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
     }
@@ -117,8 +121,20 @@ public class VehiclesController {
                             } else {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
-//TODO add delete vehicle
-                                    data.remove(getIndex());
+                                    VehiclesList vehicle = getTableView().getItems().get(getIndex());
+
+                                    databaseService.setAutoCommit(false);
+                                    try {
+                                        vehicleDao.deleteVehicleTransaction(vehicle.getVehicleId());
+                                        courseVehicleDao.deleteAssociation(vehicle.getVehicleId());
+                                        databaseService.commitTransaction();
+                                        data.remove(getIndex());
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        databaseService.rollbackTransaction();
+                                        ControllerHelper.showErrorAlertMessage(e.getMessage());
+                                    }
+                                    databaseService.setAutoCommit(true);
                                 });
                                 setGraphic(btn);
                                 setText(null);
