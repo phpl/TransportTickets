@@ -6,12 +6,13 @@ import com.transport.exceptions.DatabaseException;
 import javafx.scene.control.Alert;
 
 public class ControllerHelper {
-    public static void errorWhileRecordAdd() {
+
+    public static void showErrorAlertMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Transport Bilety");
         alert.setGraphic(null);
         alert.setHeaderText("Błąd!");
-        alert.setContentText("Rekord nie mógł być dodany");
+        alert.setContentText(message);
         alert.showAndWait();
     }
 

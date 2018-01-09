@@ -3,9 +3,9 @@ package com.transport.view.controllers;
 import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.transport.DatabaseService;
+import com.transport.dao.CourseDriverDao;
 import com.transport.dao.DriverDao;
 import com.transport.view.lists.DriversList;
-import com.transport.view.lists.ScheduleList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 
 public class DriversController {
 
@@ -49,12 +50,14 @@ public class DriversController {
 
     private DatabaseService databaseService;
     private DriverDao driverDao;
+    private CourseDriverDao courseDriverDao;
 
     private ObservableList<DriversList> data = null;
 
     public void postInit() {
         databaseService = new DatabaseService();
         driverDao = new DriverDao(databaseService);
+        courseDriverDao = new CourseDriverDao(databaseService);
         databaseService.connectToDatabase();
         initializeTableView();
         ControllerHelper.resetButtonTexts(null, usersButton1, passengersButton1, vehiclesButton);
@@ -91,7 +94,7 @@ public class DriversController {
         );
         delete.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 
-        Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> removeButtonFactory =
+        Callback<TableColumn<DriversList, String>, TableCell<DriversList, String>> removeButtonFactory =
                 createRemoveButtonTableCellFactory();
         delete.setCellFactory(removeButtonFactory);
 
@@ -100,12 +103,12 @@ public class DriversController {
         tableView.getColumns().addAll(driverId, firstName, lastName, phoneNumber, courseId, delete);
     }
 
-    private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createRemoveButtonTableCellFactory() {
-        return new Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>>() {
+    private Callback<TableColumn<DriversList, String>, TableCell<DriversList, String>> createRemoveButtonTableCellFactory() {
+        return new Callback<TableColumn<DriversList, String>, TableCell<DriversList, String>>() {
             @Override
-            public TableCell<ScheduleList, String> call(TableColumn<ScheduleList, String> param) {
+            public TableCell<DriversList, String> call(TableColumn<DriversList, String> param) {
                 {
-                    return new TableCell<ScheduleList, String>() {
+                    return new TableCell<DriversList, String>() {
 
                         final Button btn = new Button("Usuń");
 
@@ -118,8 +121,20 @@ public class DriversController {
                             } else {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
-//TODO add delete driver
-                                    data.remove(getIndex());
+                                    DriversList driver = getTableView().getItems().get(getIndex());
+
+                                    databaseService.setAutoCommit(false);
+                                    try {
+                                        driverDao.deleteDriverTransaction(driver.getDriverId());
+                                        courseDriverDao.deleteAssociation(driver.getDriverId());
+                                        databaseService.commitTransaction();
+                                        data.remove(getIndex());
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        databaseService.rollbackTransaction();
+                                        ControllerHelper.showErrorAlertMessage(e.getMessage());
+                                    }
+                                    databaseService.setAutoCommit(true);
                                 });
                                 setGraphic(btn);
                                 setText(null);

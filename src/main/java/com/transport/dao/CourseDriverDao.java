@@ -32,4 +32,17 @@ public class CourseDriverDao extends BasicDao {
             log.info("End insertNewCourseDriver");
         }
     }
+
+    public void deleteAssociation(int driverId) throws SQLException {
+        String deleteAssociation = "DELETE FROM transport.kurs_kierowca WHERE kierowca_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteAssociation)) {
+            log.info("Begin deleteCourseDriverAssociation");
+
+            preparedStatement.setInt(1, driverId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteCourseDriverAssociation");
+        }
+    }
 }

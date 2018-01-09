@@ -24,7 +24,7 @@ public class DriverDao extends BasicDao {
             executeInsert(newEntity);
         } catch (SQLException e) {
             e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
+            ControllerHelper.showErrorAlertMessage(e.getMessage());
         }
     }
 
@@ -99,5 +99,18 @@ public class DriverDao extends BasicDao {
         }
 
         return data;
+    }
+
+    public void deleteDriverTransaction(int driverId) throws SQLException {
+        String deleteDriver = "DELETE FROM transport.kierowca WHERE kierowca_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteDriver)) {
+            log.info("Begin deleteDriver");
+
+            preparedStatement.setInt(1, driverId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteDriver");
+        }
     }
 }

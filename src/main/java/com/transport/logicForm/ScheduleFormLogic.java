@@ -65,7 +65,7 @@ public class ScheduleFormLogic {
         } catch (SQLException | DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
-            ControllerHelper.errorWhileRecordAdd();
+            ControllerHelper.showErrorAlertMessage(e.getMessage());
         }
 
         databaseService.setAutoCommit(true);

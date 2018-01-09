@@ -24,7 +24,7 @@ public class VehicleDao extends BasicDao {
             executeInsert(newEntity);
         } catch (SQLException e) {
             e.printStackTrace();
-            ControllerHelper.errorWhileRecordAdd();
+            ControllerHelper.showErrorAlertMessage(e.getMessage());
         }
     }
 
