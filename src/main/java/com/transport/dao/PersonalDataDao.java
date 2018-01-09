@@ -28,6 +28,10 @@ public class PersonalDataDao extends BasicDao {
         }
     }
 
+    public void insertPersonalDataTransaction(PersonalDataEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(PersonalDataEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewPersonalData)) {
             log.info("Begin insertNewPersonalData");

@@ -10,6 +10,8 @@ import com.transport.entity.UserEntity;
 import com.transport.exceptions.DatabaseException;
 import com.transport.view.controllers.ControllerHelper;
 
+import java.sql.SQLException;
+
 public class RegisterFormLogic {
     private DatabaseService databaseService;
     private UserDao userDao;
@@ -36,22 +38,28 @@ public class RegisterFormLogic {
                         String city,
                         String street,
                         String houseNumber) {
+        databaseService.setAutoCommit(false);
+
         try {
             validateUserExist(username);
             AddressEntity addressEntity = new AddressEntity(city, street, houseNumber);
-            addressDao.insertAddress(addressEntity);
+            addressDao.insertAddressTransaction(addressEntity);
 
             UserEntity userEntity = new UserEntity(username, password);
-            userDao.insertUser(userEntity);
+            userDao.insertUserTransaction(userEntity);
 
             PersonalDataEntity personalDataEntity =
                     createPersonalDataEntity(addressEntity, username, firstName, lastName, phone);
-            personalDataDao.insertPersonalData(personalDataEntity);
-        } catch (DatabaseException e) {
+            personalDataDao.insertPersonalDataTransaction(personalDataEntity);
+
+            databaseService.commitTransaction();
+        } catch (SQLException | DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();
         }
+
+        databaseService.setAutoCommit(true);
     }
 
     private void validateUserExist(String username) throws DatabaseException {

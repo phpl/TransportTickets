@@ -39,6 +39,10 @@ public class TicketDao extends BasicDao {
         }
     }
 
+    public void insertTicketTransaction(TicketEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(TicketEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(isnertNewTicket)) {
             log.info("Begin insertNewTicket");

@@ -30,6 +30,10 @@ public class CourseVehicleDao extends BasicDao {
         }
     }
 
+    public void insertCourseVehicleTransaction(CourseVehicleEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(CourseVehicleEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCourseVechicle)) {
             log.info("Begin insertNewCourseVehicle");

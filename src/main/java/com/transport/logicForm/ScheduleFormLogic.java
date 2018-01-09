@@ -9,6 +9,7 @@ import com.transport.entity.RouteEntity;
 import com.transport.exceptions.DatabaseException;
 import com.transport.view.controllers.ControllerHelper;
 
+import java.sql.SQLException;
 import java.time.LocalTime;
 
 public class ScheduleFormLogic {
@@ -44,25 +45,30 @@ public class ScheduleFormLogic {
                                  int phoneNumber,
                                  String licencePlate
     ) {
+        databaseService.setAutoCommit(false);
+
         try {
             RouteEntity routeEntity = new RouteEntity(distance, beginCity, endCity);
-            routeDao.insertRoute(routeEntity);
+            routeDao.insertRouteTransaction(routeEntity);
 
             CourseEntity courseEntity = createCourseEntity(routeEntity, departureTime, arrivalTime, licencePlate);
-            courseDao.insertCourse(courseEntity);
+            courseDao.insertCourseTransaction(courseEntity);
 
 
             CourseVehicleEntity courseVehicleEntity = createCourseVehicleEntity(courseEntity, licencePlate);
-            courseVehicleDao.insertCourseVehicle(courseVehicleEntity);
+            courseVehicleDao.insertCourseVehicleTransaction(courseVehicleEntity);
 
             CourseDriverEntity courseDriverEntity = createCourseDriverEntity(courseEntity, phoneNumber);
-            courseDriverDao.insertCourseDriver(courseDriverEntity);
+            courseDriverDao.insertCourseDriverTransaction(courseDriverEntity);
 
-        } catch (DatabaseException e) {
+            databaseService.commitTransaction();
+        } catch (SQLException | DatabaseException e) {
             e.printStackTrace();
             databaseService.rollbackTransaction();
             ControllerHelper.errorWhileRecordAdd();
         }
+
+        databaseService.setAutoCommit(true);
     }
 
     private CourseEntity createCourseEntity(RouteEntity routeEntity,

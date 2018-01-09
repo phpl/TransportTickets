@@ -30,6 +30,10 @@ public class AddressDao extends BasicDao {
         }
     }
 
+    public void insertAddressTransaction(AddressEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(AddressEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewAddress)) {
             log.info("Begin insertNewAddress");

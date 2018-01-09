@@ -28,6 +28,10 @@ public class LuggageDao extends BasicDao {
         }
     }
 
+    public void insertLuggageTransaction(LuggageEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(LuggageEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewDriver)) {
             log.info("Begin insertNewLuggage");

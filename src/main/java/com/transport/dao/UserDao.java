@@ -40,6 +40,10 @@ public class UserDao extends BasicDao {
         }
     }
 
+    public void insertUserTransaction(UserEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(UserEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewUser)) {
             log.info("Begin insertNewUser");

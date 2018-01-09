@@ -42,6 +42,10 @@ public class CourseDao extends BasicDao {
         }
     }
 
+    public void insertCourseTransaction(CourseEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(CourseEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCourse)) {
             log.info("Begin insertNewCourse");

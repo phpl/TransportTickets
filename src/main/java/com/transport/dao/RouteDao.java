@@ -32,6 +32,10 @@ public class RouteDao extends BasicDao {
         }
     }
 
+    public void insertRouteTransaction(RouteEntity newEntity) throws SQLException {
+        executeInsert(newEntity);
+    }
+
     private void executeInsert(RouteEntity newEntity) throws SQLException {
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewRoute)) {
             log.info("Begin insertNewRoute");
