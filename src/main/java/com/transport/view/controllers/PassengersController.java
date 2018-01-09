@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.transport.Account;
 import com.transport.DatabaseService;
 import com.transport.dao.CourseDao;
+import com.transport.dao.LuggageDao;
 import com.transport.dao.TicketDao;
 import com.transport.view.lists.PassengersList;
 import javafx.collections.ObservableList;
@@ -19,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 
 public class PassengersController {
 
@@ -55,6 +57,7 @@ public class PassengersController {
     private DatabaseService databaseService;
     private CourseDao courseDao;
     private TicketDao ticketDao;
+    private LuggageDao luggageDao;
 
     private ObservableList<PassengersList> data = null;
 
@@ -64,6 +67,7 @@ public class PassengersController {
         databaseService = new DatabaseService();
         courseDao = new CourseDao(databaseService);
         ticketDao = new TicketDao(databaseService);
+        luggageDao = new LuggageDao(databaseService);
         databaseService.connectToDatabase();
         clearTable();
         ControllerHelper.resetButtonTexts(driversButton, usersButton1, null, vehiclesButton);
@@ -148,8 +152,18 @@ public class PassengersController {
                                 btn.setOnAction((ActionEvent event) ->
                                 {
                                     PassengersList passengers = getTableView().getItems().get(getIndex());
-//                                    TODO delete passenger
-                                    data.remove(getIndex());
+                                    databaseService.setAutoCommit(false);
+                                    try {
+                                        luggageDao.deleteLuggageTransaction(passengers.getUserId(), passengers.getTicketId());
+                                        ticketDao.deleteTicketTransaction(passengers.getUserId(), passengers.getCourseId());
+                                        databaseService.commitTransaction();
+                                        data.remove(getIndex());
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        databaseService.rollbackTransaction();
+                                        ControllerHelper.showErrorAlertMessage(e.getMessage());
+                                    }
+                                    databaseService.setAutoCommit(true);
                                 });
                                 setGraphic(btn);
                                 setText(null);

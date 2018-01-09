@@ -97,4 +97,18 @@ public class TicketDao extends BasicDao {
 
         return data;
     }
+
+    public void deleteTicketTransaction(Integer userId, Integer courseId) throws SQLException {
+        String deleteTicket = "DELETE FROM transport.bilet WHERE uzytkownik_pk = ? AND kurs_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteTicket)) {
+            log.info("Begin deleteTicket");
+
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, courseId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteTicket");
+        }
+    }
 }

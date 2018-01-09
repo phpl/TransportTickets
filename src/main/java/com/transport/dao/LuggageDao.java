@@ -34,4 +34,18 @@ public class LuggageDao extends BasicDao {
             log.info("End insertNewLuggage");
         }
     }
+
+    public void deleteLuggageTransaction(Integer userId, Integer ticketId) throws SQLException {
+        String deleteLuggage = "DELETE FROM transport.bagaz WHERE uzytkownik_pk = ? AND bilet_pk = ?";
+
+        try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteLuggage)) {
+            log.info("Begin deleteLuggage");
+
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, ticketId);
+            preparedStatement.executeUpdate();
+
+            log.info("End deleteLuggage");
+        }
+    }
 }
