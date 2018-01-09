@@ -4,7 +4,6 @@ import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.transport.DatabaseService;
 import com.transport.dao.VehicleDao;
-import com.transport.view.lists.ScheduleList;
 import com.transport.view.lists.VehiclesList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -91,7 +90,7 @@ public class VehiclesController {
         );
         delete.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 
-        Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> removeButtonFactory =
+        Callback<TableColumn<VehiclesList, String>, TableCell<VehiclesList, String>> removeButtonFactory =
                 createRemoveButtonTableCellFactory();
         delete.setCellFactory(removeButtonFactory);
 
@@ -100,12 +99,12 @@ public class VehiclesController {
         tableView.getColumns().addAll(vehicleId, model, licencePlate, seatsNumber, courseId, delete);
     }
 
-    private Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>> createRemoveButtonTableCellFactory() {
-        return new Callback<TableColumn<ScheduleList, String>, TableCell<ScheduleList, String>>() {
+    private Callback<TableColumn<VehiclesList, String>, TableCell<VehiclesList, String>> createRemoveButtonTableCellFactory() {
+        return new Callback<TableColumn<VehiclesList, String>, TableCell<VehiclesList, String>>() {
             @Override
-            public TableCell<ScheduleList, String> call(TableColumn<ScheduleList, String> param) {
+            public TableCell<VehiclesList, String> call(TableColumn<VehiclesList, String> param) {
                 {
-                    return new TableCell<ScheduleList, String>() {
+                    return new TableCell<VehiclesList, String>() {
 
                         final Button btn = new Button("Usuń");
 
