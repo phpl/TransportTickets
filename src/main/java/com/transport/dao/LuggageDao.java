@@ -10,10 +10,6 @@ import java.sql.SQLException;
 @Log4j
 public class LuggageDao extends BasicDao {
 
-    private final String insertNewDriver = "INSERT INTO " +
-            "transport.bagaz (bilet_pk, waga, uzytkownik_pk) " +
-            "VALUES (?, ?, ?);";
-
     public LuggageDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -23,6 +19,10 @@ public class LuggageDao extends BasicDao {
     }
 
     private void executeInsert(LuggageEntity newEntity) throws SQLException {
+        String insertNewDriver = "INSERT INTO " +
+                "transport.bagaz (bilet_pk, waga, uzytkownik_pk) " +
+                "VALUES (?, ?, ?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewDriver)) {
             log.info("Begin insertNewLuggage");
 

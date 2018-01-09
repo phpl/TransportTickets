@@ -11,13 +11,6 @@ import java.sql.SQLException;
 @Log4j
 public class RouteDao extends BasicDao {
 
-    private final String insertNewRoute = "INSERT INTO " +
-            "transport.trasa (odleglosc, miasto_poczatkowe, miasto_koncowe) " +
-            "VALUES (?,?,?);";
-
-    private final String selectIdFromRoute = "SELECT trasa.trasa_pk FROM transport.trasa" +
-            " WHERE trasa.odleglosc = ? AND trasa.miasto_poczatkowe = ? AND trasa.miasto_koncowe = ?;";
-
     public RouteDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -27,6 +20,10 @@ public class RouteDao extends BasicDao {
     }
 
     private void executeInsert(RouteEntity newEntity) throws SQLException {
+        String insertNewRoute = "INSERT INTO " +
+                "transport.trasa (odleglosc, miasto_poczatkowe, miasto_koncowe) " +
+                "VALUES (?,?,?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewRoute)) {
             log.info("Begin insertNewRoute");
 
@@ -41,8 +38,9 @@ public class RouteDao extends BasicDao {
 
     public int getRouteIdOfItem(RouteEntity entityToFind) {
         ResultSet resultSet;
-
         int idOfElement = -1;
+        String selectIdFromRoute = "SELECT trasa.trasa_pk FROM transport.trasa" +
+                " WHERE trasa.odleglosc = ? AND trasa.miasto_poczatkowe = ? AND trasa.miasto_koncowe = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromRoute)) {
             preparedStatement.setInt(1, entityToFind.getDistance());

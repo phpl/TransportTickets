@@ -15,19 +15,6 @@ import java.sql.SQLException;
 @Log4j
 public class VehicleDao extends BasicDao {
 
-    private final String insertNewVechicle = "INSERT INTO " +
-            "transport.pojazd (model, numer_rejestracji, ilosc_miejsc) " +
-            "VALUES (?, ?, ?);";
-
-    private final String selectIdFromVechicle = "SELECT pojazd.pojazd_pk FROM transport.pojazd" +
-            " WHERE numer_rejestracji = ?;";
-
-    private final String selectSeatNumberFromVechicle = "SELECT pojazd.ilosc_miejsc FROM transport.pojazd" +
-            " WHERE numer_rejestracji = ?;";
-
-    private final String selectFromVehicles = "SELECT * FROM transport.pojazd " +
-            "LEFT JOIN transport.kurs_pojazd ON pojazd.pojazd_pk = kurs_pojazd.pojazd_pk;";
-
     public VehicleDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -42,6 +29,10 @@ public class VehicleDao extends BasicDao {
     }
 
     private void executeInsert(VehicleEntity newEntity) throws SQLException {
+        String insertNewVechicle = "INSERT INTO " +
+                "transport.pojazd (model, numer_rejestracji, ilosc_miejsc) " +
+                "VALUES (?, ?, ?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewVechicle)) {
             log.info("Begin insertNewVechicle");
 
@@ -55,16 +46,22 @@ public class VehicleDao extends BasicDao {
     }
 
     public int getSeatsNumber(String licencePlate) {
+        String selectSeatNumberFromVechicle = "SELECT pojazd.ilosc_miejsc FROM transport.pojazd" +
+                " WHERE numer_rejestracji = ?;";
         return getIntFromEntity(licencePlate, selectSeatNumberFromVechicle);
     }
 
     public int getVehicleId(String licencePlate) {
+        String selectIdFromVechicle = "SELECT pojazd.pojazd_pk FROM transport.pojazd" +
+                " WHERE numer_rejestracji = ?;";
         return getIntFromEntity(licencePlate, selectIdFromVechicle);
     }
 
     public ObservableList<VehiclesList> selectAllVehicles() {
         ResultSet resultSet;
         ObservableList<VehiclesList> data = FXCollections.observableArrayList();
+        String selectFromVehicles = "SELECT * FROM transport.pojazd " +
+                "LEFT JOIN transport.kurs_pojazd ON pojazd.pojazd_pk = kurs_pojazd.pojazd_pk;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromVehicles)) {
             resultSet = preparedStatement.executeQuery();

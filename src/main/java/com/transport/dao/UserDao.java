@@ -14,17 +14,8 @@ import java.sql.SQLException;
 @Log4j
 public class UserDao extends BasicDao {
 
-    private final String insertNewUser = "INSERT INTO " +
-            "transport.uzytkownik (login, haslo) " +
-            "VALUES (?, ?);";
-
-    private final String selectFromUsersView = "SELECT * FROM transport.uzytkownicy_view";
-
     private final String selectIdFromUser = "SELECT uzytkownik.uzytkownik_pk FROM transport.uzytkownik" +
             " WHERE login = ?;";
-
-    private final String checkUser = "SELECT uzytkownik.uzytkownik_pk FROM transport.uzytkownik" +
-            " WHERE login = ? AND haslo = ?;";
 
     public UserDao(DatabaseService databaseService) {
         super(databaseService);
@@ -35,6 +26,10 @@ public class UserDao extends BasicDao {
     }
 
     private void executeInsert(UserEntity newEntity) throws SQLException {
+        String insertNewUser = "INSERT INTO " +
+                "transport.uzytkownik (login, haslo) " +
+                "VALUES (?, ?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewUser)) {
             log.info("Begin insertNewUser");
 
@@ -57,6 +52,7 @@ public class UserDao extends BasicDao {
     public ObservableList<UsersList> selectAllUsers() {
         ResultSet resultSet;
         ObservableList<UsersList> data = FXCollections.observableArrayList();
+        String selectFromUsersView = "SELECT * FROM transport.uzytkownicy_view";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromUsersView)) {
             resultSet = preparedStatement.executeQuery();
@@ -91,6 +87,8 @@ public class UserDao extends BasicDao {
     public boolean checkUserCredentials(String username, String password) {
         ResultSet resultSet;
         boolean canLogin = false;
+        String checkUser = "SELECT uzytkownik.uzytkownik_pk FROM transport.uzytkownik" +
+                " WHERE login = ? AND haslo = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(checkUser)) {
             preparedStatement.setString(1, username);

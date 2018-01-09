@@ -11,11 +11,6 @@ import java.sql.SQLException;
 @Log4j
 public class AddressDao extends BasicDao {
 
-    private final String insertNewAddress = "INSERT INTO transport.adres (miasto, ulica, numer_domu) VALUES (?, ?, ?);";
-
-    private final String selectIdFromAddress = "SELECT adres.adres_pk FROM transport.adres" +
-            " WHERE miasto = ? AND ulica = ? AND numer_domu = ?;";
-
     public AddressDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -25,6 +20,8 @@ public class AddressDao extends BasicDao {
     }
 
     private void executeInsert(AddressEntity newEntity) throws SQLException {
+        String insertNewAddress = "INSERT INTO transport.adres (miasto, ulica, numer_domu) VALUES (?, ?, ?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewAddress)) {
             log.info("Begin insertNewAddress");
 
@@ -39,8 +36,9 @@ public class AddressDao extends BasicDao {
 
     public int getAddressId(AddressEntity entityToFind) {
         ResultSet resultSet;
-
         int idOfElement = -1;
+        String selectIdFromAddress = "SELECT adres.adres_pk FROM transport.adres" +
+                " WHERE miasto = ? AND ulica = ? AND numer_domu = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromAddress)) {
 

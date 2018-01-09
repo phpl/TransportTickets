@@ -10,12 +10,6 @@ import java.sql.SQLException;
 @Log4j
 public class CourseVehicleDao extends BasicDao {
 
-    private final String insertNewCourseVechicle = "INSERT INTO " +
-            "transport.kurs_pojazd (kurs_pk, pojazd_pk) " +
-            "VALUES (?,?);";
-
-    private final String deleteAssociation = "DELETE FROM transport.kurs_pojazd WHERE kurs_pk = ?;";
-
     public CourseVehicleDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -25,6 +19,10 @@ public class CourseVehicleDao extends BasicDao {
     }
 
     private void executeInsert(CourseVehicleEntity newEntity) throws SQLException {
+        String insertNewCourseVechicle = "INSERT INTO " +
+                "transport.kurs_pojazd (kurs_pk, pojazd_pk) " +
+                "VALUES (?,?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCourseVechicle)) {
             log.info("Begin insertNewCourseVehicle");
 

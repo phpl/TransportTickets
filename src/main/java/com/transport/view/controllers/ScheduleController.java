@@ -4,7 +4,7 @@ import com.gluonhq.particle.view.ViewManager;
 import com.jfoenix.controls.JFXButton;
 import com.transport.Account;
 import com.transport.DatabaseService;
-import com.transport.dao.*;
+import com.transport.dao.CourseDao;
 import com.transport.view.lists.ScheduleList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,10 +49,6 @@ public class ScheduleController {
 
     private DatabaseService databaseService;
     private CourseDao courseDao;
-    private CourseDriverDao courseDriverDao;
-    private CourseVehicleDao courseVehicleDao;
-    private TicketDao ticketDao;
-    private LuggageDao luggageDao;
 
     public static Integer selectedCourseId = null;
     public static Double selectedCoursePrice = null;
@@ -73,10 +69,6 @@ public class ScheduleController {
 
         databaseService = new DatabaseService();
         courseDao = new CourseDao(databaseService);
-        courseDriverDao = new CourseDriverDao(databaseService);
-        courseVehicleDao = new CourseVehicleDao(databaseService);
-        ticketDao = new TicketDao(databaseService);
-        luggageDao = new LuggageDao(databaseService);
         databaseService.connectToDatabase();
         clearTable();
         initializeTableView();

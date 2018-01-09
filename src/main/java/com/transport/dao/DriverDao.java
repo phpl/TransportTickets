@@ -15,16 +15,6 @@ import java.sql.SQLException;
 @Log4j
 public class DriverDao extends BasicDao {
 
-    private final String insertNewDriver = "INSERT INTO " +
-            "transport.kierowca (imie, nazwisko, numer_telefonu) " +
-            "VALUES (?, ?, ?);";
-
-    private final String selectIdFromDriver = "SELECT kierowca.kierowca_pk FROM transport.kierowca" +
-            " WHERE numer_telefonu = ?;";
-
-    private final String selectFromDrivers = "SELECT * FROM transport.kierowca " +
-            "LEFT JOIN transport.kurs_kierowca ON kierowca.kierowca_pk = kurs_kierowca.kierowca_pk;";
-
     public DriverDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -39,6 +29,10 @@ public class DriverDao extends BasicDao {
     }
 
     private void executeInsert(DriverEntity newEntity) throws SQLException {
+        String insertNewDriver = "INSERT INTO " +
+                "transport.kierowca (imie, nazwisko, numer_telefonu) " +
+                "VALUES (?, ?, ?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewDriver)) {
             log.info("Begin insertNewDriver");
 
@@ -53,8 +47,9 @@ public class DriverDao extends BasicDao {
 
     public int getDriverId(int phoneNumber) {
         ResultSet resultSet;
-
         int idOfElement = -1;
+        String selectIdFromDriver = "SELECT kierowca.kierowca_pk FROM transport.kierowca" +
+                " WHERE numer_telefonu = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromDriver)) {
 
@@ -73,6 +68,8 @@ public class DriverDao extends BasicDao {
     public ObservableList<DriversList> selectAllDrivers() {
         ResultSet resultSet;
         ObservableList<DriversList> data = FXCollections.observableArrayList();
+        String selectFromDrivers = "SELECT * FROM transport.kierowca " +
+                "LEFT JOIN transport.kurs_kierowca ON kierowca.kierowca_pk = kurs_kierowca.kierowca_pk;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromDrivers)) {
             resultSet = preparedStatement.executeQuery();

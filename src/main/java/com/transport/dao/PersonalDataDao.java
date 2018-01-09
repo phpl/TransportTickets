@@ -10,10 +10,6 @@ import java.sql.SQLException;
 @Log4j
 public class PersonalDataDao extends BasicDao {
 
-    private final String insertNewPersonalData = "INSERT INTO " +
-            "transport.dane_osobowe (uzytkownik_pk, imie, nazwisko, numer_telefonu, adres_pk) " +
-            "VALUES (?, ?, ?, ?, ?);";
-
     public PersonalDataDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -23,6 +19,10 @@ public class PersonalDataDao extends BasicDao {
     }
 
     private void executeInsert(PersonalDataEntity newEntity) throws SQLException {
+        String insertNewPersonalData = "INSERT INTO " +
+                "transport.dane_osobowe (uzytkownik_pk, imie, nazwisko, numer_telefonu, adres_pk) " +
+                "VALUES (?, ?, ?, ?, ?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewPersonalData)) {
             log.info("Begin insertNewPersonalData");
 

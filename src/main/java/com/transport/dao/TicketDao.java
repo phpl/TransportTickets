@@ -14,17 +14,6 @@ import java.sql.SQLException;
 @Log4j
 public class TicketDao extends BasicDao {
 
-    private final String isnertNewTicket = "INSERT INTO " +
-            "transport.bilet (uzytkownik_pk, cena, kurs_pk) " +
-            "VALUES (?, ?, ?);";
-
-    private final String deleteTicket = "DELETE FROM transport.bilet WHERE kurs_pk = ?;";
-
-    private final String selectIdFromTicket = "SELECT bilet.bilet_pk FROM transport.bilet" +
-            " WHERE uzytkownik_pk = ? AND kurs_pk = ?;";
-
-    private final String selectFromPassengersView = "SELECT  * FROM transport.pasazerowie_view WHERE kurs_pk = ?;";
-
     public TicketDao(DatabaseService databaseService) {
         super(databaseService);
     }
@@ -34,6 +23,10 @@ public class TicketDao extends BasicDao {
     }
 
     private void executeInsert(TicketEntity newEntity) throws SQLException {
+        String isnertNewTicket = "INSERT INTO " +
+                "transport.bilet (uzytkownik_pk, cena, kurs_pk) " +
+                "VALUES (?, ?, ?);";
+
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(isnertNewTicket)) {
             log.info("Begin insertNewTicket");
 
@@ -48,8 +41,9 @@ public class TicketDao extends BasicDao {
 
     public int getTicketId(TicketEntity entityToFind) {
         ResultSet resultSet;
-
         int idOfElement = -1;
+        String selectIdFromTicket = "SELECT bilet.bilet_pk FROM transport.bilet" +
+                " WHERE uzytkownik_pk = ? AND kurs_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromTicket)) {
 
@@ -68,6 +62,7 @@ public class TicketDao extends BasicDao {
     public ObservableList<PassengersList> selectAllPassenger(int courseId) {
         ResultSet resultSet;
         ObservableList<PassengersList> data = FXCollections.observableArrayList();
+        String selectFromPassengersView = "SELECT  * FROM transport.pasazerowie_view WHERE kurs_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromPassengersView)) {
             preparedStatement.setInt(1, courseId);
