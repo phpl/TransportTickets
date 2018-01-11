@@ -36,7 +36,7 @@ public class LuggageDao extends BasicDao {
     }
 
     public void deleteLuggageTransaction(Integer userId, Integer ticketId) throws SQLException {
-        String deleteLuggage = "DELETE FROM transport.bagaz WHERE uzytkownik_pk = ? AND bilet_pk = ?";
+        String deleteLuggage = "DELETE FROM transport.bagaz WHERE uzytkownik_pk = ? AND bilet_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteLuggage)) {
             log.info("Begin deleteLuggage");

@@ -38,7 +38,7 @@ public class PersonalDataDao extends BasicDao {
     }
 
     public void deletePersonalDataTransaction(int userId, int addressId) throws SQLException {
-        String deletePersonalData = "DELETE FROM transport.dane_osobowe WHERE uzytkownik_pk = ? AND adres_pk = ?";
+        String deletePersonalData = "DELETE FROM transport.dane_osobowe WHERE uzytkownik_pk = ? AND adres_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deletePersonalData)) {
             log.info("Begin deletePersonalData");

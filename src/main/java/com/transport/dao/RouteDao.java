@@ -58,7 +58,7 @@ public class RouteDao extends BasicDao {
     }
 
     public void deleteRouteTransaction(Integer routeId) throws SQLException {
-        String deleteRoute = "DELETE FROM transport.trasa WHERE trasa_pk = ?";
+        String deleteRoute = "DELETE FROM transport.trasa WHERE trasa_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteRoute)) {
             log.info("Begin deleteRoute");

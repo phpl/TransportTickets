@@ -93,7 +93,7 @@ public class VehicleDao extends BasicDao {
     }
 
     public void deleteVehicleTransaction(int vehicleId) throws SQLException {
-        String deleteVehicle = "DELETE FROM transport.pojazd WHERE pojazd_pk = ?";
+        String deleteVehicle = "DELETE FROM transport.pojazd WHERE pojazd_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteVehicle)) {
             log.info("Begin deleteVehicle");

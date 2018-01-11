@@ -35,13 +35,13 @@ public class CourseVehicleDao extends BasicDao {
     }
 
     public void deleteAssociationVehicle(int vehicleId) throws SQLException {
-        String deleteAssociation = "DELETE FROM transport.kurs_pojazd WHERE pojazd_pk = ?";
+        String deleteAssociation = "DELETE FROM transport.kurs_pojazd WHERE pojazd_pk = ?;";
 
         executeDeleteAssociation(vehicleId, deleteAssociation);
     }
 
     public void deleteAssociationCourse(Integer courseId) throws SQLException {
-        String deleteAssociation = "DELETE FROM transport.kurs_pojazd WHERE kurs_pk = ?";
+        String deleteAssociation = "DELETE FROM transport.kurs_pojazd WHERE kurs_pk = ?;";
 
         executeDeleteAssociation(courseId, deleteAssociation);
     }

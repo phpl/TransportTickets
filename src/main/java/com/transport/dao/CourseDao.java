@@ -43,7 +43,7 @@ public class CourseDao extends BasicDao {
     public ObservableList<ScheduleList> selectAllCourses() {
         ResultSet resultSet;
         ObservableList<ScheduleList> data = FXCollections.observableArrayList();
-        String selectFromCourseView = "SELECT * FROM transport.trasy_view";
+        String selectFromCourseView = "SELECT * FROM transport.trasy_view;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromCourseView)) {
             resultSet = preparedStatement.executeQuery();
@@ -122,7 +122,7 @@ public class CourseDao extends BasicDao {
     }
 
     public void deleteCourseTransaction(Integer courseId) throws SQLException {
-        String deleteCourse = "DELETE FROM transport.kurs WHERE kurs_pk = ?";
+        String deleteCourse = "DELETE FROM transport.kurs WHERE kurs_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteCourse)) {
             log.info("Begin deleteCourse");

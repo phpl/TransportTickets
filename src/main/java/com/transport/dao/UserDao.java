@@ -52,7 +52,7 @@ public class UserDao extends BasicDao {
     public ObservableList<UsersList> selectAllUsers() {
         ResultSet resultSet;
         ObservableList<UsersList> data = FXCollections.observableArrayList();
-        String selectFromUsersView = "SELECT * FROM transport.uzytkownicy_view";
+        String selectFromUsersView = "SELECT * FROM transport.uzytkownicy_view;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectFromUsersView)) {
             resultSet = preparedStatement.executeQuery();
@@ -110,7 +110,7 @@ public class UserDao extends BasicDao {
     }
 
     public void deleteUserTransaction(int userId) throws SQLException {
-        String deleteUser = "DELETE FROM transport.uzytkownik WHERE uzytkownik_pk = ?";
+        String deleteUser = "DELETE FROM transport.uzytkownik WHERE uzytkownik_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteUser)) {
             log.info("Begin deleteUser");

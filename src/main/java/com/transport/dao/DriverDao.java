@@ -101,7 +101,7 @@ public class DriverDao extends BasicDao {
     }
 
     public void deleteDriverTransaction(int driverId) throws SQLException {
-        String deleteDriver = "DELETE FROM transport.kierowca WHERE kierowca_pk = ?";
+        String deleteDriver = "DELETE FROM transport.kierowca WHERE kierowca_pk = ?;";
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(deleteDriver)) {
             log.info("Begin deleteDriver");
