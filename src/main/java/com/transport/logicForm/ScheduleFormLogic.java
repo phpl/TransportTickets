@@ -54,12 +54,11 @@ public class ScheduleFormLogic {
             CourseEntity courseEntity = createCourseEntity(routeEntity, departureTime, arrivalTime, licencePlate);
             courseDao.insertCourseTransaction(courseEntity);
 
+            CourseDriverEntity courseDriverEntity = createCourseDriverEntity(courseEntity, phoneNumber);
+            courseDriverDao.insertCourseDriverTransaction(courseDriverEntity);
 
             CourseVehicleEntity courseVehicleEntity = createCourseVehicleEntity(courseEntity, licencePlate);
             courseVehicleDao.insertCourseVehicleTransaction(courseVehicleEntity);
-
-            CourseDriverEntity courseDriverEntity = createCourseDriverEntity(courseEntity, phoneNumber);
-            courseDriverDao.insertCourseDriverTransaction(courseDriverEntity);
 
             databaseService.commitTransaction();
         } catch (SQLException | DatabaseException e) {
