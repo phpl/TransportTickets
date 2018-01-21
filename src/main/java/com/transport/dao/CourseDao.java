@@ -29,9 +29,8 @@ public class CourseDao extends BasicDao {
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(insertNewCourse)) {
             log.info("Begin insertNewCourse");
-
-            preparedStatement.setObject(1, newEntity.getDepartureTime());
-            preparedStatement.setObject(2, newEntity.getArrivalTime());
+            preparedStatement.setTime(1, java.sql.Time.valueOf(newEntity.getDepartureTime()));
+            preparedStatement.setTime(2, java.sql.Time.valueOf(newEntity.getArrivalTime()));
             preparedStatement.setInt(3, newEntity.getMaxAvailableSeats());
             preparedStatement.setInt(4, newEntity.getRouteId());
             preparedStatement.executeUpdate();
@@ -85,8 +84,8 @@ public class CourseDao extends BasicDao {
 
         try (PreparedStatement preparedStatement = databaseService.getConnection().prepareStatement(selectIdFromCourse)) {
 
-            preparedStatement.setObject(1, entityToFind.getDepartureTime());
-            preparedStatement.setObject(2, entityToFind.getArrivalTime());
+            preparedStatement.setTime(1, java.sql.Time.valueOf(entityToFind.getDepartureTime()));
+            preparedStatement.setTime(2, java.sql.Time.valueOf(entityToFind.getArrivalTime()));
             preparedStatement.setInt(3, entityToFind.getMaxAvailableSeats());
             preparedStatement.setInt(4, entityToFind.getRouteId());
             resultSet = preparedStatement.executeQuery();
