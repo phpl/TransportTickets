@@ -1,5 +1,8 @@
 package com.transport;
 
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 import lombok.extern.log4j.Log4j;
 
 import java.io.IOException;
@@ -28,6 +31,28 @@ public class DatabaseService {
         }
     }
 
+    private void createSshTunnel() throws JSchException {
+        int sshPort = Integer.parseInt(properties.getProperty("SSH_PORT"));
+        int localPort = Integer.parseInt(properties.getProperty("LOCAL_PORT"));
+        int remotePort = Integer.parseInt(properties.getProperty("REMOTE_PORT"));
+        String sshRemoteHost = properties.getProperty("REMOTE_HOST");
+        String sshUser = properties.getProperty("SSH_USER");
+        String sshPassword = "";
+        JSch jsch = new JSch();
+
+        Session session = jsch.getSession(sshUser, sshRemoteHost, sshPort);
+        session.setPassword(sshPassword);
+        java.util.Properties config = new java.util.Properties();
+        config.put("StrictHostKeyChecking", "no");
+        config.put("Compression", "yes");
+        config.put("ConnectionAttempts", "2");
+        session.setConfig(config);
+
+        session.connect();
+
+        session.setPortForwardingL(localPort, sshRemoteHost, remotePort);
+    }
+
     private Properties loadProperties() {
         Properties properties = new Properties();
         InputStream stream = null;
@@ -51,18 +76,17 @@ public class DatabaseService {
     }
 
     public void connectToDatabase() {
+        String dbUrl = properties.getProperty("DB_URL");
+        String dbUser = properties.getProperty("USER");
+        String dbPassword = properties.getProperty("PASSWORD");
+
         try {
+            createSshTunnel();
             Class.forName(properties.getProperty("JDBC_DRIVER"));
-        } catch (ClassNotFoundException e) {
+            connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        } catch (ClassNotFoundException | SQLException | JSchException e) {
             e.printStackTrace();
         }
-
-        try {
-            connection = DriverManager.getConnection(properties.getProperty("DB_URL"), properties.getProperty("USER"), properties.getProperty("PASSWORD"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
 
         log.info("Connected to the Database");
     }
