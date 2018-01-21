@@ -178,7 +178,6 @@ public class ScheduleController {
                                         courseDriverDao.deleteAssociationCourse(schedule.getCourseId());
                                         courseVehicleDao.deleteAssociationCourse(schedule.getCourseId());
                                         courseDao.deleteCourseTransaction(schedule.getCourseId());
-                                        routeDao.deleteRouteTransaction(schedule.getRouteId());
                                         databaseService.commitTransaction();
                                         data.remove(getIndex());
                                     } catch (SQLException e) {

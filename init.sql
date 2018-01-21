@@ -345,3 +345,58 @@ CREATE TRIGGER dodaj_kierowca_bus_trigger
   AFTER INSERT
   ON transport.kurs_pojazd
   FOR EACH ROW EXECUTE PROCEDURE dodaj_kierowca_bus();
+
+CREATE OR REPLACE FUNCTION usun_kurs_gdy_pasazer()
+  RETURNS TRIGGER AS $$
+DECLARE
+  w INTEGER;
+BEGIN
+  SELECT COUNT(*)
+  INTO w
+  FROM transport.bilet
+  WHERE kurs_pk = OLD.kurs_pk;
+  IF (w > 0)
+  THEN RAISE 'Nie mozna usunac kursu! Istnieje pasazer zapisany na ten kurs!';
+  END IF;
+  RETURN OLD;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER usun_kurs_gdy_pasazer_trigger
+  BEFORE DELETE
+  ON transport.kurs
+  FOR EACH ROW EXECUTE PROCEDURE usun_kurs_gdy_pasazer();
+
+CREATE OR REPLACE FUNCTION usun_kurs_trasa()
+  RETURNS TRIGGER AS $$
+BEGIN
+  DELETE FROM transport.trasa
+  WHERE trasa.trasa_pk = OLD.trasa_pk;
+  RETURN OLD;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER usun_kurs_trasa_trigger
+  AFTER DELETE
+  ON transport.kurs
+  FOR EACH ROW EXECUTE PROCEDURE usun_kurs_trasa();
+
+CREATE OR REPLACE FUNCTION usun_admina()
+  RETURNS TRIGGER AS $$
+BEGIN
+  IF OLD.login = 'admin'
+  THEN
+    RAISE 'Blad! Nie mozna usunac administratora';
+  END IF;
+  RETURN OLD;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER usun_adminaa_trigger
+  BEFORE DELETE
+  ON transport.uzytkownik
+  FOR EACH ROW EXECUTE PROCEDURE usun_admina();
+
