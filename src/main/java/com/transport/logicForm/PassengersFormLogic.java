@@ -19,11 +19,9 @@ public class PassengersFormLogic {
         databaseService = new DatabaseService();
         luggageDao = new LuggageDao(databaseService);
         ticketDao = new TicketDao(databaseService);
-        databaseService.connectToDatabase();
     }
 
     public void dispose() {
-        databaseService.closeConnection();
     }
 
     public void addPassenger(Integer passengerId, Integer courseId, Double price, Double luggageWeight) {

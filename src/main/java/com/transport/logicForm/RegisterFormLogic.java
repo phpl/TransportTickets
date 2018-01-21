@@ -23,11 +23,9 @@ public class RegisterFormLogic {
         userDao = new UserDao(databaseService);
         personalDataDao = new PersonalDataDao(databaseService);
         addressDao = new AddressDao(databaseService);
-        databaseService.connectToDatabase();
     }
 
     public void dispose() {
-        databaseService.closeConnection();
     }
 
     public void addUser(String username,

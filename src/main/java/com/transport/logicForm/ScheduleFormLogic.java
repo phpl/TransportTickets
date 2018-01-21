@@ -30,11 +30,9 @@ public class ScheduleFormLogic {
         routeDao = new RouteDao(databaseService);
         driverDao = new DriverDao(databaseService);
         vehicleDao = new VehicleDao(databaseService);
-        databaseService.connectToDatabase();
     }
 
     public void dispose() {
-        databaseService.closeConnection();
     }
 
     public void insertCourseView(String beginCity,

@@ -15,17 +15,18 @@ import java.util.Properties;
 @Log4j
 public class DatabaseService {
 
-    private Connection connection = null;
+    private static Connection connection = null;
 
     private Properties properties;
 
     public DatabaseService() {
         properties = loadProperties();
+        connectToDatabase();
     }
 
     public void setAutoCommit(boolean commit) {
         try {
-            this.connection.setAutoCommit(commit);
+            connection.setAutoCommit(commit);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,11 +76,11 @@ public class DatabaseService {
         return properties;
     }
 
+
     public void connectToDatabase() {
         String dbUrl = properties.getProperty("DB_URL");
         String dbUser = properties.getProperty("USER");
         String dbPassword = properties.getProperty("PASSWORD");
-
         try {
             createSshTunnel();
             Class.forName(properties.getProperty("JDBC_DRIVER"));
@@ -91,7 +92,7 @@ public class DatabaseService {
         log.info("Connected to the Database");
     }
 
-    public void closeConnection() {
+    public static void closeConnection() {
         try {
             if (connection != null)
                 connection.close();

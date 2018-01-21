@@ -79,14 +79,12 @@ public class ScheduleController {
         courseDriverDao = new CourseDriverDao(databaseService);
         courseVehicleDao = new CourseVehicleDao(databaseService);
         routeDao = new RouteDao(databaseService);
-        databaseService.connectToDatabase();
         clearTable();
         initializeTableView();
     }
 
     public void dispose() {
         clearTable();
-        databaseService.closeConnection();
     }
 
     private void initializeTableView() {

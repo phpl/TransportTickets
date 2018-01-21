@@ -25,11 +25,9 @@ public class ScheduleFormUpdateLogic {
         courseVehicleDao = new CourseVehicleDao(databaseService);
         driverDao = new DriverDao(databaseService);
         vehicleDao = new VehicleDao(databaseService);
-        databaseService.connectToDatabase();
     }
 
     public void dispose() {
-        databaseService.closeConnection();
     }
 
     public void updateCourse(Integer courseId, int phoneNumber, String licencePlate) {

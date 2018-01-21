@@ -11,11 +11,9 @@ public class VehiclesFormLogic {
     public VehiclesFormLogic() {
         databaseService = new DatabaseService();
         vehicleDao = new VehicleDao(databaseService);
-        databaseService.connectToDatabase();
     }
 
     public void dispose() {
-        databaseService.closeConnection();
     }
 
     public void addVehicle(String model,

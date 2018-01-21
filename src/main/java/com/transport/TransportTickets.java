@@ -18,4 +18,10 @@ public class TransportTickets extends ParticleApplication {
         scene.getStylesheets().add(TransportTickets.class.getResource("style.css").toExternalForm());
         setTitle("Transport");
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        DatabaseService.closeConnection();
+    }
 }

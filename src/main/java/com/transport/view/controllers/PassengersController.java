@@ -68,7 +68,6 @@ public class PassengersController {
         courseDao = new CourseDao(databaseService);
         ticketDao = new TicketDao(databaseService);
         luggageDao = new LuggageDao(databaseService);
-        databaseService.connectToDatabase();
         clearTable();
         ControllerHelper.resetButtonTexts(driversButton, usersButton1, null, vehiclesButton);
         ControllerHelper.hideButtonDependindOnAccountType(driversButton, usersButton1, null, vehiclesButton);
@@ -76,7 +75,6 @@ public class PassengersController {
 
     public void dispose() {
         clearTable();
-        databaseService.closeConnection();
     }
 
     @FXML

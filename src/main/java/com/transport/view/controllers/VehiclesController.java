@@ -60,13 +60,11 @@ public class VehiclesController {
         databaseService = new DatabaseService();
         vehicleDao = new VehicleDao(databaseService);
         courseVehicleDao = new CourseVehicleDao(databaseService);
-        databaseService.connectToDatabase();
         initializeTableView();
     }
 
     public void dispose() {
         clearTable();
-        databaseService.closeConnection();
     }
 
     private void initializeTableView() {

@@ -60,13 +60,11 @@ public class UsersController {
         userDao = new UserDao(databaseService);
         addressDao = new AddressDao(databaseService);
         personalDataDao = new PersonalDataDao(databaseService);
-        databaseService.connectToDatabase();
         initializeTableView();
     }
 
     public void dispose() {
         clearTable();
-        databaseService.closeConnection();
     }
 
     private void initializeTableView() {

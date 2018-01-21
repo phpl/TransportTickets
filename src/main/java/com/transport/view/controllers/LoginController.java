@@ -61,11 +61,9 @@ public class LoginController {
         Account.currentUserId = null;
         databaseService = new DatabaseService();
         userDao = new UserDao(databaseService);
-        databaseService.connectToDatabase();
     }
 
     public void dispose() {
-        databaseService.closeConnection();
     }
 
     @FXML

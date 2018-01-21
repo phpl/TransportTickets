@@ -11,11 +11,9 @@ public class DriversFormLogic {
     public DriversFormLogic() {
         databaseService = new DatabaseService();
         driverDao = new DriverDao(databaseService);
-        databaseService.connectToDatabase();
     }
 
     public void dispose() {
-        databaseService.closeConnection();
     }
 
     public void addDriver(String firstName,

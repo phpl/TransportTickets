@@ -58,7 +58,6 @@ public class DriversController {
         databaseService = new DatabaseService();
         driverDao = new DriverDao(databaseService);
         courseDriverDao = new CourseDriverDao(databaseService);
-        databaseService.connectToDatabase();
         initializeTableView();
         ControllerHelper.resetButtonTexts(null, usersButton1, passengersButton1, vehiclesButton);
         ControllerHelper.hideButtonDependindOnAccountType(null, usersButton1, passengersButton1, vehiclesButton);
@@ -66,7 +65,6 @@ public class DriversController {
 
     public void dispose() {
         clearTable();
-        databaseService.closeConnection();
     }
 
     private void initializeTableView() {
