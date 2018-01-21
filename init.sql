@@ -285,3 +285,63 @@ CREATE OR REPLACE VIEW transport."pasazerowie_view" AS
     JOIN transport.bilet ON uzytkownik.uzytkownik_pk = bilet.uzytkownik_pk
     LEFT JOIN transport.bagaz ON uzytkownik.uzytkownik_pk = bagaz.uzytkownik_pk
     JOIN transport.kurs ON bilet.kurs_pk = kurs.kurs_pk;
+
+CREATE OR REPLACE FUNCTION kup_bilet()
+  RETURNS TRIGGER AS $$
+DECLARE
+  w INTEGER;
+BEGIN
+  SELECT maks_dostepna_ilosc_miejsc
+  INTO w
+  FROM transport.kurs
+  WHERE kurs_pk = NEW.kurs_pk;
+  IF (w = 0)
+  THEN RAISE 'Nie mozna kupic biletu! Brak miejsc!';
+  ELSE
+    UPDATE transport.kurs
+    SET maks_dostepna_ilosc_miejsc = maks_dostepna_ilosc_miejsc - 1
+    WHERE kurs_pk = NEW.kurs_pk;
+    RETURN NEW;
+  END IF;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER kup_bilet_trigger
+  BEFORE INSERT OR UPDATE
+  ON transport.bilet
+  FOR EACH ROW EXECUTE PROCEDURE kup_bilet();
+
+CREATE OR REPLACE FUNCTION anuluj_bilet()
+  RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE transport.kurs
+  SET maks_dostepna_ilosc_miejsc = maks_dostepna_ilosc_miejsc + 1
+  WHERE kurs_pk = OLD.kurs_pk;
+  RETURN NULL;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER anuluj_bilet_trigger
+  AFTER DELETE
+  ON transport.bilet
+  FOR EACH ROW EXECUTE PROCEDURE anuluj_bilet();
+
+CREATE OR REPLACE FUNCTION dodaj_kierowca_bus()
+  RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE transport.kurs
+  SET maks_dostepna_ilosc_miejsc = maks_dostepna_ilosc_miejsc + (SELECT ilosc_miejsc
+                                                                 FROM transport.pojazd
+                                                                 WHERE pojazd.pojazd_pk = NEW.pojazd_pk)
+  WHERE kurs_pk = NEW.kurs_pk;
+  RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER dodaj_kierowca_bus_trigger
+  AFTER INSERT
+  ON transport.kurs_pojazd
+  FOR EACH ROW EXECUTE PROCEDURE dodaj_kierowca_bus();
