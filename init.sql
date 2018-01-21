@@ -400,3 +400,68 @@ CREATE TRIGGER usun_adminaa_trigger
   ON transport.uzytkownik
   FOR EACH ROW EXECUTE PROCEDURE usun_admina();
 
+CREATE OR REPLACE FUNCTION usun_kierowce()
+  RETURNS TRIGGER AS $$
+DECLARE
+  w INTEGER;
+BEGIN
+  SELECT COUNT(*)
+  INTO w
+  FROM transport.kurs_kierowca
+  WHERE kierowca_pk = OLD.kierowca_pk;
+  IF (w > 0)
+  THEN RAISE 'Nie mozna usunac kierowcy! Kierowca jest zapisany na kurs!';
+  END IF;
+  RETURN OLD;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER usun_kierowce_trigger
+  BEFORE DELETE
+  ON transport.kierowca
+  FOR EACH ROW EXECUTE PROCEDURE usun_kierowce();
+
+CREATE OR REPLACE FUNCTION usun_pojazd()
+  RETURNS TRIGGER AS $$
+DECLARE
+  w INTEGER;
+BEGIN
+  SELECT COUNT(*)
+  INTO w
+  FROM transport.kurs_pojazd
+  WHERE pojazd_pk = OLD.pojazd_pk;
+  IF (w > 0)
+  THEN RAISE 'Nie mozna usunac pojazdu! Pojazd jest zapisany na kurs!';
+  END IF;
+  RETURN OLD;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER usun_pojazd_trigger
+  BEFORE DELETE
+  ON transport.pojazd
+  FOR EACH ROW EXECUTE PROCEDURE usun_pojazd();
+
+CREATE OR REPLACE FUNCTION usun_uzytkownika_gdy_kurs()
+  RETURNS TRIGGER AS $$
+DECLARE
+  w INTEGER;
+BEGIN
+  SELECT COUNT(*)
+  INTO w
+  FROM transport.bilet
+  WHERE bilet.uzytkownik_pk = OLD.uzytkownik_pk;
+  IF (w > 0)
+  THEN RAISE 'Nie mozna usunac uzytkownika! Uzytkownik jest zapisany na kurs!';
+  END IF;
+  RETURN OLD;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER usun_uzytkownika_gdy_kurs_trigger
+  BEFORE DELETE
+  ON transport.uzytkownik
+  FOR EACH ROW EXECUTE PROCEDURE usun_uzytkownika_gdy_kurs();
